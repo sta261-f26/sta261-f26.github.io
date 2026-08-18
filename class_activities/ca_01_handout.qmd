@@ -20,7 +20,7 @@ To download the data, run the following chunk of code in R:
 
 ```{r, message=F, warning=F}
 library(tidyverse)
-raw_data <- read_csv("https://sta279-f25.github.io/data/canine_raw.csv")
+raw_data <- read_csv("https://sta261-f26.github.io/data/canine_raw.csv")
 ```
 
 You can then inspect the data, for example by running `View(raw_data)` or `glimpse(raw_data)`.
