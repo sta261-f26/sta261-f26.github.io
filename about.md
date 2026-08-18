@@ -183,9 +183,9 @@ There will be one project in this course, due towards the end of the semester. I
 
 We will have two in-class exams and one final exam.
 
-**Exam 1:** October 6 (tentative), in class
+**Exam 1:** October 2 (tentative), in class
 
-**Exam 2:** November 14 (tentative), in class
+**Exam 2:** November 6 (tentative), in class
 
 **Final exam:** December 10, 2pm
 

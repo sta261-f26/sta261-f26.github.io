@@ -90,28 +90,26 @@ The original data from the Binfet *et al.* paper actually includes a *lot* more 
 
 ## Class plan (tentative)
 
-* Unit 1: Fundamentals for working with data
-    * Data wrangling, functions, and iteration
+* Fundamentals for working with data
+    * Data wrangling, reshaping, and joining
 
-* Unit 2: More on computing
-    * Deeper dive on iteration, functions + function scoping, and objects in R
-
-* Unit 3: Other data types and importing
-    * Text as data, regular expressions, web scraping
+* Simulation
+    * Iteration, sampling for answering statistics and probability questions
     
-* Unit 4: Beyond R
-    * SQL + relational data, Python
+* Functions
+    * Functions for data wrangling and statistical methods, function scoping, unit testing
+
+* Languages and tools: R, Python, SQL, Git
 
 ## Class plan
 
-Unit 1: Fundamentals for working with data
+Part 1: Fundamentals for working with data
 
 * tools for cleaning and processing data (modifying columns, creating new columns, subsetting rows, etc)
 * working with different variable types
 * reshaping data
 * wrangling with multiple tables
-* iteration across columns and tables
-* writing functions for data wrangling
+* iteration across columns
 
 ## Course goals
 
