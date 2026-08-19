@@ -76,7 +76,7 @@ After you send me your GitHub username, I will email you with an invitation to j
 
 Click the green "Join" button to join. This will take you to the GitHub organization page for the class:
 
-<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/classroom_email_invite_2.png" width="30%"/>
+<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/classroom_email_invite_2.jpg" width="30%"/>
 
 If you are not already logged in to GitHub, you may be prompted to log in before you can join.
 
@@ -88,7 +88,7 @@ Go to Canvas. Under Assignments, click on *Example Assignment*. Click on the Git
 
 If you are not already logged in, GitHub will prompt you to log in to your account:
 
-<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/accept_assignment_sign_in.png" width="30%"/>
+<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/accept_assignment_sign_in.jpg" width="30%"/>
 
 ### Step 3: Authorize `Classroom 50`
 
@@ -96,17 +96,17 @@ Classroom 50 is the organization that maintains the tools that allow the classro
 
 You will see a message that looks like this, with a green check already next to `sta261-f26-statcomp` organization:
 
-<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/accept_assignment_authorize.png" width="30%"/>
+<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/accept_assignment_authorize.jpg" width="30%"/>
 
 You do **not** need to grant Classroom 50 access to *any* other organizations or repositories you may have on GitHub -- just your work in this class. This means you do not need to click "Grant" or "Request" for any groups!
 
 Just click the green "Authorize" button. You will then be taken to a Classroom 50 dashboard:
 
-<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/accept_assignment_classroom_50_dashboard.png" width="30%"/>
+<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/accept_assignment_classroom_50_dashboard.jpg" width="30%"/>
 
 Click "Open" on the `sta261-f26-statcomp` organization, and then click "View assignments":
 
-<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/accept_assignment_view_assignments.png" width="30%"/>
+<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/accept_assignment_view_assignments.jpg" width="30%"/>
 
 ### Step 4: Accept the assignment
 
@@ -114,15 +114,15 @@ You should now see an assignment, or a list of assignments, to accept. If no ass
 
 You will now be prompted to accept the assignment (in this case, "Example assignment"). This will give you access to a new repository on GitHub. 
 
-<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/accept_assignment_accepting.png" width="30%"/>
+<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/accept_assignment_accepting.jpg" width="30%"/>
 
 Click the "Accept assignment" button. Then click "Open repository":
 
-<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/accept_assignment_open_repository.png" width="30%"/>
+<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/accept_assignment_open_repository.jpg" width="30%"/>
 
 Once you have accepted the assignment, you will be taken to the assignment repository on GitHub (e.g., `statistical-computing-example-assignment-cevans47`). In the example assignment, there are two files already in the repository: `README.md` provides some information about the assignment (short because full assignment instructions are on the course website), and `example_template.qmd` provides a Quarto file with starter code.
 
-<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/example_assignment_github_repo.png" width="70%"/>
+<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/example_assignment_github_repo.jpg" width="70%"/>
 
 If you click on the `example_template.qmd` file, for example, you will see a chunk of R code with some errors that need fixing.
 
@@ -130,7 +130,7 @@ If you click on the `example_template.qmd` file, for example, you will see a chu
 
 Click the green "Code" button, and select HTTPS. You will see a web URL that you can copy to the clipboard:
 
-<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/clone_assignment_repo_https.png" width="50%"/>
+<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/clone_assignment_repo_https.jpg" width="50%"/>
 
 **(Important: if you have used the SSH key instead of Personal Access Token setup, e.g. because you are connecting from an RStudio server, then you should instead select "SSH" and copy the corresponding SSH URL)**
 
@@ -239,13 +239,15 @@ Once you have completed the assignment and pushed the final version of your work
 
 In the GitHub repository, navigate to the "Pull requests" tab. There should be one open pull request, called "Feedback":
 
-<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/efeedback_pull_request.png" width="60%"/>
+<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/efeedback_pull_request.jpg" width="60%"/>
 
 Click on this pull request. The pull request has tabs for Conversation (for us to make comments on the code), Commits, Checks (ignore this for now), and Files changed. Under the Conversation tab, you can see some information automatically populated by GitHub Classroom, and a list of the commits to the repository:
 
-<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/feedback_pull_request_2.png" width="60%"/>
+<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/feedback_pull_request_2.jpg" width="60%"/>
 
 **Very Important: DO NOT close or merge the pull request!** You should only ever request reviews and make comments.
+
+(Note: for now, assignments are not automatically graded. You can ignore that "autograding" link)
 
 To request feedback from me, click on the gears symbol next to "Reviewers" on the right:
 
