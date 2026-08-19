@@ -72,7 +72,7 @@ This section describes the steps for accepting and submitting your first assignm
 
 After you send me your GitHub username, I will email you with an invitation to join the classroom:
 
-<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/classroom_email_invite.png" width="30%"/>
+<img src="https://sta261-f26.github.io/resources/github_instruction_pictures/classroom_email_invite.jpg" width="30%"/>
 
 Click the green "Join" button to join. This will take you to the GitHub organization page for the class:
 
