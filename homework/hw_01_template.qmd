@@ -9,12 +9,13 @@ editor: source
 author: "Your name"
 ---
 
-**Collaborators:** (leave blank if none)
+**Collaborators and AI statement:**
 
 **Instructions:** 
 
 * Answer each question on the homework assignment
 * When done, Render this file to HTML and submit the HTML on Canvas
+* Don't forget to complete the GitHub example assignment!
 
 #### Question 1
 

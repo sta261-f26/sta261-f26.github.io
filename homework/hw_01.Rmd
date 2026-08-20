@@ -7,16 +7,18 @@ output:
 link-citations: yes
 ---
 
-**Due:** Friday, September 5, 10:00pm on Canvas
+**Due:** Friday, September 4, 11:59pm on Canvas
 
 **Instructions:** 
 
-* Download the [HW 1 template](https://sta279-f25.github.io/homework/hw_01_template.qmd), and open the template (a Quarto document) in RStudio. 
+* Download the [HW 1 template](https://sta261-f26.github.io/homework/hw_01_template.qmd), and open the template (a Quarto document) in RStudio. 
 * Put your name in the file header
 * Click `Render`
 * Type all code and answers in the document
 * Render early and often to catch any errors!
 * When you are finished, submit the final rendered HTML to Canvas
+
+**Collaborators and AI statement:** At the top of your assignment, list any collaborators (Dr. Evans does not count -- he is a resource, not a collaborator), and provide an AI statement describing your use of AI to complete the questions. If you did not use AI in any way, let me know that too. If you did use AI, provide: the model used, the HW questions on which you used AI, and a summary of the ways in which AI provided assistance. As described in the syllabus, AI use is permitted on homework assignments, but submissions without a complete AI statement may not receive full credit.
 
 **Code guidelines:**
 
@@ -194,5 +196,8 @@ mod_data <- read_html("https://en.wikipedia.org/wiki/K-anonymity") |>
 Using `dplyr` functions that we have covered in this course, verify that this data has 2-anonymity with respect to Age, Gender, and State of domicile.
 :::
 
+## Submitting assignments on GitHub
+
+For the remainder of the course, we will submit assignments through GitHub instead of on Canvas. Follow the [Git and GitHub setup instructions](https://sta261-f26.github.io/resources/github_instructions/) on the course website and submit the *Example Assignment* on GitHub. Completing this example assignment will count towards your HW 1 grade.
 
 

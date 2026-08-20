@@ -19,5 +19,6 @@ August 29
 : Data wrangling fundamentals
 
 : **Homework 1 released**{: .label .label-yellow }
+  : [HW 1](https://sta261-f26.github.io/homework/hw_01.html)
   
-: Complete the Git and GitHub setup and example assignment for Monday's class
+: Follow the [Git and GitHub setup instructions](https://sta261-f26.github.io/resources/github_instructions/). Email me your GitHub username!
