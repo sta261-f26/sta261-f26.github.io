@@ -195,9 +195,7 @@ starwars |>
 
 ## Class activity
 
-[https://sta279-f25.github.io/class_activities/ca_02.html](https://sta279-f25.github.io/class_activities/ca_02.html)
-
-* Work with a neighbor on the class activity
+* Work with a neighbor on the class activity (linked on Canvas and course website)
 * At the end of class, submit your work as an HTML file on Canvas (one per group, list all your names)
 * I will come around and answer any questions
 
