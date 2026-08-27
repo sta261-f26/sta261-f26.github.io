@@ -1,5 +1,5 @@
 ---
-title: "Warmup: data wrangling with the Mets"
+title: "Warmup: data wrangling"
 format: pdf
 editor: source
 ---
@@ -10,46 +10,67 @@ editor: source
 
 # Baseball data
 
-The `Teams` dataset in contains 3045 rows and 48 columns, and describes yearly statistics for baseball teams between 1871 and 2023. 
-
-Here are the first few rows and columns of the dataset:
+The `teams` dataset contains information on wins, losses, and attendance for three MLB teams (Anaheim, Baltimore, and the New York Mets) between 2021 and 2023:
 
 ```{r, echo=F, message=F, warning=F}
 library(Lahman)
 library(tidyverse)
 
-head(Teams[,1:13])
+teams <- Teams |>
+  select(yearID, franchID, W, L, attendance) |>
+  filter(franchID %in% c("ANA", "BAL", "NYM"),
+         yearID > 2020)
 ```
+
+```{r}
+teams
+```
+
 
 ## Questions
 
-1. The following chunk of code is run, producing the output below. Explain what the `select` function is doing.
+1. The following chunk of code is run, producing the output below. What is the `select` function doing?
 
 ```{r, eval=F}
-Teams |>
+teams |>
   select(yearID, franchID, W, L)
 ```
 
 ```{r, echo=F}
-Teams |>
-  select(yearID, franchID, W, L) |>
-  head()
+teams |>
+  select(yearID, franchID, W, L)
 ```
 
-\vspace{3cm}
-
-2. Now suppose we want to get *only* the data for the New York Mets (franchise ID "NYM"), between 1998 and 2018. Fill in the code; the first few rows of the desired output are shown below.
+2. After running the following code, what will be the dimensions (number of rows and columns) of the `team_sub` dataset? Of the `teams` dataset?
 
 ```{r, eval=F}
-Teams |>
-  select(yearID, franchID, W, L) |>
-  filter(...)
+team_sub <- teams |>
+  filter(franchID %in% c("BAL", "NYM"))
 ```
 
-```{r, echo=F}
-Teams |>
-  select(yearID, franchID, W, L) |>
-  filter(franchID == "NYM",
-         yearID >= 1998, yearID <= 2018) |>
-  head()
+\vspace{1cm}
+
+3. After running the following code, what will be the dimensions (number of rows and columns) of the `team_stats` dataset?
+
+```{r, eval=F}
+team_stats <- teams |>
+  group_by(franchID) |>
+  summarize(max_w = max(W), min_w = min(W))
 ```
+
+\vspace{1cm}
+
+4. Give the output of the following code:
+
+```{r, eval=F}
+teams |>
+  filter(franchID %in% c("BAL", "NYM")) |>
+  group_by(franchID) |>
+  summarize(max_attend = max(attendance))
+```
+
+
+
+
+
+

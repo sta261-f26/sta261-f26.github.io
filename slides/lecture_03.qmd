@@ -17,149 +17,201 @@ editor_options:
 * `group_by`: group rows together
 * `mutate`: create new columns
 
-## Data for today
+## Input data
 
-* Data on professional baseball teams between 1871 and 2023
-* 3015 rows and 48 columns
-* Each row represents one year (season) for one team
-* Variables include:
-  * `yearID`: Year
-  * `franchID`: Franchise
-  * `W`: Wins
-  * `L`: Losses
-  
-## Data for today
-
-* Variables include:
-  * `yearID`: Year
-  * `franchID`: Franchise
-  * `W`: Wins
-  * `L`: Losses
-  
-We want to know: which NY Mets general manager performed best between 1998 - 2018
-
-## Warmup activity
-
-Work on the activity (handout) with a neighbor, then we will discuss as a class
+**Key principle:** The first argument to a `dplyr` function is the input dataframe
 
 ```{r, include=F}
-library(Lahman)
 library(tidyverse)
 ```
 
-## Step 0: Make the columns more manageable
-
-There are 48 columns in the initial data! Let's only focus on the ones we care about:
-
-```{r}
-Teams |>
-  select(yearID, franchID, W, L)
-```
-
-## Step 1: Focus on the Mets between 1998 and 2018
+Example:
 
 ```{r, eval=F}
-Teams |>
-  select(yearID, franchID, W, L) |>
-  filter(...)
+filter(starwars, species == "Droid")
 ```
-
-**Question:** What goes in my `filter`?
-
-## Step 1: Focus on the Mets between 1998 and 2018
-
-```{r}
-Teams |>
-  select(yearID, franchID, W, L) |>
-  filter(franchID == "NYM",
-         yearID >= 1998, yearID <= 2018)
-```
-
-## Step 2: Who was the GM?
-
-* 1998 - 2003: Steve Phillips
-* 2004: Jim Duquette
-* 2005 - 2010: Omar Minaya
-* 2011 - 2018: Sandy Alderson
-
-How should we add this information to the data?
-
-## Step 2: Who was the GM?
-
-```{r}
-Teams |>
-  select(yearID, franchID, W, L) |>
-  filter(franchID == "NYM",
-         yearID >= 1998, yearID <= 2018) |>
-  mutate(gm = case_when(
-    yearID <= 2003 ~ "Phillips",
-    yearID == 2004 ~ "Duquette",
-    yearID <= 2010 ~ "Minaya",
-    yearID <= 2018 ~ "Alderson"
-  ))
-```
-
-## Step 3: Summarize performance
 
 ```{r, echo=F}
-Teams |>
-  select(yearID, franchID, W, L) |>
-  filter(franchID == "NYM",
-         yearID >= 1998, yearID <= 2018) |>
-  mutate(gm = case_when(
-    yearID <= 2003 ~ "Phillips",
-    yearID == 2004 ~ "Duquette",
-    yearID <= 2010 ~ "Minaya",
-    yearID <= 2018 ~ "Alderson"
-  ))
+starwars |>
+  filter(species == "Droid") |>
+  head(2)
 ```
 
-How would I calculate the win percentage for *each* GM?
+## Input data and the pipe
 
-## Step 3: Summarize performance
+By default, the pipe (`|>`) enters the output of one line as the first argument in the next line
 
-```{r}
-Teams |>
-  select(yearID, franchID, W, L) |>
-  filter(franchID == "NYM",
-         yearID >= 1998, yearID <= 2018) |>
-  mutate(gm = case_when(
-    yearID <= 2003 ~ "Phillips",
-    yearID == 2004 ~ "Duquette",
-    yearID <= 2010 ~ "Minaya",
-    yearID <= 2018 ~ "Alderson"
-  )) |>
-  group_by(gm) |>
-  summarize(wpct = sum(W)/sum(W + L))
+```{r, eval=F}
+starwars |>
+  filter(species == "Droid")
 ```
 
-## Finally: arrange results
+<br/>
+
+<br/>
+
+```{r, eval=F}
+starwars |>
+  filter(species == "Droid") |>
+  summarize(mean_height = mean(height))
+```
+
+## Data in, data out
+
+**Key principle:** The **input** to a `dplyr` function is always a data frame, and the **output** is always a dataframe
 
 ```{r}
-Teams |>
-  select(yearID, franchID, W, L) |>
-  filter(franchID == "NYM",
-         yearID >= 1998, yearID <= 2018) |>
-  mutate(gm = case_when(
-    yearID <= 2003 ~ "Phillips",
-    yearID == 2004 ~ "Duquette",
-    yearID <= 2010 ~ "Minaya",
-    yearID <= 2018 ~ "Alderson"
-  )) |>
-  group_by(gm) |>
-  summarize(wpct = sum(W)/sum(W + L)) |>
-  arrange(desc(wpct))
+starwars |>
+  filter(species %in% c("Droid", "Human", "Ewok")) |>
+  group_by(species) |>
+  summarize(mean_height = mean(height, na.rm=T))
+```
+
+
+## The output
+
+**Question:** After running this code, have we changed the original `starwars` data?
+
+```{r}
+starwars |>
+  filter(species %in% c("Droid", "Human", "Ewok")) |>
+  group_by(species) |>
+  summarize(mean_height = mean(height, na.rm=T))
+```
+
+## The output
+
+**Key principle:** `dplyr` functions do **not** modify the original data; they return a *new* data frame
+
+```{r}
+starwars |>
+  filter(species %in% c("Droid", "Human", "Ewok")) |>
+  group_by(species) |>
+  summarize(mean_height = mean(height, na.rm=T))
+
+dim(starwars)
+```
+
+## The output
+
+**Key principle:** `dplyr` functions do **not** modify the original data; they return a *new* data frame
+
+```{r}
+starwars |>
+  filter(species %in% c("Droid", "Human", "Ewok")) |>
+  group_by(species) |>
+  summarize(mean_height = mean(height, na.rm=T))
+```
+
+**Question:** How do I save the output data so I can use it again?
+
+## Assignment
+
+```{r}
+species_means <- starwars |>
+  filter(species %in% c("Droid", "Human", "Ewok")) |>
+  group_by(species) |>
+  summarize(mean_height = mean(height, na.rm=T))
+
+species_means
+
+starwars
 ```
 
 ## Class activity
 
-[https://sta279-f25.github.io/class_activities/ca_03.html](https://sta279-f25.github.io/class_activities/ca_03.html)
+* Work with a neighbor on the class activity (handout)
+* I will collect the handout at the end of class
+
+## Activity
+
+```{r, echo=F, message=F, warning=F}
+library(Lahman)
+library(tidyverse)
+
+teams <- Teams |>
+  select(yearID, franchID, W, L, attendance) |>
+  filter(franchID %in% c("ANA", "BAL", "NYM"),
+         yearID > 2020)
+```
+
+What is the `select` function doing?
+
+```{r}
+teams |>
+  select(yearID, franchID, W, L)
+```
+
+## Activity
+
+After running the following code, what will be the dimensions (number of rows and columns) of the `team_sub` dataset? Of the `teams` dataset?
+
+```{r, eval=F}
+team_sub <- teams |>
+  filter(franchID %in% c("BAL", "NYM"))
+```
+
+## Activity
+
+After running the following code, what will be the dimensions (number of rows and columns) of the `team_sub` dataset? Of the `teams` dataset?
+
+```{r}
+team_sub <- teams |>
+  filter(franchID %in% c("BAL", "NYM"))
+
+team_sub
+```
+
+## Activity
+
+After running the following code, what will be the dimensions (number of rows and columns) of the `team_stats` dataset?
+
+```{r, eval=F}
+team_stats <- teams |>
+  group_by(franchID) |>
+  summarize(max_w = max(W), min_w = min(W))
+```
+
+## Activity
+
+After running the following code, what will be the dimensions (number of rows and columns) of the `team_stats` dataset?
+
+```{r}
+team_stats <- teams |>
+  group_by(franchID) |>
+  summarize(max_w = max(W), min_w = min(W))
+
+team_stats
+```
+
+## Activity
+
+Give the output of the following code:
+
+```{r, eval=F}
+teams |>
+  filter(franchID %in% c("BAL", "NYM")) |>
+  group_by(franchID) |>
+  summarize(max_attend = max(attendance))
+```
+
+## Activity
+
+Give the output of the following code:
+
+```{r}
+teams |>
+  filter(franchID %in% c("BAL", "NYM")) |>
+  group_by(franchID) |>
+  summarize(max_attend = max(attendance))
+```
+
+## Class activity
 
 * Work with a neighbor on the class activity
 * At the end of class, submit your work as an HTML file on Canvas (one per group, list all your names)
 
 **Monday's class** will be reserved for getting Git and GitHub setup. We will use these tools for the rest of the semester.
 
-* Work through the **Git and GitHub assignment instructions** on the course website
-* If you successfully complete all steps, you do not need to come to class
+* Before class, work through the **Git and GitHub assignment instructions** on the course website
 
