@@ -6,4 +6,8 @@ website: https://ciaran-evans.github.io/
 photo: ciaran.jpg
 ---
 
-Office hours: TBA
+Office hours:  (Manchester 329)
+
+* Monday 4 - 5pm
+* Wednesday 3:30 - 5pm
+* Thursday 9 - 10:30am
