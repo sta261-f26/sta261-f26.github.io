@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="lecture_04_files/libs/clipboard/clipboard.min.js"></script>
-<script src="lecture_04_files/libs/quarto-html/tabby.min.js"></script>
-<script src="lecture_04_files/libs/quarto-html/popper.min.js"></script>
-<script src="lecture_04_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="lecture_04_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="lecture_04_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="lecture_04_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="lecture_05_files/libs/clipboard/clipboard.min.js"></script>
+<script src="lecture_05_files/libs/quarto-html/tabby.min.js"></script>
+<script src="lecture_05_files/libs/quarto-html/popper.min.js"></script>
+<script src="lecture_05_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="lecture_05_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lecture_05_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="lecture_05_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.38">
 
   <title>Reshaping data</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="lecture_04_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="lecture_04_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="lecture_05_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="lecture_05_files/libs/revealjs/dist/reveal.css">
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -97,11 +97,11 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="lecture_04_files/libs/revealjs/dist/theme/quarto-9bfcd23f92724dd98e2e799e5611c3b7.css">
-  <link href="lecture_04_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="lecture_04_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="lecture_04_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="lecture_04_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="lecture_05_files/libs/revealjs/dist/theme/quarto-9bfcd23f92724dd98e2e799e5611c3b7.css">
+  <link href="lecture_05_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="lecture_05_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="lecture_05_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="lecture_05_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -201,12 +201,27 @@
 </div>
 
 </section>
-<section id="warmup-activity" class="slide level2">
-<h2>Warmup activity</h2>
-<p>Work on the warmup activity (on the course website) with a neighbor, then we will discuss as a class</p>
+<section id="logistics-and-reminders" class="slide level2">
+<h2>Logistics and reminders</h2>
+<ul>
+<li>HW 1 due tonight</li>
+<li>HW 2 released, due next Friday</li>
+</ul>
 </section>
-<section id="warmup" class="slide level2">
-<h2>Warmup</h2>
+<section id="last-time-pivot_longer" class="slide level2">
+<h2>Last time: <code>pivot_longer</code></h2>
+
+<img data-src="https://r4ds.hadley.nz/diagrams/tidy-data/variables.png" class="r-stretch"><div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb1-2"><a href=""></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb1-3"><a href=""></a>    <span class="at">cols =</span> bp1<span class="sc">:</span>bp2,</span>
+<span id="cb1-4"><a href=""></a>    <span class="at">names_to =</span> <span class="st">"measurement"</span>,</span>
+<span id="cb1-5"><a href=""></a>    <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb1-6"><a href=""></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="why-pivot" class="slide level2">
+<h2>Why pivot?</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 260 × 38
@@ -231,95 +246,41 @@
 #   `2009` &lt;dbl&gt;, `2010` &lt;dbl&gt;, `2011` &lt;dbl&gt;</code></pre>
 </div>
 </div>
-<p><strong>Question:</strong> What does a row in this data represent?</p>
+<p>Challenge: a variable of interest (year) is contained in the column names!</p>
 </section>
-<section id="warmup-1" class="slide level2">
-<h2>Warmup</h2>
+<section id="why-pivot-1" class="slide level2">
+<h2>Why pivot?</h2>
+<p>Literacy data in tidy form:</p>
 <div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>litF_long <span class="ot">&lt;-</span> litF <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href=""></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb3-3"><a href=""></a>    <span class="at">cols =</span> <span class="sc">-</span>country,</span>
+<span id="cb3-4"><a href=""></a>    <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
+<span id="cb3-5"><a href=""></a>    <span class="at">values_to =</span> <span class="st">"literacy_rate"</span>,</span>
+<span id="cb3-6"><a href=""></a>    <span class="at">values_drop_na =</span> T</span>
+<span id="cb3-7"><a href=""></a>  )</span>
+<span id="cb3-8"><a href=""></a></span>
+<span id="cb3-9"><a href=""></a>litF_long</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 260 × 38
-   country `1975` `1976` `1977` `1978` `1979` `1980` `1981` `1982` `1983` `1984`
-   &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
- 1 Afghan…     NA     NA     NA     NA   4.99   NA       NA     NA     NA   NA  
- 2 Albania     NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
- 3 Algeria     NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
- 4 Andorra     NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
- 5 Angola      NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
- 6 Anguil…     NA     NA     NA     NA  NA      NA       NA     NA     NA   95.7
- 7 Antigu…     NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
- 8 Argent…     NA     NA     NA     NA  NA      93.6     NA     NA     NA   NA  
- 9 Armenia     NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
-10 Aruba       NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
-# ℹ 250 more rows
-# ℹ 27 more variables: `1985` &lt;dbl&gt;, `1986` &lt;dbl&gt;, `1987` &lt;dbl&gt;, `1988` &lt;dbl&gt;,
-#   `1989` &lt;dbl&gt;, `1990` &lt;dbl&gt;, `1991` &lt;dbl&gt;, `1992` &lt;dbl&gt;, `1993` &lt;dbl&gt;,
-#   `1994` &lt;dbl&gt;, `1995` &lt;dbl&gt;, `1996` &lt;dbl&gt;, `1997` &lt;dbl&gt;, `1998` &lt;dbl&gt;,
-#   `1999` &lt;dbl&gt;, `2000` &lt;dbl&gt;, `2001` &lt;dbl&gt;, `2002` &lt;dbl&gt;, `2003` &lt;dbl&gt;,
-#   `2004` &lt;dbl&gt;, `2005` &lt;dbl&gt;, `2006` &lt;dbl&gt;, `2007` &lt;dbl&gt;, `2008` &lt;dbl&gt;,
-#   `2009` &lt;dbl&gt;, `2010` &lt;dbl&gt;, `2011` &lt;dbl&gt;</code></pre>
+<pre><code># A tibble: 571 × 3
+   country     year  literacy_rate
+   &lt;chr&gt;       &lt;chr&gt;         &lt;dbl&gt;
+ 1 Afghanistan 1979           4.99
+ 2 Afghanistan 2011          13   
+ 3 Albania     2001          98.3 
+ 4 Albania     2008          94.7 
+ 5 Albania     2011          95.7 
+ 6 Algeria     1987          35.8 
+ 7 Algeria     2002          60.1 
+ 8 Algeria     2006          63.9 
+ 9 Angola      2001          54.2 
+10 Angola      2011          58.6 
+# ℹ 561 more rows</code></pre>
 </div>
 </div>
-<p><strong>Question:</strong> What does a row in this data represent?</p>
-<p>Each row is one country</p>
 </section>
-<section id="warmup-2" class="slide level2">
-<h2>Warmup</h2>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 260 × 38
-   country `1975` `1976` `1977` `1978` `1979` `1980` `1981` `1982` `1983` `1984`
-   &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
- 1 Afghan…     NA     NA     NA     NA   4.99   NA       NA     NA     NA   NA  
- 2 Albania     NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
- 3 Algeria     NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
- 4 Andorra     NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
- 5 Angola      NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
- 6 Anguil…     NA     NA     NA     NA  NA      NA       NA     NA     NA   95.7
- 7 Antigu…     NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
- 8 Argent…     NA     NA     NA     NA  NA      93.6     NA     NA     NA   NA  
- 9 Armenia     NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
-10 Aruba       NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
-# ℹ 250 more rows
-# ℹ 27 more variables: `1985` &lt;dbl&gt;, `1986` &lt;dbl&gt;, `1987` &lt;dbl&gt;, `1988` &lt;dbl&gt;,
-#   `1989` &lt;dbl&gt;, `1990` &lt;dbl&gt;, `1991` &lt;dbl&gt;, `1992` &lt;dbl&gt;, `1993` &lt;dbl&gt;,
-#   `1994` &lt;dbl&gt;, `1995` &lt;dbl&gt;, `1996` &lt;dbl&gt;, `1997` &lt;dbl&gt;, `1998` &lt;dbl&gt;,
-#   `1999` &lt;dbl&gt;, `2000` &lt;dbl&gt;, `2001` &lt;dbl&gt;, `2002` &lt;dbl&gt;, `2003` &lt;dbl&gt;,
-#   `2004` &lt;dbl&gt;, `2005` &lt;dbl&gt;, `2006` &lt;dbl&gt;, `2007` &lt;dbl&gt;, `2008` &lt;dbl&gt;,
-#   `2009` &lt;dbl&gt;, `2010` &lt;dbl&gt;, `2011` &lt;dbl&gt;</code></pre>
-</div>
-</div>
-<p>Can I use the data in this form to make a scatterplot or fit a linear model?</p>
-</section>
-<section id="warmup-3" class="slide level2">
-<h2>Warmup</h2>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 260 × 38
-   country `1975` `1976` `1977` `1978` `1979` `1980` `1981` `1982` `1983` `1984`
-   &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
- 1 Afghan…     NA     NA     NA     NA   4.99   NA       NA     NA     NA   NA  
- 2 Albania     NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
- 3 Algeria     NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
- 4 Andorra     NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
- 5 Angola      NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
- 6 Anguil…     NA     NA     NA     NA  NA      NA       NA     NA     NA   95.7
- 7 Antigu…     NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
- 8 Argent…     NA     NA     NA     NA  NA      93.6     NA     NA     NA   NA  
- 9 Armenia     NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
-10 Aruba       NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
-# ℹ 250 more rows
-# ℹ 27 more variables: `1985` &lt;dbl&gt;, `1986` &lt;dbl&gt;, `1987` &lt;dbl&gt;, `1988` &lt;dbl&gt;,
-#   `1989` &lt;dbl&gt;, `1990` &lt;dbl&gt;, `1991` &lt;dbl&gt;, `1992` &lt;dbl&gt;, `1993` &lt;dbl&gt;,
-#   `1994` &lt;dbl&gt;, `1995` &lt;dbl&gt;, `1996` &lt;dbl&gt;, `1997` &lt;dbl&gt;, `1998` &lt;dbl&gt;,
-#   `1999` &lt;dbl&gt;, `2000` &lt;dbl&gt;, `2001` &lt;dbl&gt;, `2002` &lt;dbl&gt;, `2003` &lt;dbl&gt;,
-#   `2004` &lt;dbl&gt;, `2005` &lt;dbl&gt;, `2006` &lt;dbl&gt;, `2007` &lt;dbl&gt;, `2008` &lt;dbl&gt;,
-#   `2009` &lt;dbl&gt;, `2010` &lt;dbl&gt;, `2011` &lt;dbl&gt;</code></pre>
-</div>
-</div>
-<p>What do I want my data to look like instead?</p>
-</section>
-<section id="what-we-want" class="slide level2 small">
-<h2>What we want</h2>
+<section id="why-pivot-2" class="slide level2 small">
+<h2>Why pivot?</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
@@ -903,7 +864,7 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="lecture_04_files/figure-revealjs/unnamed-chunk-7-1.png" width="960"></p>
+<p><img data-src="lecture_05_files/figure-revealjs/unnamed-chunk-6-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -916,8 +877,8 @@
 </div>
 </div></div>
 </section>
-<section id="what-we-want-1" class="slide level2 small">
-<h2>What we want</h2>
+<section id="why-pivot-3" class="slide level2 small">
+<h2>Why pivot?</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
@@ -1508,412 +1469,231 @@
 </div>
 </div></div>
 </section>
-<section id="tidy-data" class="slide level2">
-<h2>Tidy data</h2>
-
-<img data-src="https://r4ds.hadley.nz/images/tidy-1.png" class="r-stretch"><p>(Image from <em>R for Data Science</em>)</p>
-</section>
-<section id="tidy-data-1" class="slide level2">
-<h2>Tidy data</h2>
-<p>Literacy data in tidy form:</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 571 × 3
-   country     year  literacy_rate
-   &lt;chr&gt;       &lt;chr&gt;         &lt;dbl&gt;
- 1 Afghanistan 1979           4.99
- 2 Afghanistan 2011          13   
- 3 Albania     2001          98.3 
- 4 Albania     2008          94.7 
- 5 Albania     2011          95.7 
- 6 Algeria     1987          35.8 
- 7 Algeria     2002          60.1 
- 8 Algeria     2006          63.9 
- 9 Angola      2001          54.2 
-10 Angola      2011          58.6 
-# ℹ 561 more rows</code></pre>
-</div>
-</div>
-</section>
-<section id="another-example" class="slide level2">
-<h2>Another example</h2>
-<p>Data on three patients (A, B, C), with two blood pressure measurements (bp1 and bp2) per patient:</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>  id bp1 bp2
-1  A 100 120
-2  B 140 115
-3  C 120 125</code></pre>
-</div>
-</div>
-<p>How might we want to reshape this data?</p>
-</section>
-<section id="another-example-1" class="slide level2">
-<h2>Another example</h2>
-<p>Original data:</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>  id bp1 bp2
-1  A 100 120
-2  B 140 115
-3  C 120 125</code></pre>
-</div>
-</div>
-<p>Reshaped data:</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>  id measurement value
-1  A         bp1   100
-2  A         bp2   120
-3  B         bp1   140
-4  B         bp2   115
-5  C         bp1   120
-6  C         bp2   125</code></pre>
-</div>
-</div>
-<p><strong>Question:</strong> how do we do this reshaping in R?</p>
-</section>
-<section id="reshaping-data-pivot_longer" class="slide level2">
-<h2>Reshaping data: <code>pivot_longer</code></h2>
-
-<img data-src="https://r4ds.hadley.nz/diagrams/tidy-data/variables.png" class="r-stretch"><div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb14-2"><a href=""></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb14-3"><a href=""></a>    <span class="at">cols =</span> bp1<span class="sc">:</span>bp2,</span>
-<span id="cb14-4"><a href=""></a>    <span class="at">names_to =</span> <span class="st">"measurement"</span>,</span>
-<span id="cb14-5"><a href=""></a>    <span class="at">values_to =</span> <span class="st">"value"</span></span>
-<span id="cb14-6"><a href=""></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>(Image and example from <em>R for Data Science</em>)</p>
-</section>
-<section id="pivot_longer" class="slide level2">
-<h2><code>pivot_longer</code></h2>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 260 × 38
-   country `1975` `1976` `1977` `1978` `1979` `1980` `1981` `1982` `1983` `1984`
-   &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
- 1 Afghan…     NA     NA     NA     NA   4.99   NA       NA     NA     NA   NA  
- 2 Albania     NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
- 3 Algeria     NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
- 4 Andorra     NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
- 5 Angola      NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
- 6 Anguil…     NA     NA     NA     NA  NA      NA       NA     NA     NA   95.7
- 7 Antigu…     NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
- 8 Argent…     NA     NA     NA     NA  NA      93.6     NA     NA     NA   NA  
- 9 Armenia     NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
-10 Aruba       NA     NA     NA     NA  NA      NA       NA     NA     NA   NA  
-# ℹ 250 more rows
-# ℹ 27 more variables: `1985` &lt;dbl&gt;, `1986` &lt;dbl&gt;, `1987` &lt;dbl&gt;, `1988` &lt;dbl&gt;,
-#   `1989` &lt;dbl&gt;, `1990` &lt;dbl&gt;, `1991` &lt;dbl&gt;, `1992` &lt;dbl&gt;, `1993` &lt;dbl&gt;,
-#   `1994` &lt;dbl&gt;, `1995` &lt;dbl&gt;, `1996` &lt;dbl&gt;, `1997` &lt;dbl&gt;, `1998` &lt;dbl&gt;,
-#   `1999` &lt;dbl&gt;, `2000` &lt;dbl&gt;, `2001` &lt;dbl&gt;, `2002` &lt;dbl&gt;, `2003` &lt;dbl&gt;,
-#   `2004` &lt;dbl&gt;, `2005` &lt;dbl&gt;, `2006` &lt;dbl&gt;, `2007` &lt;dbl&gt;, `2008` &lt;dbl&gt;,
-#   `2009` &lt;dbl&gt;, `2010` &lt;dbl&gt;, `2011` &lt;dbl&gt;</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a>litF <span class="sc">|&gt;</span></span>
-<span id="cb16-2"><a href=""></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb16-3"><a href=""></a>    <span class="at">cols =</span> ...,</span>
-<span id="cb16-4"><a href=""></a>    <span class="at">names_to =</span> ...,</span>
-<span id="cb16-5"><a href=""></a>    <span class="at">values_to =</span> ...</span>
-<span id="cb16-6"><a href=""></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="pivot_longer-1" class="slide level2">
-<h2><code>pivot_longer</code></h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>litF <span class="sc">|&gt;</span></span>
-<span id="cb17-2"><a href=""></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb17-3"><a href=""></a>    <span class="at">cols =</span> <span class="sc">-</span>country,</span>
-<span id="cb17-4"><a href=""></a>    <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
-<span id="cb17-5"><a href=""></a>    <span class="at">values_to =</span> <span class="st">"literacy_rate"</span></span>
-<span id="cb17-6"><a href=""></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 9,620 × 3
-   country     year  literacy_rate
-   &lt;chr&gt;       &lt;chr&gt;         &lt;dbl&gt;
- 1 Afghanistan 1975          NA   
- 2 Afghanistan 1976          NA   
- 3 Afghanistan 1977          NA   
- 4 Afghanistan 1978          NA   
- 5 Afghanistan 1979           4.99
- 6 Afghanistan 1980          NA   
- 7 Afghanistan 1981          NA   
- 8 Afghanistan 1982          NA   
- 9 Afghanistan 1983          NA   
-10 Afghanistan 1984          NA   
-# ℹ 9,610 more rows</code></pre>
-</div>
-</div>
-</section>
-<section id="pivot_longer-2" class="slide level2">
-<h2><code>pivot_longer</code></h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a>litF <span class="sc">|&gt;</span></span>
-<span id="cb19-2"><a href=""></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb19-3"><a href=""></a>    <span class="at">cols =</span> <span class="sc">-</span>country,</span>
-<span id="cb19-4"><a href=""></a>    <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
-<span id="cb19-5"><a href=""></a>    <span class="at">values_to =</span> <span class="st">"literacy_rate"</span></span>
-<span id="cb19-6"><a href=""></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb19-7"><a href=""></a>  <span class="fu">drop_na</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 571 × 3
-   country     year  literacy_rate
-   &lt;chr&gt;       &lt;chr&gt;         &lt;dbl&gt;
- 1 Afghanistan 1979           4.99
- 2 Afghanistan 2011          13   
- 3 Albania     2001          98.3 
- 4 Albania     2008          94.7 
- 5 Albania     2011          95.7 
- 6 Algeria     1987          35.8 
- 7 Algeria     2002          60.1 
- 8 Algeria     2006          63.9 
- 9 Angola      2001          54.2 
-10 Angola      2011          58.6 
-# ℹ 561 more rows</code></pre>
-</div>
-</div>
-</section>
-<section id="pivot_longer-3" class="slide level2">
-<h2><code>pivot_longer</code></h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>litF <span class="sc">|&gt;</span></span>
-<span id="cb21-2"><a href=""></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb21-3"><a href=""></a>    <span class="at">cols =</span> <span class="sc">-</span>country,</span>
-<span id="cb21-4"><a href=""></a>    <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
-<span id="cb21-5"><a href=""></a>    <span class="at">values_to =</span> <span class="st">"literacy_rate"</span>,</span>
-<span id="cb21-6"><a href=""></a>    <span class="at">values_drop_na =</span> T</span>
-<span id="cb21-7"><a href=""></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 571 × 3
-   country     year  literacy_rate
-   &lt;chr&gt;       &lt;chr&gt;         &lt;dbl&gt;
- 1 Afghanistan 1979           4.99
- 2 Afghanistan 2011          13   
- 3 Albania     2001          98.3 
- 4 Albania     2008          94.7 
- 5 Albania     2011          95.7 
- 6 Algeria     1987          35.8 
- 7 Algeria     2002          60.1 
- 8 Algeria     2006          63.9 
- 9 Angola      2001          54.2 
-10 Angola      2011          58.6 
-# ℹ 561 more rows</code></pre>
-</div>
-</div>
-</section>
-<section id="example-2" class="slide level2 small">
-<h2>Example 2</h2>
-<p>Now consider the following table:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a>ex_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  id x_1 x_2 y_1 y_2
-1  1   3   5   0   2
-2  2   1   8   1   7
-3  3   4   9   2   9</code></pre>
-</div>
-</div>
-<p>What will the following code return?</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>ex_df <span class="sc">|&gt;</span></span>
-<span id="cb25-2"><a href=""></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>id, </span>
-<span id="cb25-3"><a href=""></a>               <span class="at">names_to =</span> <span class="st">"group_obs"</span>, </span>
-<span id="cb25-4"><a href=""></a>               <span class="at">values_to =</span> <span class="st">"value"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="example-2-1" class="slide level2 small">
-<h2>Example 2</h2>
-<div class="columns">
-<div class="column" style="width:40%;">
-<p>Original data:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a>ex_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  id x_1 x_2 y_1 y_2
-1  1   3   5   0   2
-2  2   1   8   1   7
-3  3   4   9   2   9</code></pre>
-</div>
-</div>
-</div><div class="column" style="width:60%;">
-<p>Reshaped data:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a>ex_df <span class="sc">|&gt;</span></span>
-<span id="cb28-2"><a href=""></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>id, </span>
-<span id="cb28-3"><a href=""></a>               <span class="at">names_to =</span> <span class="st">"group_obs"</span>, </span>
-<span id="cb28-4"><a href=""></a>               <span class="at">values_to =</span> <span class="st">"value"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 12 × 3
-      id group_obs value
-   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
- 1     1 x_1           3
- 2     1 x_2           5
- 3     1 y_1           0
- 4     1 y_2           2
- 5     2 x_1           1
- 6     2 x_2           8
- 7     2 y_1           1
- 8     2 y_2           7
- 9     3 x_1           4
-10     3 x_2           9
-11     3 y_1           2
-12     3 y_2           9</code></pre>
-</div>
-</div>
-</div></div>
-</section>
-<section id="example-2-2" class="slide level2 small">
-<h2>Example 2</h2>
-<div class="columns">
-<div class="column" style="width:32%;">
-<p>Original data:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href=""></a>ex_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  id x_1 x_2 y_1 y_2
-1  1   3   5   0   2
-2  2   1   8   1   7
-3  3   4   9   2   9</code></pre>
-</div>
-</div>
-</div><div class="column" style="width:68%;">
-<p>Reshaped data:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a>ex_df <span class="sc">|&gt;</span></span>
-<span id="cb32-2"><a href=""></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>id, </span>
-<span id="cb32-3"><a href=""></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"group"</span>, <span class="st">"obs"</span>), </span>
-<span id="cb32-4"><a href=""></a>               <span class="at">names_sep =</span> <span class="st">"_"</span>,</span>
-<span id="cb32-5"><a href=""></a>               <span class="at">values_to =</span> <span class="st">"value"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 12 × 4
-      id group obs   value
-   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
- 1     1 x     1         3
- 2     1 x     2         5
- 3     1 y     1         0
- 4     1 y     2         2
- 5     2 x     1         1
- 6     2 x     2         8
- 7     2 y     1         1
- 8     2 y     2         7
- 9     3 x     1         4
-10     3 x     2         9
-11     3 y     1         2
-12     3 y     2         9</code></pre>
-</div>
-</div>
-</div></div>
-</section>
-<section id="example-3" class="slide level2">
-<h2>Example 3</h2>
-<p>Consider the following example data:</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>  id bp_1 bp_2 hr_1 hr_2
-1  1  100  120   60   77
-2  2  120  115   75   81
-3  3  125  130   80   93</code></pre>
-</div>
-</div>
-<p>What if we want the data to look like this:</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 12 × 4
-      id measurement stage value
-   &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt;
- 1     1 bp          1       100
- 2     1 bp          2       120
- 3     1 hr          1        60
- 4     1 hr          2        77
- 5     2 bp          1       120
- 6     2 bp          2       115
- 7     2 hr          1        75
- 8     2 hr          2        81
- 9     3 bp          1       125
-10     3 bp          2       130
-11     3 hr          1        80
-12     3 hr          2        93</code></pre>
-</div>
-</div>
-</section>
-<section id="example-3-1" class="slide level2">
-<h2>Example 3</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a>df_3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  id bp_1 bp_2 hr_1 hr_2
-1  1  100  120   60   77
-2  2  120  115   75   81
-3  3  125  130   80   93</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a>df_3 <span class="sc">|&gt;</span></span>
-<span id="cb38-2"><a href=""></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>id, </span>
-<span id="cb38-3"><a href=""></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"measurement"</span>, <span class="st">"stage"</span>), </span>
-<span id="cb38-4"><a href=""></a>               <span class="at">names_sep =</span> <span class="st">"_"</span>, </span>
-<span id="cb38-5"><a href=""></a>               <span class="at">values_to =</span> <span class="st">"value"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 12 × 4
-      id measurement stage value
-   &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt;
- 1     1 bp          1       100
- 2     1 bp          2       120
- 3     1 hr          1        60
- 4     1 hr          2        77
- 5     2 bp          1       120
- 6     2 bp          2       115
- 7     2 hr          1        75
- 8     2 hr          2        81
- 9     3 bp          1       125
-10     3 bp          2       130
-11     3 hr          1        80
-12     3 hr          2        93</code></pre>
-</div>
-</div>
-</section>
-<section id="example-3-2" class="slide level2">
-<h2>Example 3</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a>df_3 <span class="sc">|&gt;</span></span>
-<span id="cb40-2"><a href=""></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>id, </span>
-<span id="cb40-3"><a href=""></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"measurement"</span>, <span class="st">"stage"</span>), </span>
-<span id="cb40-4"><a href=""></a>               <span class="at">names_sep =</span> <span class="st">"_"</span>, </span>
-<span id="cb40-5"><a href=""></a>               <span class="at">values_to =</span> <span class="st">"value"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<section id="another-example-from-last-time" class="slide level2 small">
+<h2>Another example from last time</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<p><strong>Step 1:</strong> Pivot</p>
 <div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>df_3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 3
-     id measurement value
-  &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;
-1     1 bp_1          100
-2     1 bp_2          120
-3     1 hr_1           60
-4     1 hr_2           77
-5     2 bp_1          120
-6     2 bp_2          115</code></pre>
+<pre><code>  id bp_1 bp_2 hr_1 hr_2
+1  1  100  120   60   77
+2  2  120  115   75   81
+3  3  125  130   80   93</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
-<p><strong>Step 2:</strong> Separate columns</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 4
-     id measurement stage value
-  &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt;
-1     1 bp          1       100
-2     1 bp          2       120
-3     1 hr          1        60
-4     1 hr          2        77
-5     2 bp          1       120
-6     2 bp          2       115</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>df_3 <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bp_1, </span>
+<span id="cb12-3"><a href=""></a>             <span class="at">y =</span> bp_2)) <span class="sc">+</span></span>
+<span id="cb12-4"><a href=""></a>  <span class="fu">geom_point</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lecture_05_files/figure-revealjs/unnamed-chunk-13-1.png" width="576"></p>
+</figure>
+</div>
 </div>
 </div>
 </div></div>
+</section>
+<section id="what-we-can-do-with-reshaped-data" class="slide level2 small">
+<h2>What we can do with reshaped data</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>df3_long <span class="ot">&lt;-</span> df_3 <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href=""></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>id, </span>
+<span id="cb13-3"><a href=""></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"measurement"</span>, </span>
+<span id="cb13-4"><a href=""></a>                            <span class="st">"stage"</span>), </span>
+<span id="cb13-5"><a href=""></a>               <span class="at">names_sep =</span> <span class="st">"_"</span>, </span>
+<span id="cb13-6"><a href=""></a>               <span class="at">values_to =</span> <span class="st">"value"</span>)</span>
+<span id="cb13-7"><a href=""></a></span>
+<span id="cb13-8"><a href=""></a>df3_long</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 4
+      id measurement stage value
+   &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt;
+ 1     1 bp          1       100
+ 2     1 bp          2       120
+ 3     1 hr          1        60
+ 4     1 hr          2        77
+ 5     2 bp          1       120
+ 6     2 bp          2       115
+ 7     2 hr          1        75
+ 8     2 hr          2        81
+ 9     3 bp          1       125
+10     3 bp          2       130
+11     3 hr          1        80
+12     3 hr          2        93</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lecture_05_files/figure-revealjs/unnamed-chunk-15-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>df3_long <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> stage, </span>
+<span id="cb15-3"><a href=""></a>             <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb15-4"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb15-5"><a href=""></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> id)) <span class="sc">+</span></span>
+<span id="cb15-6"><a href=""></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>measurement)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div></div>
+</section>
+<section id="warmup-activity" class="slide level2">
+<h2>Warmup activity</h2>
+<p>Work on the activity (handout) with a neighbor, then we will discuss as a class</p>
+</section>
+<section id="warmup" class="slide level2">
+<h2>Warmup</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a>df_3</span>
+<span id="cb16-2"><a href=""></a></span>
+<span id="cb16-3"><a href=""></a>df_3 <span class="sc">|&gt;</span></span>
+<span id="cb16-4"><a href=""></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>id,</span>
+<span id="cb16-5"><a href=""></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">".value"</span>, <span class="st">"stage"</span>),</span>
+<span id="cb16-6"><a href=""></a>               <span class="at">names_sep =</span> <span class="st">"_"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  id bp_1 bp_2 hr_1 hr_2
+1  1  100  120   60   77
+2  2  120  115   75   81
+3  3  125  130   80   93</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  id stage  bp hr
+1  1     1 100 60
+2  1     2 120 77
+3  2     1 120 75
+4  2     2 115 81
+5  3     1 125 80
+6  3     2 130 93</code></pre>
+</div>
+</div>
+<p>What is <code>names_to = c(".value", "stage")</code> doing?</p>
+</section>
+<section id="what-we-can-do-with-the-reshaped-data" class="slide level2">
+<h2>What we can do with the reshaped data</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+     id stage    bp    hr
+  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     1 1       100    60
+2     1 2       120    77
+3     2 1       120    75
+4     2 2       115    81
+5     3 1       125    80
+6     3 2       130    93</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:55%;">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = bp ~ hr + stage, data = df3_new)
+
+Coefficients:
+(Intercept)           hr       stage2  
+     38.022        1.074       -6.223  </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a><span class="fu">lm</span>(bp <span class="sc">~</span> hr <span class="sc">+</span> stage, </span>
+<span id="cb21-2"><a href=""></a>   <span class="at">data =</span> df3_new)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div></div>
+</section>
+<section id="going-the-other-way" class="slide level2">
+<h2>Going the other way</h2>
+<p>Data on air quality in two locations (BETR801, London Westminster) on different days:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a>air_quality</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,825 × 3
+   date.utc            location value
+   &lt;dttm&gt;              &lt;chr&gt;    &lt;dbl&gt;
+ 1 2019-06-18 06:00:00 BETR801   18  
+ 2 2019-06-17 08:00:00 BETR801    6.5
+ 3 2019-06-17 07:00:00 BETR801   18.5
+ 4 2019-06-17 06:00:00 BETR801   16  
+ 5 2019-06-17 05:00:00 BETR801    7.5
+ 6 2019-06-17 04:00:00 BETR801    7.5
+ 7 2019-06-17 03:00:00 BETR801    7  
+ 8 2019-06-17 02:00:00 BETR801    7  
+ 9 2019-06-17 01:00:00 BETR801    8  
+10 2019-06-16 01:00:00 BETR801   15  
+# ℹ 1,815 more rows</code></pre>
+</div>
+</div>
+<p>What if I want a separate column for each location?</p>
+</section>
+<section id="pivot_wider" class="slide level2">
+<h2><code>pivot_wider</code></h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  date.utc            location value
+  &lt;dttm&gt;              &lt;chr&gt;    &lt;dbl&gt;
+1 2019-06-18 06:00:00 BETR801   18  
+2 2019-06-17 08:00:00 BETR801    6.5
+3 2019-06-17 07:00:00 BETR801   18.5</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>air_quality <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a href=""></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> ...,</span>
+<span id="cb25-3"><a href=""></a>              <span class="at">names_from =</span> ...,</span>
+<span id="cb25-4"><a href=""></a>              <span class="at">values_from =</span> ...)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="pivot_wider-1" class="slide level2">
+<h2><code>pivot_wider</code></h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  date.utc            location value
+  &lt;dttm&gt;              &lt;chr&gt;    &lt;dbl&gt;
+1 2019-06-18 06:00:00 BETR801   18  
+2 2019-06-17 08:00:00 BETR801    6.5
+3 2019-06-17 07:00:00 BETR801   18.5</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a>air_quality <span class="sc">|&gt;</span></span>
+<span id="cb27-2"><a href=""></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> date.utc,</span>
+<span id="cb27-3"><a href=""></a>              <span class="at">names_from =</span> location,</span>
+<span id="cb27-4"><a href=""></a>              <span class="at">values_from =</span> value)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,670 × 3
+   date.utc            BETR801 `London Westminster`
+   &lt;dttm&gt;                &lt;dbl&gt;                &lt;dbl&gt;
+ 1 2019-06-18 06:00:00    18                      7
+ 2 2019-06-17 08:00:00     6.5                    6
+ 3 2019-06-17 07:00:00    18.5                    6
+ 4 2019-06-17 06:00:00    16                      6
+ 5 2019-06-17 05:00:00     7.5                    6
+ 6 2019-06-17 04:00:00     7.5                    6
+ 7 2019-06-17 03:00:00     7                      6
+ 8 2019-06-17 02:00:00     7                      6
+ 9 2019-06-17 01:00:00     8                      6
+10 2019-06-16 01:00:00    15                      7
+# ℹ 1,660 more rows</code></pre>
+</div>
+</div>
 </section>
 <section id="class-activity" class="slide level2">
 <h2>Class activity</h2>
@@ -1923,7 +1703,7 @@
 </ul>
 <p><strong>For next time</strong>, read:</p>
 <ul>
-<li>Chapter 5 in <em>R for Data Science</em> (2nd ed.)</li>
+<li>Chapter 5 in <em>Modern Data Science with R</em></li>
 </ul>
 
 </section>
@@ -1935,19 +1715,19 @@
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="lecture_04_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="lecture_05_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="lecture_04_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="lecture_04_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="lecture_04_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="lecture_04_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="lecture_04_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="lecture_05_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="lecture_05_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="lecture_05_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="lecture_05_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="lecture_05_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="lecture_04_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="lecture_04_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="lecture_04_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="lecture_04_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="lecture_05_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="lecture_05_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="lecture_05_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="lecture_05_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>

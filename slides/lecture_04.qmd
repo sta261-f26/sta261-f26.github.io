@@ -265,7 +265,7 @@ litF |>
   )
 ```
 
-## Example 2
+## Example 2{.small}
 
 ```{r, include=F}
 ex_df <- data.frame(
@@ -292,7 +292,7 @@ ex_df |>
                values_to = "value")
 ```
 
-## Example 2
+## Example 2{.small}
 
 :::: {.columns}
 
@@ -317,7 +317,7 @@ ex_df |>
 
 ::::
 
-## Example 2
+## Example 2{.small}
 
 :::: {.columns}
 

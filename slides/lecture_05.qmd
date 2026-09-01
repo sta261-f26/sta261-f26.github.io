@@ -1,0 +1,314 @@
+---
+title: "Reshaping data"
+format: 
+  revealjs:
+    theme: theme.scss
+editor: source
+execute: 
+  echo: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include=F}
+library(tidyverse)
+library(googlesheets4)
+gs4_deauth()
+litF <- read_sheet("https://docs.google.com/spreadsheets/d/1hDinTIRHQIaZg1RUn6Z_6mo12PtKwEPFIz_mJVF6P5I/pub?gid=0") |>
+  rename(country = starts_with("Adult"))
+```
+
+## Logistics and reminders
+
+* HW 1 due tonight
+* HW 2 released, due next Friday
+
+## Last time: `pivot_longer`
+
+![](https://r4ds.hadley.nz/diagrams/tidy-data/variables.png)
+
+```{r, eval=F}
+df |> 
+  pivot_longer(
+    cols = bp1:bp2,
+    names_to = "measurement",
+    values_to = "value"
+  )
+```
+
+## Why pivot?
+
+```{r, echo=F}
+litF
+```
+
+Challenge: a variable of interest (year) is contained in the column names!
+
+## Why pivot?
+
+Literacy data in tidy form:
+
+```{r}
+
+litF_long <- litF |>
+  pivot_longer(
+    cols = -country,
+    names_to = "year",
+    values_to = "literacy_rate",
+    values_drop_na = T
+  )
+
+litF_long
+```
+
+
+
+
+## Why pivot?{.small}
+
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r, echo=F}
+litF_long <- litF_long |>
+  mutate(year = as.numeric(year))
+litF_long |>
+  as.data.frame()
+```
+:::
+
+::: {.column width="50%"}
+
+```{r, echo=F}
+litF_long |>
+  ggplot(aes(x = year, 
+             y = literacy_rate)) +
+  geom_point() +
+  theme(text = element_text(size = 25))
+```
+
+```{r, eval=F}
+litF_long |>
+  ggplot(aes(x = year, 
+             y = literacy_rate)) +
+  geom_point()
+```
+:::
+
+::::
+
+
+## Why pivot?{.small}
+
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r, echo=F}
+litF_long <- litF_long |>
+  mutate(year = as.numeric(year))
+litF_long |>
+  as.data.frame()
+```
+:::
+
+::: {.column width="50%"}
+
+```{r, echo=F}
+lm(literacy_rate ~ year, data = litF_long) |>
+  coef()
+```
+
+```{r, eval=F}
+lm(literacy_rate ~ year, data = litF_long)
+```
+:::
+
+::::
+
+
+## Another example from last time{.small}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+```{r, include=F}
+df_3 = data.frame(id = c(1, 2, 3),
+                 bp_1 = c(100, 120, 125),
+                 bp_2 = c(120, 115, 130),
+                 hr_1 = c(60, 75, 80),
+                 hr_2 = c(77, 81, 93))
+```
+
+```{r}
+df_3
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r, fig.width=6, fig.height=4}
+df_3 |>
+  ggplot(aes(x = bp_1, 
+             y = bp_2)) +
+  geom_point()
+```
+
+:::
+
+:::
+
+## What we can do with reshaped data{.small}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r}
+df3_long <- df_3 |>
+  pivot_longer(cols = -id, 
+               names_to = c("measurement", 
+                            "stage"), 
+               names_sep = "_", 
+               values_to = "value")
+
+df3_long
+```
+:::
+
+::: {.column width="50%"}
+
+```{r, echo=F}
+df3_long |>
+  ggplot(aes(x = stage, 
+             y = value)) +
+  geom_point() +
+  geom_line(aes(group = id)) +
+  facet_wrap(~measurement) +
+  theme(text = element_text(size = 25))
+```
+
+```{r, eval=F}
+df3_long |>
+  ggplot(aes(x = stage, 
+             y = value)) +
+  geom_point() +
+  geom_line(aes(group = id)) +
+  facet_wrap(~measurement)
+```
+:::
+
+::::
+
+
+## Warmup activity
+
+Work on the activity (handout) with a neighbor, then we will discuss as a class
+
+## Warmup
+
+```{r, eval=F}
+df_3
+
+df_3 |>
+  pivot_longer(cols = -id,
+               names_to = c(".value", "stage"),
+               names_sep = "_")
+```
+
+```{r, echo=F}
+df_3
+
+df_3 |>
+  pivot_longer(cols = -id,
+               names_to = c(".value", "stage"),
+               names_sep = "_") |>
+  as.data.frame()
+```
+
+What is `names_to = c(".value", "stage")` doing?
+
+## What we can do with the reshaped data
+
+:::: {.columns}
+
+::: {.column width="45%"}
+```{r, echo=F}
+df3_new <- df_3 |>
+  pivot_longer(cols = -id,
+               names_to = c(".value", "stage"),
+               names_sep = "_")
+
+df3_new
+```
+:::
+
+::: {.column width="55%"}
+
+```{r, echo=F}
+lm(bp ~ hr + stage, data = df3_new)
+```
+
+```{r, eval=F}
+lm(bp ~ hr + stage, 
+   data = df3_new)
+```
+:::
+
+::::
+
+## Going the other way
+
+Data on air quality in two locations (BETR801, London Westminster) on different days:
+
+```{r, include=F}
+air_quality = read_csv("https://raw.githubusercontent.com/pandas-dev/pandas/main/doc/data/air_quality_long.csv") |>
+  filter(parameter == "pm25") |>
+  select(date.utc, location, value)
+```
+
+```{r}
+air_quality
+```
+
+
+What if I want a separate column for each location?
+
+## `pivot_wider`
+
+```{r, echo=F}
+air_quality |>
+  head(3)
+```
+
+```{r, eval=F}
+air_quality |>
+  pivot_wider(id_cols = ...,
+              names_from = ...,
+              values_from = ...)
+```
+
+## `pivot_wider`
+
+```{r, echo=F}
+air_quality |>
+  head(3)
+```
+
+```{r}
+air_quality |>
+  pivot_wider(id_cols = date.utc,
+              names_from = location,
+              values_from = value)
+```
+
+## Class activity
+
+* Work with a neighbor on the class activity
+* At the end of class, submit your work as an HTML file on Canvas (one per group, list all your names)
+
+**For next time**, read:
+
+* Chapter 5 in *Modern Data Science with R*
