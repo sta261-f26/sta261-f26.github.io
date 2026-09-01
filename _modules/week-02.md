@@ -10,6 +10,7 @@ August 31
 
 September 2
 : Reshaping data (pivoting)
+  : [slides (html)](https://sta261-f26.github.io/slides/lecture_04.html), [slides (pdf)](https://sta261-f26.github.io/slides/lecture_04.pdf), [warmup](https://sta261-f26.github.io/class_activities/ca_04_warmup.html), [class activity](https://sta261-f26.github.io/class_activities/ca_04.html)
 
 : Reading for next class
   : [Chapter 5, R4DS](https://r4ds.hadley.nz/data-tidy.html)

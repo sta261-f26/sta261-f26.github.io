@@ -1,0 +1,51 @@
+---
+title: "Warmup: adult literacy data"
+format: html
+editor: source
+---
+
+**Instructions:** 
+
+* Work with a neighbor to answer the following questions 
+* You do *not* need to submit anything for this warmup activity
+
+# Adult literacy data
+
+The code below will load a dataset on historical adult literacy in different countries since 
+
+```{r message=F, warning=F}
+library(tidyverse)
+
+litF <- read_csv("https://sta261-f26.github.io/class_activities/literacy_data.csv")
+```
+
+## Questions
+
+1. What does a row in the data represent?
+
+2. You want to fit a linear regression model of literacy rate on year, so you write the following code:
+```{r, eval=F}
+lm(literacy_rate ~ year, data = litF)
+```
+However, the code fails -- why?
+
+3. You want to make the following scatterplot, of literacy rate vs. year. Can you create this plot with the `litF` data in its current form?
+
+```{r, echo=F}
+litF_long <- litF |>
+  rename(country = starts_with("Adult")) |>
+  pivot_longer(
+    cols = -country,
+    names_to = "year",
+    values_to = "literacy_rate",
+    values_drop_na = T
+  )
+
+litF_long |>
+  ggplot(aes(x = year, y = literacy_rate)) +
+  geom_point() +
+  theme_bw() +
+  labs(x = "Year", y = "Literacy rate") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
