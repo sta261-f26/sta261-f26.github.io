@@ -1,12 +1,8 @@
 ---
 title: "Warmup: pivoting"
-format: pdf
+format: html
 editor: source
 ---
-
-**Group members:**
-
-**Instructions:** Work with a neighbor on the following activity. I will collect the handout at the end of class, and it will be part of your class participation grade. You will be graded only on effort -- it is ok if you don't finish all the questions, or get them all correct.
 
 # More pivoting
 
@@ -34,7 +30,7 @@ df_3 |>
                names_sep = "_")
 ```
 
-1. Explain what the line `names_to = c(".value", "stage")` is doing.
+1. What is the line `names_to = c(".value", "stage")` doing?
 
 
 
