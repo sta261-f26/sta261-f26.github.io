@@ -21,6 +21,8 @@ litF <- read_sheet("https://docs.google.com/spreadsheets/d/1hDinTIRHQIaZg1RUn6Z_
 ## Logistics and reminders
 
 * HW 1 due tonight
+* Reminder: bank of 5 extension days, can use 1 or 2 days on an assignment
+* Reminder: annotated course notes and activity solutions posted on course website
 * HW 2 released, due next Friday
 
 ## Last time: `pivot_longer`
@@ -36,103 +38,12 @@ df |>
   )
 ```
 
-## Why pivot?
 
-```{r, echo=F}
-litF
-```
+## Warmup activity
 
-Challenge: a variable of interest (year) is contained in the column names!
+Work on the activity (handout) with a neighbor, then we will discuss as a class
 
-## Why pivot?
-
-Literacy data in tidy form:
-
-```{r}
-
-litF_long <- litF |>
-  pivot_longer(
-    cols = -country,
-    names_to = "year",
-    values_to = "literacy_rate",
-    values_drop_na = T
-  )
-
-litF_long
-```
-
-
-
-
-## Why pivot?{.small}
-
-
-:::: {.columns}
-
-::: {.column width="50%"}
-```{r, echo=F}
-litF_long <- litF_long |>
-  mutate(year = as.numeric(year))
-litF_long |>
-  as.data.frame()
-```
-:::
-
-::: {.column width="50%"}
-
-```{r, echo=F}
-litF_long |>
-  ggplot(aes(x = year, 
-             y = literacy_rate)) +
-  geom_point() +
-  theme(text = element_text(size = 25))
-```
-
-```{r, eval=F}
-litF_long |>
-  ggplot(aes(x = year, 
-             y = literacy_rate)) +
-  geom_point()
-```
-:::
-
-::::
-
-
-## Why pivot?{.small}
-
-
-:::: {.columns}
-
-::: {.column width="50%"}
-```{r, echo=F}
-litF_long <- litF_long |>
-  mutate(year = as.numeric(year))
-litF_long |>
-  as.data.frame()
-```
-:::
-
-::: {.column width="50%"}
-
-```{r, echo=F}
-lm(literacy_rate ~ year, data = litF_long) |>
-  coef()
-```
-
-```{r, eval=F}
-lm(literacy_rate ~ year, data = litF_long)
-```
-:::
-
-::::
-
-
-## Another example from last time{.small}
-
-:::: {.columns}
-
-::: {.column width="50%"}
+## Warmup
 
 ```{r, include=F}
 df_3 = data.frame(id = c(1, 2, 3),
@@ -141,73 +52,6 @@ df_3 = data.frame(id = c(1, 2, 3),
                  hr_1 = c(60, 75, 80),
                  hr_2 = c(77, 81, 93))
 ```
-
-```{r}
-df_3
-```
-
-:::
-
-::: {.column width="50%"}
-
-```{r, fig.width=6, fig.height=4}
-df_3 |>
-  ggplot(aes(x = bp_1, 
-             y = bp_2)) +
-  geom_point()
-```
-
-:::
-
-:::
-
-## What we can do with reshaped data{.small}
-
-:::: {.columns}
-
-::: {.column width="50%"}
-```{r}
-df3_long <- df_3 |>
-  pivot_longer(cols = -id, 
-               names_to = c("measurement", 
-                            "stage"), 
-               names_sep = "_", 
-               values_to = "value")
-
-df3_long
-```
-:::
-
-::: {.column width="50%"}
-
-```{r, echo=F}
-df3_long |>
-  ggplot(aes(x = stage, 
-             y = value)) +
-  geom_point() +
-  geom_line(aes(group = id)) +
-  facet_wrap(~measurement) +
-  theme(text = element_text(size = 25))
-```
-
-```{r, eval=F}
-df3_long |>
-  ggplot(aes(x = stage, 
-             y = value)) +
-  geom_point() +
-  geom_line(aes(group = id)) +
-  facet_wrap(~measurement)
-```
-:::
-
-::::
-
-
-## Warmup activity
-
-Work on the activity (handout) with a neighbor, then we will discuss as a class
-
-## Warmup
 
 ```{r, eval=F}
 df_3
