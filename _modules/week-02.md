@@ -24,3 +24,4 @@ September 4
   : [Chapter 5, MDSR](https://mdsr-book.github.io/mdsr3e/05-joins.html)
 
 : **Homework 2 released**{: .label .label-yellow }
+  : [HW 2](https://sta261-f26.github.io/homework/hw_02.html)
