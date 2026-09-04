@@ -18,7 +18,7 @@ September 2
 September 4
 
 : Reshaping data (pivoting)
-  : [slides (html)](https://sta261-f26.github.io/slides/lecture_05.html), [slides (pdf)](https://sta261-f26.github.io/slides/lecture_05.pdf), [activity 1](https://sta261-f26.github.io/class_activities/ca_05_handout.html), [activity 2](https://sta261-f26.github.io/class_activities/ca_05.html)
+  : [slides (html)](https://sta261-f26.github.io/slides/lecture_05.html), [slides (pdf)](https://sta261-f26.github.io/slides/lecture_05.pdf), [activity 1](https://sta261-f26.github.io/class_activities/ca_05_handout.html), [activity 2](https://sta261-f26.github.io/class_activities/ca_05.html), [activity 2 solutions](https://sta261-f26.github.io/class_activities/ca_05_solutions.html)
 
 : Reading for next class
   : [Chapter 5, MDSR](https://mdsr-book.github.io/mdsr3e/05-joins.html)
