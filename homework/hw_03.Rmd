@@ -7,22 +7,25 @@ output:
 link-citations: yes
 ---
 
-**Due:** Friday, September 19, 10:00pm on Canvas
+**Due:** Friday, September 18, 11:59pm on Canvas
 
 **Instructions:** 
 
 1. Go to Canvas -> Assignments -> HW 3. Open the GitHub Classroom assignment link
-2. Follow the [instructions](https://sta279-f25.github.io/resources/github_instructions/) to accept the assignment and clone the repository to your local computer
+2. Follow the [instructions](https://sta261-f26.github.io/resources/github_instructions/) to accept the assignment and clone the repository to your local computer
 3. The repository contains the file `hw_03.qmd`, and several CSV files containing data for the different questions. Write your code and answers to the questions in the Quarto document. Commit and push to GitHub regularly.
 4. When you are finished, make sure to Render your Quarto document; this will produce a `hw_03.md` file which is easy to view on GitHub. Commit and push both the `hw_03.qmd` and `hw_03.md` files to GitHub
-5. Finally, [request feedback](https://sta279-f25.github.io/resources/github_instructions/#step-10-request-feedback) on your assignment on the "Feedback" pull request on your HW 3 repository
+5. Finally, [request feedback](https://sta261-f26.github.io/resources/github_instructions/#step-10-request-feedback) on your assignment on the "Feedback" pull request on your HW 3 repository
 
 **Important:** Make sure to include both the `.qmd` and `.md` files when you submit to receive full credit
+
+**Collaborators and AI statement:** At the top of your assignment, list any collaborators (Dr. Evans does not count -- he is a resource, not a collaborator), and provide an AI statement describing your use of AI to complete the questions. If you did not use AI in any way, let me know that too. If you did use AI, provide: the model used, the HW questions on which you used AI, and a summary of the ways in which AI provided assistance. As described in the syllabus, AI use is permitted on homework assignments, but submissions without a complete AI statement may not receive full credit.
 
 **Code guidelines:**
 
 * If a question requires code, and code is not provided, you will not receive full credit
 * You will be graded on the quality of your code. In addition to being correct, your code should also be easy to read
+* Some questions require both code and discussion of the results. If you are missing a discussion of the results, you will not receive full credit
 
 ## Course evals and exam grades
 
@@ -47,7 +50,7 @@ Use the two datasets provided to answer this question and prepare a short summar
 * at least one visualization
 * at least one relevant summary statistic
 * at least one statistical model (such as a linear regression model)
-* brief interpretation and discussion of the above
+* interpretation and discussion of the above
 :::
 
 ## Assigning course grades
@@ -138,7 +141,7 @@ The `phone_data.csv` file contains the study data. `year_in_school` is the stude
 
 **Research question:** Is there a relationship between a student's year in school and the total number of hours they used their phone?
 
-Create a visualization in R to answer this question. You will need to figure out how to convert the entries in the `phone_hours` column into a total number of hours for the week. There are several different ways this could be done; you are welcome to use any resources you like (Google, Stack Exchange, AI, course textbooks, etc.) to search for ideas.
+Create a visualization in R to answer this question, then discuss the results in context. You will need to figure out how to convert the entries in the `phone_hours` column into a total number of hours for the week. There are several different ways this could be done; you are welcome to use external resources to search for ideas.
 :::
 
 
