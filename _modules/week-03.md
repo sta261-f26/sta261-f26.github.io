@@ -7,7 +7,7 @@ September 7
 
 September 9
 : Joins
-  : [slides (html)](https://sta261-f26.github.io/slides/lecture_06.html), [slides (pdf)](https://sta261-f26.github.io/slides/lecture_06.pdf), [Class Activity](https://sta261-f26.github.io/class_activities/ca_06.html)
+  : [slides (html)](https://sta261-f26.github.io/slides/lecture_06.html), [slides (pdf)](https://sta261-f26.github.io/slides/lecture_06.pdf), [Class Activity](https://sta261-f26.github.io/class_activities/ca_06.html), [Class Activity solutions](https://sta261-f26.github.io/class_activities/ca_06_solutions.html)
 
 : Reading for next class
   : [Chapter 26.2, R4DS](https://r4ds.hadley.nz/iteration.html#sec-across)
