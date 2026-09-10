@@ -18,3 +18,4 @@ September 11
   
 
 : **Homework 3 released**{: .label .label-yellow }
+  : [HW 3](https://sta261-f26.github.io/homework/hw_03.html)

@@ -15,9 +15,10 @@ link-citations: yes
 2. Follow the [instructions](https://sta261-f26.github.io/resources/github_instructions/) to accept the assignment and clone the repository to your local computer
 3. The repository contains the file `hw_03.qmd`, and several CSV files containing data for the different questions. Write your code and answers to the questions in the Quarto document. Commit and push to GitHub regularly.
 4. When you are finished, make sure to Render your Quarto document; this will produce a `hw_03.md` file which is easy to view on GitHub. Commit and push both the `hw_03.qmd` and `hw_03.md` files to GitHub
-5. Finally, [request feedback](https://sta261-f26.github.io/resources/github_instructions/#step-10-request-feedback) on your assignment on the "Feedback" pull request on your HW 3 repository
+5. When your code generates figures (e.g., in questions 1 and 3), you will also need to commit and push those figures to GitHub. These figures will be stored in a folder called something like `homework_3_files`, in the same directory as your `.qmd` and `.md` files. When you Git commit your work, **add** the image files *as well* as the `.qmd` and `.md` files.
+6. Finally, [request feedback](https://sta261-f26.github.io/resources/github_instructions/#step-10-request-feedback) on your assignment on the "Feedback" pull request on your HW 3 repository
 
-**Important:** Make sure to include both the `.qmd` and `.md` files when you submit to receive full credit
+**Important:** Make sure to include the `.qmd` and `.md` files, and any images, when you submit!
 
 **Collaborators and AI statement:** At the top of your assignment, list any collaborators (Dr. Evans does not count -- he is a resource, not a collaborator), and provide an AI statement describing your use of AI to complete the questions. If you did not use AI in any way, let me know that too. If you did use AI, provide: the model used, the HW questions on which you used AI, and a summary of the ways in which AI provided assistance. As described in the syllabus, AI use is permitted on homework assignments, but submissions without a complete AI statement may not receive full credit.
 
