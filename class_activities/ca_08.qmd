@@ -1,0 +1,80 @@
+---
+title: "Activity: How likely is 'likely'?"
+format: html
+editor: source
+---
+
+**Instructions:** 
+
+* Work with a neighbor to answer the following questions 
+* To get started, download the [class activity template](https://sta261-f26.github.io/class_activities/ca_08_template.qmd) file
+* When you are finished, render the file as an HTML and submit the HTML to Canvas (let me know if you encounter any problems)
+
+## Motivation
+
+In an [online quiz](https://probability.kucharski.io/), created as an independent project by Adam Kucharski, over 5,000 participants compared pairs of probability phrases (e.g. “Which conveys a higher probability: Likely or Probable?”) and assigned numerical values (0–100%) to each of 19 phrases. The resulting data can be used to analyse how people interpret common probability phrases.
+
+### Data
+
+The code below will download three different datasets:
+
+```{r, eval=F}
+absolute_judgements <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-03-10/absolute_judgements.csv')
+pairwise_comparisons <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-03-10/pairwise_comparisons.csv')
+respondent_metadata <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-03-10/respondent_metadata.csv')
+```
+
+### `absolute_judgements.csv`
+
+In the `absolute_judgements` dataset, respondents provide a numerical value (0-100%) for each different probability phrase ("Little Change", "Almost No Chance", etc.). These 19 different phrases were presented to each respondent in a random order.
+
+|variable    |class     |description                           |
+|:-----------|:---------|:-------------------------------------|
+|response_id |integer   |Unique respondent identifier. |
+|term        |character |Probability phrase. |
+|probability |integer   |Numerical estimate (0--100). |
+|order       |integer   |Presentation order of this term for the respondent. |
+
+### `pairwise_comparisons.csv`
+
+In the `pairwise_comparisons` dataset, respondents were presented with pairs of probability phrases, and asked to decide which phrase indicated higher probability. 
+
+variable    |class     |description                           |
+|:-----------|:---------|:-------------------------------------|
+|response_id |integer   |Unique respondent identifier. |
+|pair_id     |integer   |Pair sequence number within the respondent's session (1--10). |
+|term1       |character |First term shown. |
+|term2       |character |Second term shown. |
+|selected    |character |The term the respondent chose as higher probability. |
+
+### `respondent_metadata.csv`
+
+The `respondent_metadata` dataset contains some information on respondent demographics.
+
+|variable             |class     |description                           |
+|:--------------------|:---------|:-------------------------------------|
+|response_id          |integer   |Unique respondent identifier. |
+|timestamp            |character |Submission month (YYYY-MM). |
+|age_band             |character |Self-reported age band (e.g. "25-34"). |
+|english_background   |character |English language background. |
+|education_level      |character |Highest education level. |
+|country_of_residence |character |Country of residence. |
+
+## Questions of interest
+
+* Do all respondents answer the same set of questions, and do we have the same number of responses for each participant?
+* Which phrases do people most disagree on, in relation to the probability they represent?
+* Which demographic background is the most optimistic?
+
+## Your task
+
+1. Examine the data in R, and make sure you understand what information is contained in each dataset.
+2. **Before you do any data wrangling or write any code**, brainstorm some ideas for how you will answer the questions of interest. What data wrangling steps might be involved? How would you quantify the questions of interest? Do you need to combine or reshape any of the datasets?
+3. Choose one or two of the questions of interest, and use the data wrangling tools we have learned in this class to implement your ideas from (2) and explore these questions.
+
+<br/>
+
+<br/>
+
+**Acknowledgment:** This activity is borrowed directly from the [TidyTuesday](https://github.com/rfordatascience/tidytuesday/blob/main/data/2026/2026-03-10/readme.md) challenge from March 10, 2026, which was curated by Nicola Rennie.
+

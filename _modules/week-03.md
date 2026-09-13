@@ -14,7 +14,7 @@ September 9
 
 September 11
 : Data wrangling across columns
-  : [slides (html)](https://sta261-f26.github.io/slides/lecture_07.html), [slides (pdf)](https://sta261-f26.github.io/slides/lecture_07.pdf), [warmup](https://sta261-f26.github.io/class_activities/ca_07_handout.pdf), [Class Activity](https://sta261-f26.github.io/class_activities/ca_07.html)
+  : [slides (html)](https://sta261-f26.github.io/slides/lecture_07.html), [slides (pdf)](https://sta261-f26.github.io/slides/lecture_07.pdf), [warmup](https://sta261-f26.github.io/class_activities/ca_07_handout.pdf), [Class Activity](https://sta261-f26.github.io/class_activities/ca_07.html), [Class Activity solutions](https://sta261-f26.github.io/class_activities/ca_07_solutions.html)
   
 
 : **Homework 3 released**{: .label .label-yellow }
