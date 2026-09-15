@@ -11,6 +11,7 @@ September 14
 
 September 16
 : Data types in R
+  : [slides (html)](https://sta261-f26.github.io/slides/lecture_09.html), [slides (pdf)](https://sta261-f26.github.io/slides/lecture_09.pdf), [Class Activity](https://sta261-f26.github.io/class_activities/ca_09.html)
 
 September 18
 : Intro to data wrangling in Python
