@@ -1,0 +1,85 @@
+---
+title: "Activity: practice with R objects"
+format: html
+editor: source
+---
+
+**Instructions:** 
+
+* Work with a neighbor to answer the following questions 
+* To get started, download the [class activity template](https://sta261-f26.github.io/class_activities/ca_09_template.qmd) file
+* When you are finished, render the file as an HTML and submit the HTML to Canvas (let me know if you encounter any problems)
+
+## Practice with indexing
+
+Consider the following vector `x`:
+
+```{r}
+x <- c("Statistics", "Mathematics", "Computer Science", "Spanish")
+x
+```
+
+1. Use vector indexing to extract just "Statistics" and "Mathematics" from `x`.
+
+2. How could you extract the last entry in `x`, *without* manually counting the number of entries?
+
+## More practice with indexing
+
+Consider the following data frame `advisors`:
+
+```{r}
+advisors <- data.frame(name = c("Dr. Beavers",
+                                "Dr. Huang",
+                                "Dr. Evans",
+                                "Dr. Mason",
+                                "Dr. Alarcon"),
+                       program = c("Statistics",
+                                   "Statistics",
+                                   "Statistics",
+                                   "Math",
+                                   "Spanish"),
+                       office = c("MAN 337",
+                                  "MAN 340",
+                                  "MAN 329",
+                                  "MAN 334",
+                                  "GRN 519"))
+
+advisors
+```
+
+3. Extract only the first and third columns of the `advisors` data frame, using indexing (`[ ]`) -- *not* the `select` function.
+
+4. Now repeat question 3 with the `select` function instead.
+
+5. Select only the rows of the `advisors` data frame corresponding to the statistics program, using indexing.
+
+6. Now repeat question 5 with the `filter` function instead.
+
+
+## Practice with R objects
+
+The code below fits a linear regression model to the `diamonds` data:
+
+```{r, message=F, warning=F}
+library(tidyverse)
+
+m_diamonds <- lm(price ~ carat, data = diamonds)
+```
+
+7. What type of object is `m_diamonds` (i.e., how does R store the output of a fitted model?)
+
+8. What information is contained in the `m_diamonds` object?
+
+
+## Practice with lists
+
+9. Each of the following lists contains the vector `c(2, 7, 9)`. Determine the correct list indexing syntax to extract that vector from the list (your code should return just the vector, *not* a list containing the vector).
+
+```{r, eval=F}
+x1 <- list(c(2, 7, 9))
+x2 <- list(list(c(2, 7, 9)))
+x3 <- list(c(2, 7, 9), list("a", "b"))
+x4 <- list(c("a", "b"), list(list(c(2, 7, 9))))
+```
+
+10. Create a list `x5` such that the vector `c(2, 7, 9)` can be extracted with `x5[[3]][[2]][[1]]`.

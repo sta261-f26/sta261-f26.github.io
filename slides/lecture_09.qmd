@@ -1,0 +1,336 @@
+---
+title: "Data types in R"
+format: 
+  revealjs:
+    theme: theme.scss
+editor: source
+execute: 
+  echo: true
+editor_options: 
+  chunk_output_type: console
+---
+
+## Course so far
+
+**So far**, we know how to do key wrangling tasks in R:
+
+* Grouping, summarizing, mutating
+* Pivoting and joining
+
+**What is next:** Data wrangling in Python!
+
+**To get there:**
+
+* How does R store data?
+* Similarities and differences between R and Python objects for data storage and wrangling
+
+## Atomic vectors
+
+So far, we have worked with rectangular data (data tables which are collections of columns):
+
+```{r, echo=F, message=F, warning=F}
+library(tidyverse)
+as.data.frame(starwars) |>
+  select(name, height, species, mass, hair_color) |> head()
+```
+
+## Atomic vectors
+
+So far, we have worked with rectangular data (data tables which are collections of columns):
+
+```{r, echo=F, message=F, warning=F}
+library(tidyverse)
+as.data.frame(starwars) |>
+  select(name, height, species, mass, hair_color) |> head()
+```
+
+Each column is an **atomic vector**:
+
+```{r}
+starwars$name
+```
+
+
+## Atomic vectors
+
+**Atomic vectors** are one-dimensional objects, and are indexed with `[ ]`:
+
+```{r}
+x <- c(0, 23, 98)
+length(x)
+
+x[1]
+x[2]
+
+x[1:2]
+x[c(1, 3)]
+```
+
+## Atomic vectors
+
+Vectors can contain numbers, booleans, characters, etc:
+
+```{r, echo=T}
+x <- c(0, 1, 2)
+x
+typeof(x)
+
+x <- c("a", "b", "c")
+x
+typeof(x)
+```
+
+The `typeof` function tells what *type* of object we have
+
+## Vectors of multiple types?
+
+```{r, echo=T, eval=F}
+x <- c(0, 1, "a")
+x
+x[1] + 1
+```
+
+What do you think will happen when we run this code?
+
+
+## Vectors of multiple types?
+
+```{r, echo=T, error=T}
+x <- c(0, 1, "a")
+x
+x[1] + 1
+```
+
+## Vectors of multiple types?
+
+```{r, echo=T, error=T}
+x <- c(0, 1, "a")
+x
+x[1] + 1
+```
+
+**Atomic vectors** only contain one type.
+
+## Lists
+
+```{r, echo=T}
+x <- list(c(0, 1), "a")
+x
+```
+
+## Lists
+
+```{r, echo=T}
+x <- list(c(0, 1), "a")
+x
+
+x[[1]]
+
+x[[1]][1]
+```
+
+
+## Lists
+
+```{r, echo=T}
+x <- list(c(0, 1), "a")
+x
+
+x[[1]]
+
+x[[1]][1]
+
+typeof(x[[1]])
+
+x[[2]]
+
+typeof(x[[2]])
+```
+
+## Visualizing list structure
+
+```{r, echo=T}
+x1 <- list(c(1, 2), c(3, 4))
+x1
+x2 <- list(list(1, 2), list(3, 4))
+x2
+```
+
+## Indexing lists
+
+```{r, echo=T}
+x <- list(c(1, 2), c(3, 4))
+
+x[1]
+typeof(x[1])
+
+x[[1]]
+typeof(x[[1]])
+```
+
+* `x[1]` returns a *list* which contains the first component of `x`
+* `x[[1]]` returns the object stored in the first component
+
+## Rectangular data 
+
+```{r, message=F, warning=F}
+starwars
+```
+
+## Rectangular data in R
+
+In R, there are two main ways of storing rectangular data:
+
+* matrices
+* data frames
+
+## Matrices
+
+A *matrix* generalizes a vector to *two* dimensions:
+
+```{r}
+x <- matrix(c(1, 2, 3, 4, 5, 6), nrow=2)
+x
+```
+
+* Each row is an atomic vector
+* Each column is an atomic vector
+
+## Indexing matrices
+
+```{r}
+x <- matrix(c("a", "b", "c", "d", "e", "f"), nrow=2)
+x
+```
+
+What will this code return?
+
+```{r, eval=F}
+x[2, 3]
+```
+
+## Indexing matrices
+
+```{r}
+x <- matrix(c("a", "b", "c", "d", "e", "f"), nrow=2)
+x
+```
+
+What will this code return?
+
+```{r}
+x[2, 3]
+```
+
+## Indexing matrices
+
+```{r}
+x <- matrix(c("a", "b", "c", "d", "e", "f"), nrow=2)
+x
+```
+
+What will this code return?
+
+```{r, eval=F}
+x[2,]
+```
+
+## Indexing matrices
+
+```{r}
+x <- matrix(c("a", "b", "c", "d", "e", "f"), nrow=2)
+x
+```
+
+What will this code return?
+
+```{r}
+x[2,]
+```
+
+## Indexing matrices
+
+```{r}
+x <- matrix(c("a", "b", "c", "d", "e", "f"), nrow=2)
+x
+```
+
+What will this code return?
+
+```{r, eval=F}
+x[,2]
+```
+
+## Indexing matrices
+
+```{r}
+x <- matrix(c("a", "b", "c", "d", "e", "f"), nrow=2)
+x
+```
+
+What will this code return?
+
+```{r}
+x[,2]
+```
+
+## Uses and limitations of matrices
+
+* Correspond to the matrices we know and love from linear algebra
+* Usually the right way to store 2-d data for doing math (like matrix multiplication)
+* Like atomic vectors, contain only one type of data
+
+```{r}
+x <- matrix(c(1, 2, 3, 'a', 5, 6), nrow=2)
+x
+```
+
+## Data frames
+
+```{r}
+example_df <- data.frame(x = c(1, 2, 3),
+                         y = c('a', 'b', 'c'))
+example_df
+```
+
+## Aside: what *are* data frames?
+
+```{r}
+example_df <- data.frame(x = c(1, 2, 3),
+                         y = c('a', 'b', 'c'))
+typeof(example_df)
+```
+
+* Matrices are like a 2-d atomic vector
+* Data frames are a special type of list! With some requirements:
+  * Each component is a vector
+  * Each component has the same length
+  
+## Indexing data frames
+
+`[ ]` can work for indexing data frames, just like matrices:
+
+```{r}
+example_df <- data.frame(x = c(1, 2, 3),
+                         y = c('a', 'b', 'c'))
+example_df
+example_df[2, 1]
+```
+
+## Indexing data frames
+
+Like lists, `[[ ]]` and `$` can also be used:
+
+```{r}
+example_df <- data.frame(x = c(1, 2, 3),
+                         y = c('a', 'b', 'c'))
+example_df
+
+example_df$x
+example_df[["x"]]
+```
+
+## Class activity
+
+* Work with a neighbor on the class activity
+* At the end of class, submit your work as an HTML file on Canvas (one per group, list all your names)
