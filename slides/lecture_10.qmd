@@ -1,0 +1,229 @@
+---
+title: "Intro to Python"
+format: 
+  revealjs:
+    theme: theme.scss
+editor: source
+execute: 
+  echo: true
+editor_options: 
+  chunk_output_type: console
+---
+
+## Course so far
+
+**So far**, we know how to do key wrangling tasks in R:
+
+* Grouping, summarizing, mutating
+* Pivoting and joining
+
+**What is next:** Data wrangling in Python!
+
+## What *is* R?
+
+* R is a programming language specifically designed for statistics and data analysis
+  * Objects for storing data, and functions for interacting with data, are fundamental
+  * R is very good at graphics and visualization
+  * R is easily extended. Users can write and share their own functions and packages
+* We can interact with R through IDEs like RStudio
+
+## What other options exist?
+
+* SAS
+* Stata
+* SPSS
+* Excel
+* Python
+* Julia
+* Matlab
+* Many others...
+
+## What is Python
+
+* Python is a general-purpose programming language 
+* Like R, python has a wide range of packages to extend functionality
+* Certain Python packages allow for sophisticated data analysis and modeling
+  * `SciPy`, `NumPy`
+  * `scikit-learn`, `statsmodels`, `pytorch`
+  * `pandas`
+  * `matplotlib`
+  
+## R vs. Python
+
+My own, *personal*, preferences:
+
+:::: {.columns}
+
+::: {.column width="50%"}
+R is good for
+
+* Data visualization and wrangling
+* Classical statistics
+* Statistical inference
+* New statistical methods
+:::
+
+::: {.column width="50%"}
+Python is good for
+
+* General-purpose programming
+* Challenging data types (e.g. images)
+* Prediction and machine learning
+:::
+
+::::
+
+## Warmup
+
+What do you think this code is doing? Discuss with your neighbor for 1--2 minutes, then we will discuss as a class.
+
+```{python}
+#| eval: false
+import pandas as pd
+import seaborn as sns
+
+penguins = sns.load_dataset("penguins")
+
+(penguins.groupby('species').
+  agg(
+    mean_bill = ('bill_length_mm', 'mean'),
+    sd_bill = ('bill_length_mm', 'std')
+    ))
+```
+
+## Warmup
+
+```{python}
+import pandas as pd
+import seaborn as sns
+
+penguins = sns.load_dataset("penguins")
+
+(penguins.groupby('species').
+  agg(
+    mean_bill = ('bill_length_mm', 'mean'),
+    sd_bill = ('bill_length_mm', 'std')
+    ))
+```
+
+## Data wrangling ideas
+
+* choose certain rows and columns
+* calculate summary statistics
+* group rows together
+* create new columns
+* apply functions across columns
+* reshape data by pivoting
+* join tables
+
+These ideas are language-agnostic! The implementation is just a bit different
+
+## Basic information
+
+```{python}
+penguins
+```
+
+
+## Basic information
+
+```{python}
+penguins.shape
+```
+
+```{python}
+penguins.columns
+```
+
+## Choosing columns
+
+```{python}
+penguins['bill_length_mm']
+```
+
+## Choosing columns
+
+```{python}
+penguins[['bill_length_mm', 'bill_depth_mm']]
+```
+
+## Calculating summary statistics
+
+```{python}
+penguins.agg({'bill_length_mm': 'mean'})
+```
+
+
+```{python}
+penguins.agg(mean_length = ('bill_length_mm', 'mean'))
+```
+
+## Summarizing multiple columns
+
+```{python}
+penguins[['bill_length_mm', 'bill_depth_mm']].agg('mean')
+```
+
+```{python}
+penguins[['bill_length_mm', 'bill_depth_mm']].agg(['mean', 'std'])
+```
+
+## Grouping and summarizing
+
+```{python}
+(penguins.groupby('species').
+  agg(
+    mean_bill = ('bill_length_mm', 'mean'),
+    sd_bill = ('bill_length_mm', 'std')
+    ))
+```
+
+## Grouping and summarizing
+
+```{r, include=F}
+library(tidyverse)
+library(palmerpenguins)
+```
+
+```{r}
+penguins |>
+  group_by(island) |>
+  summarize(mean_length = mean(bill_length_mm))
+```
+
+## Grouping and summarizing
+
+```{r}
+penguins |>
+  group_by(species) |>
+  summarize(mean_length = mean(bill_length_mm,
+                               na.rm = T))
+```
+
+## Sorting
+
+```{python}
+(penguins.groupby('species').
+  agg(
+    mean_bill = ('bill_length_mm', 'mean'),
+    sd_bill = ('bill_length_mm', 'std')
+    ).
+  sort_values('mean_bill'))
+```
+
+## Sorting
+
+```{python}
+(penguins.groupby('species').
+  agg(
+    mean_bill = ('bill_length_mm', 'mean'),
+    sd_bill = ('bill_length_mm', 'std')
+    ).
+  sort_values('mean_bill', ascending = False))
+```
+
+
+## Class activity
+
+* Work with a neighbor on the class activity
+* At the end of class, submit your work as an HTML file on Canvas (one per group, list all your names)

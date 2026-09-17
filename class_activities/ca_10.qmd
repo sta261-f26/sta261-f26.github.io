@@ -1,0 +1,89 @@
+---
+title: "Activity: Data wrangling in Python"
+format: html
+editor: source
+---
+
+**Instructions:** 
+
+* Work with a neighbor to answer the following questions 
+* You do **not** need to submit anything for this activity
+
+**Working in Python:** To work in Python, we will use [Google Colab](https://colab.research.google.com/):
+
+* Click on the link to go to Colab
+* Log in with your WFU google account
+* Click "New Notebook"
+
+# How likely is 'likely'? Revisited
+
+## Motivation
+
+In an [online quiz](https://probability.kucharski.io/), created as an independent project by Adam Kucharski, over 5,000 participants compared pairs of probability phrases (e.g. “Which conveys a higher probability: Likely or Probable?”) and assigned numerical values (0–100%) to each of 19 phrases. The resulting data can be used to analyse how people interpret common probability phrases.
+
+### Data
+
+The code below will download three different datasets:
+
+```{python, eval = false}
+import pandas as pd
+
+absolute_judgements = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-03-10/absolute_judgements.csv')
+pairwise_comparisons = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-03-10/pairwise_comparisons.csv')
+respondent_metadata = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-03-10/respondent_metadata.csv')
+```
+
+### `absolute_judgements.csv`
+
+In the `absolute_judgements` dataset, respondents provide a numerical value (0-100%) for each different probability phrase ("Little Change", "Almost No Chance", etc.). These 19 different phrases were presented to each respondent in a random order.
+
+|variable    |class     |description                           |
+|:-----------|:---------|:-------------------------------------|
+|response_id |integer   |Unique respondent identifier. |
+|term        |character |Probability phrase. |
+|probability |integer   |Numerical estimate (0--100). |
+|order       |integer   |Presentation order of this term for the respondent. |
+
+### `pairwise_comparisons.csv`
+
+In the `pairwise_comparisons` dataset, respondents were presented with pairs of probability phrases, and asked to decide which phrase indicated higher probability. 
+
+variable    |class     |description                           |
+|:-----------|:---------|:-------------------------------------|
+|response_id |integer   |Unique respondent identifier. |
+|pair_id     |integer   |Pair sequence number within the respondent's session (1--10). |
+|term1       |character |First term shown. |
+|term2       |character |Second term shown. |
+|selected    |character |The term the respondent chose as higher probability. |
+
+### `respondent_metadata.csv`
+
+The `respondent_metadata` dataset contains some information on respondent demographics.
+
+|variable             |class     |description                           |
+|:--------------------|:---------|:-------------------------------------|
+|response_id          |integer   |Unique respondent identifier. |
+|timestamp            |character |Submission month (YYYY-MM). |
+|age_band             |character |Self-reported age band (e.g. "25-34"). |
+|english_background   |character |English language background. |
+|education_level      |character |Highest education level. |
+|country_of_residence |character |Country of residence. |
+
+## Questions
+
+Note: this list of [built-in aggregation methods](https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html#built-in-aggregation-methods) may be helpful.
+
+1. Using the `absolute_judgements` dataset, identify the terms which have the highest and lowest average probability. 
+
+2. Using the `absolute_judgements` dataset, identify the terms which have the highest and lowest variability in the response probabilities. On which terms do the respondents most agree? Disagree?
+
+3. Using the `absolute_judgements` dataset, count the number of unique terms for each participant. Did every participant respond to 19 questions?
+
+### Joining datasets
+
+Read the [introduction](https://pandas.pydata.org/pandas-docs/stable/user_guide/merging.html#merge) to the `merge` method in `pandas`. Then answer the following question.
+
+4. Merge the `absolute_judgements` and `response_metadata` datasets, and use the resulting dataset to compute the average probability for each age band. Which age band is most "optimistic"?
+
+
+
