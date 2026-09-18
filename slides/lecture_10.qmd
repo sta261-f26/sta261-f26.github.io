@@ -226,4 +226,4 @@ penguins |>
 ## Class activity
 
 * Work with a neighbor on the class activity
-* At the end of class, submit your work as an HTML file on Canvas (one per group, list all your names)
+* You do not need to submit this activity!
