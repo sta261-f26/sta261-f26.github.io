@@ -7,199 +7,260 @@ output:
 link-citations: yes
 ---
 
-**Due:** Friday, September 26, 10:00pm on Canvas
+**Due:** Friday, September 25, 11:59pm on Canvas
 
 **Instructions:** 
 
 1. Go to Canvas -> Assignments -> HW 4. Open the GitHub Classroom assignment link
-2. Follow the [instructions](https://sta279-f25.github.io/resources/github_instructions/) to accept the assignment and clone the repository to your local computer
-3. The repository contains the file `hw_04.qmd`, and several CSV files containing data for the different questions. Write your code and answers to the questions in the Quarto document. Commit and push to GitHub regularly.
+2. Follow the [instructions](https://sta261-f26.github.io/resources/github_instructions/) to accept the assignment and clone the repository to your local computer
+3. The repository contains the file `hw_04.qmd`. Write your code and answers to the questions in the Quarto document. Commit and push to GitHub regularly.
 4. When you are finished, make sure to Render your Quarto document; this will produce a `hw_04.md` file which is easy to view on GitHub. Commit and push both the `hw_04.qmd` and `hw_04.md` files to GitHub
-5. The final question in the assignment will also have you create 10 CSV files of course grades. Make sure to commit and push those CSV files too!
-6. Finally, [request feedback](https://sta279-f25.github.io/resources/github_instructions/#step-10-request-feedback) on your assignment on the "Feedback" pull request on your HW 4 repository
+5. When your code generates figures (e.g., in question 6), you will also need to commit and push those figures to GitHub. These figures will be stored in a folder called something like `homework_4_files`, in the same directory as your `.qmd` and `.md` files. When you Git commit your work, **add** the image files *as well* as the `.qmd` and `.md` files.
+6. Finally, [request feedback](https://sta261-f26.github.io/resources/github_instructions/#step-10-request-feedback) on your assignment on the "Feedback" pull request on your HW 4 repository
 
-**Important:** Make sure to include both the `.qmd` and `.md` files, and the CSV files from the last question, when you submit to receive full credit
+**Important:** Make sure to include the `.qmd` and `.md` files, and any images, when you submit!
+
+**Collaborators and AI statement:** At the top of your assignment, list any collaborators (Dr. Evans does not count -- he is a resource, not a collaborator), and provide an AI statement describing your use of AI to complete the questions. If you did not use AI in any way, let me know that too. If you did use AI, provide: the model used, the HW questions on which you used AI, and a summary of the ways in which AI provided assistance. As described in the syllabus, AI use is permitted on homework assignments, but submissions without a complete AI statement may not receive full credit.
 
 **Code guidelines:**
 
 * If a question requires code, and code is not provided, you will not receive full credit
 * You will be graded on the quality of your code. In addition to being correct, your code should also be easy to read
-  
-**Resources:**
+* Some questions require both code and discussion of the results. If you are missing a discussion of the results, you will not receive full credit
 
-* [Chapter 25](https://r4ds.hadley.nz/functions.html) (functions) in *R for Data Science* (2nd edition)
-* [Chapter 26](https://r4ds.hadley.nz/iteration.html) (iteration) in *R for Data Science* (2nd edition)
+# Exam practice
 
-## Practice writing functions
+Because this is a computing course, exams will involve reading and writing small pieces of code and interpreting output. As it is not feasible for these to be done electronically, you will be expected to write small portions of code by hand. 
 
-In the first part of this assignment, you will practice writing some short functions to calculate two quantities which appear often in statistics and data science. These will be functions which take in a vector, like in [Section 25.2](https://r4ds.hadley.nz/functions.html#vector-functions) of *R for Data Science* (2nd edition).
+The amount you will need to do by hand is not as extensive as the amount of code on a homework assignment! However, you will need to be familiar with the fundamental types of functions and operations we have used in the course.
 
-The goal of these two functions will be to assess the performance of a prediction model. When we fit a model (for example, a linear or logistic regression model), we are trying to describe the relation between the explanatory variable(s) and the response variable. The goal is that our model predictions should be "close" to the true, observed values of the response variable.
+To help you practice those skills, I have included some sample questions on this homework assignment that are similar to some of the questions I could ask on an exam. I suggest that you try **writing these by hand** on a piece of paper, before typing the answers.
 
-Formally, suppose that you have data with $n$ observations. Let $y_1,...,y_n$ denote the observed values of the response variable for these $n$ observations, and let $\widehat{y}_1,...,\widehat{y}_n$ denote the *predicted* values from some model. We want the $\widehat{y}$ values to be "close" to the true $y$ values.
+## Writing code
 
-How do we formalize this idea of "close"?
-
-### Mean squared error (MSE)
-
-If the response $y$ is a continuous variable, it is most common to use the *mean squared error* (MSE), which measures the average squared distance between the predictions and the true response:
-
-$$MSE = \frac{1}{n} \sum \limits_{i=1}^n (y_i - \widehat{y}_i)^2$$
-
-For the first question, you will write a function to compute the MSE. When writing your function, it will help to notice that many arithmetic operations in R are *vectorized* -- that is, you can simultaneously apply an operation to every element of a vector. For example:
-
-```{r}
-x <- 1:5
-x
-x + 1
-2 * x
-```
+In each of the questions below, write code to produce the output from the original data. Note that you cannot actually run this code, since you don't have easy access the original data! That is ok. Use `eval = FALSE` in your chunk options to show the code but prevent it running.
 
 :::{.question}
 #### Question 1
 
-Write a function called `my_mse` to compute the MSE, which satisfies the following requirements:
+Original data:
 
-* Inputs:
+```{r, echo=F, message=F, warning=F}
+library(tidyverse)
+library(palmerpenguins)
 
-    * `yhat`: vector of predictions
-    * `y`: vector of true responses
+set.seed(3)
 
-* Output: the MSE, as described in the formula above
+sub_data <- penguins |>
+  slice_sample(n=10) |>
+  select(species, island, bill_length_mm, bill_depth_mm)
 
-Other requirements:
-
-* Your function should leverage R's vectorized operations
-* Do not use any existing MSE implementations
-* You *may* assume that the two input vectors are numeric and of the same length
-
-Examples:
-
-```{r, include=F}
-my_mse <- function(yhat, y) {
-  mean((yhat - y)^2)
-}
+sub_data
 ```
 
-```{r}
-my_mse(c(1, 2, 3), c(1, 2, 3))
-my_mse(c(1, 2, 2), c(1, 2, 3))
-my_mse(c(0, 1, 2), c(1, 2, 3))
-```
+Output:
 
+```{r, echo=F}
+sub_data |>
+  count(species, island)
+```
 
 :::
-
-
-### Binary cross-entropy (BCE)
-
-MSE is a common choice when the response is continuous. But what if the response is *binary* (as in logistic regression)?
-
-Suppose that our true values $y_1,...,y_n$ are binary, taking values either 0 or 1. And suppose that our predictions $\widehat{y}_1,...,\widehat{y}_n$ are all predicted *probabilities*, taking values between 0 and 1. Then, the *binary cross-entropy* (BCE) is defined as
-
-$$BCE = \frac{1}{n} \sum \limits_{i=1}^n [y_i \log(\widehat{y}_i) + (1 - y_i) \log(1 - \widehat{y}_i) ]$$
-
-(Here log is the natural log).
 
 :::{.question}
 #### Question 2
 
-Write a function called `my_bce` to compute the BCE, which satisfies the following requirements:
+Original data:
 
-* Inputs:
+```{r, echo=F}
+ex_df <- data.frame(
+  id = c(1, 2, 3),
+  x_1 = c(3, 1, 4),
+  x_2 = c(5, 8, 9),
+  y_1 = c(0, 1, 2),
+  y_2 = c(2, 7, 9)
+)
 
-    * `yhat`: vector of predictions
-    * `y`: vector of true responses
-
-* Output: the BCE, as described in the formula above
-
-Other requirements:
-
-* Your function should leverage R's vectorized operations
-* Do not use any existing BCE implementations
-* You *may* assume that the two input vectors are of the same length
-* You *may* assume that the values of `y` are all 0s and 1s
-* You *may* assume that the values of `yhat` are all between 0 and 1, with no values exactly equal to 0 or 1
-
-Examples:
-
-```{r, include=F}
-my_bce <- function(yhat, y) {
-  mean(y*log(yhat) + (1 - y)*log(1 - yhat))
-}
+ex_df
 ```
 
-```{r}
-my_bce(c(0.5, 0.5, 0.5), c(1, 0, 0))
-my_bce(c(0.99, 0.01, 0.02), c(1, 0, 0))
+Output:
+
+```{r, echo=F}
+ex_df |>
+  pivot_longer(cols = -id, names_to = c("group", "obs"), names_sep = "_")
 ```
-
-
 :::
-
-
-### Comparing model performance
-
-Model performance metrics such as MSE and BCE can be used to compare different models. The repository for this assignment contains a CSV file, `pred_data.csv`, with the following columns:
-
-* `truth`: the true response values $y$ for 200 observations
-* `pred_knn`: the predictions for a k-nearest neighbors (kNN) model
-* `pred_random_forest`: the predictions for a random forest model
-* `pred_lasso`: the predictions for a lasso model 
-* `pred_linear`: the predictions for a linear regression model (no penalty term)
 
 :::{.question}
 #### Question 3
 
-Using your MSE function from question 1, and the `across` function from `dplyr`, calculate the MSE for each model (kNN, random forest, lasso, linear regression). Which model has the lowest MSE?
+Original data:
+
+```{r, echo=F}
+ex_df <- data.frame(
+  id = c(1, 1, 2, 2, 3, 3),
+  group = c("x", "y", "x", "y", "x", "y"),
+  value = sample(1:6, replace=T)
+)
+
+ex_df
+```
+
+Output:
+
+```{r, echo=F}
+ex_df |>
+  pivot_wider(id_cols = id, names_from = group, values_from = value)
+```
 :::
-
-
-## Practice with iteration
-
-In HW 3, you wrote code to compute students' overall course grades, given their scores on homeworks, exams, and projects. In this assignment, you will use that code to compute course grades across multiple classes and save the results as CSV files.
-
-The repository for this assignment contains a folder called `intro_stats_grades`, which contains CSV files with gradebooks for 10 different sections of intro stats at a university. As the head TA for intro stats, your job is to calculate the overall grade for students in each of the 10 sections.
-
-Here is information on how the grades are calculated:
-
-* Different sections have different numbers of hw assignments. Some have 5, some have 6, some have 7, etc.
-* Each section has 2 midterms, a final exam, and a project
-* Each homework is scored out of 10. All other assignments are scored out of 100
-* If a student did not submit an assignment, it is marked as `NA` in the CSV file. These missing assignments should receive a score of 0
-* For all sections: Homework is worth 15% of the course grade; midterm 1 is worth 15%; midterm 2 is worth 15%; the final exam is worth 25%; and the project is worth 30%
-* The possible letter grades at the university are A, B, C, D, and F. There are no plus/minus options. Grades are assigned on a standard scale: 
-    * < 60 is F
-    * 60 - 69 is D
-    * 70 - 79 is C
-    * 80 - 89 is B
-    * 90+ is A
-
-Your task is to calculate the overall course grade, reporting both the percentage and the letter grade. For each section, you will create a CSV file containing these overall grades, in the `intro_stats_grades` folder.
-
 
 :::{.question}
 #### Question 4
 
-Adapting your code from HW 3, write a function to calculate course grades for a section called `calc_overall_grade` which satisfies the following requirements:
+Here there are two original datasets (`df1` and `df2`):
 
-* Inputs:
-    * `df`: a data frame containing the gradebook for the section (e.g., the contents of CSV files like `intro_stats_grades/section_1.csv`)
-* Output:
-    * a data frame containing three columns:
-        * `student_id`: the student's id number
-        * `class_grade`: the student's overall percentage in the course, calculated as described above
-        * `letter_grade`: the student's corresponding letter grade (A, B, C, etc.)
 
-Test your function on the data from a couple csv files in the `intro_stats_grades` folder.
+```{r, echo=F}
+df1 = data.frame(
+  a_x = 1,
+  a_y = 2,
+  b_x = 2,
+  b_y = 3
+)
+
+df2 = data.frame(
+  id = c("a", "b"),
+  z = c(4, 5)
+)
+```
+
+```{r}
+df1
+
+df2
+```
+
+Output:
+
+
+```{r, echo=F}
+df1 |> 
+  pivot_longer(cols = -c(), names_to = c("id", ".value"), names_sep = "_") |>
+  left_join(df2, join_by(id))
+```
 :::
 
 
 :::{.question}
 #### Question 5
 
-Now use your function from question 4 to calculate the overall grades for students in each section of the course. Save the results as 10 CSV files (one per section) in the `intro_stats_grades` folder, with names `course_grades_section_1.csv`, `course_grades_section_2.csv`, etc.
+Create a list `x` in R such that:
 
-* Use functions from the `purrr` package, as discussed in [Chapter 26](https://r4ds.hadley.nz/iteration.html) of *R for Data Science* (2nd edition). You may *not* use any loops (for loops, while loops, etc.)
-* Do not list any files or datasets explicitly. For example, you should not manually write out all the names of the files in the `intro_stats_grades` folder. Instead, use tools like `list.files`
+* `x[[1]]` returns the function `mean`
+* `x[[2]]` returns the function `sd`
+* `x[[3]][[1]]` returns the vector `c(0, 1, 2)`
+* `x[[3]][[2]]` returns a function which calculates the cube root of a vector
+
 :::
+
+# Simpsons data
+
+## Motivation
+
+*The Simpsons* is a long-run animated sitcom which has had a big effect on popular culture over the years. The data for this assignment is composed of four files that contain the characters, locations, episode details, and script lines for approximately 600 Simpsons episodes between 2010 and 2016. 
+
+### Data
+
+The code below will download the different datasets:
+
+```{r, eval = F}
+simpsons_characters <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-02-04/simpsons_characters.csv')
+simpsons_episodes <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-02-04/simpsons_episodes.csv')
+simpsons_locations <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-02-04/simpsons_locations.csv')
+simpsons_script_lines <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-02-04/simpsons_script_lines.csv')
+```
+
+### `simpsons_characters.csv`
+
+| variable        | class     | description                                 |
+|:----------------|:----------|:-------------------------------------------|
+| id              | double    | Unique identifier for each character record.          |
+| name            | character | Full name associated with the character record.       |
+| normalized_name | character | Lowercase version of the character name.           |
+| gender          | character | Gender associated with the character record.          |
+
+### `simpsons_episodes.csv`
+
+| variable               | class     | description                                         |
+|:-----------------------|:----------|:---------------------------------------------------|
+| id                     | double    | Unique identifier for each episode record.                 |
+| image_url              | character | URL linking to the image associated with the episode record. |
+| imdb_rating            | double    | IMDb rating for the episode. |
+| imdb_votes             | double    | Number of votes received on IMDb for the episode. |
+| number_in_season       | double    | Episode number within the season. |
+| number_in_series       | double    | Episode number within the series. |
+| original_air_date      | date      | Date the episode originally aired. |
+| original_air_year      | double    | Year the episode originally aired. |
+| production_code        | character | Code used in production to identify the episode. |
+| season                 | double    | Season number of the episode. |
+| title                  | character | Title of the episode. |
+| us_viewers_in_millions | double    | Number of viewers in the U.S. in millions. |
+| video_url              | character | URL linking to the video associated with the record. |
+| views                  | double    | Total number of views recorded for the episode video URL. |
+
+### `simpsons_locations.csv`
+
+| variable        | class     | description                                 |
+|:----------------|:----------|:-------------------------------------------|
+| id              | double    | Unique identifier for each location.        |
+| name            | character | Name of the location.                       |
+| normalized_name | character | Lowercase version of the location name.  |
+
+### `simpsons_script_lines.csv`
+
+| variable           | class     | description                                              |
+|:-------------------|:----------|:--------------------------------------------------------|
+| id                 | double    | Unique identifier for each script line. |
+| episode_id         | double    | Identifier for the episode in which the line appears. |
+| number             | double    | Sequential number of the line within the episode. |
+| raw_text           | character | The original text of the script line. |
+| timestamp_in_ms    | double    | Timestamp of the line in milliseconds. |
+| speaking_line      | logical   | Indicates whether the line is spoken by a character. |
+| character_id       | double    | Identifier for the character speaking the line. |
+| location_id        | double    | Identifier for the location where the line is spoken. |
+| raw_character_text | character | Original text of the character's name. |
+| raw_location_text  | character | Original text of the location name. |
+| spoken_words       | character | Words spoken by the character in the line. |
+| normalized_text    | character | Lowercase version of the script line. |
+| word_count         | double    | Number of words in the line. |
+
+## Questions of interest
+
+* Which character has the most spoken lines across all episodes, and how has their dialogue volume changed over the seasons?
+* What are the most frequently used locations in the series, and do specific locations correspond to higher IMDb ratings for episodes?
+* Is there a relationship between the number of U.S. viewers (in millions) and the IMDb ratings or votes for episodes?
+
+## Your task
+
+1. Examine the data in R, and make sure you understand what information is contained in each dataset.
+2. **Before you do any data wrangling or write any code**, brainstorm some ideas for how you will answer the questions of interest. What data wrangling steps might be involved? How would you quantify the questions of interest? Do you need to combine or reshape any of the datasets? (You do **not** need to submit this brainstorming, but it is good practice to think about your analysis before you start writing the code.)
+3. Use the data wrangling tools in `R` we have learned in this class to implement your ideas from (2) and explore the questions of interest.
+
+## What you will submit
+
+:::{.question}
+#### Question 6
+
+Submit a summary of your analysis that answers the three questions of interest. The summary must meet the following requirements:
+
+* All questions must be addressed
+* At least one visualization must be made for each question
+* If a statistical model would be appropriate to answer a research question, it should be used
+* All results (summary statistics, visualizations, models, etc.) must be discussed
+* Discussion does not have to be long, but it should answer the questions and be written in full sentences
+:::
+
+
+**Acknowledgment:** This assignment is borrowed from the [TidyTuesday](https://github.com/rfordatascience/tidytuesday/blob/main/data/2026/2026-03-10/readme.md) challenge from February 4, 2025, which was curated by Nicolas Foss, Prashant Banerjee, and Todd W. Schneider.
+

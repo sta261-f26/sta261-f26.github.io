@@ -1646,10 +1646,20 @@ margin-left: 0 !important;
         </ul>
         <nav role="navigation" id="toc">
           <ul>
-          <li><a href="#practice-writing-functions" id="toc-practice-writing-functions">Practice writing
-          functions</a></li>
-          <li><a href="#practice-with-iteration" id="toc-practice-with-iteration">Practice with
-          iteration</a></li>
+          <li><a href="#exam-practice" id="toc-exam-practice">Exam
+          practice</a>
+          <ul>
+          <li><a href="#writing-code" id="toc-writing-code">Writing
+          code</a></li>
+          </ul></li>
+          <li><a href="#simpsons-data" id="toc-simpsons-data">Simpsons
+          data</a>
+          <ul>
+          <li><a href="#motivation" id="toc-motivation">Motivation</a></li>
+          <li><a href="#questions-of-interest" id="toc-questions-of-interest">Questions of interest</a></li>
+          <li><a href="#your-task" id="toc-your-task">Your task</a></li>
+          <li><a href="#what-you-will-submit" id="toc-what-you-will-submit">What you will submit</a></li>
+          </ul></li>
           </ul>
         </nav>
         <ul class="authors">
@@ -1674,262 +1684,493 @@ margin-left: 0 !important;
       
    
 <!-- Don't indent these lines or it will mess pre blocks indentation --> 
-<p><strong>Due:</strong> Friday, September 26, 10:00pm on Canvas</p>
+<p><strong>Due:</strong> Friday, September 25, 11:59pm on Canvas</p>
 <p><strong>Instructions:</strong></p>
 <ol style="list-style-type: decimal">
 <li>Go to Canvas -&gt; Assignments -&gt; HW 4. Open the GitHub Classroom
 assignment link</li>
-<li>Follow the <a href="https://sta279-f25.github.io/resources/github_instructions/">instructions</a>
+<li>Follow the <a href="https://sta261-f26.github.io/resources/github_instructions/">instructions</a>
 to accept the assignment and clone the repository to your local
 computer</li>
-<li>The repository contains the file <code>hw_04.qmd</code>, and several
-CSV files containing data for the different questions. Write your code
-and answers to the questions in the Quarto document. Commit and push to
-GitHub regularly.</li>
+<li>The repository contains the file <code>hw_04.qmd</code>. Write your
+code and answers to the questions in the Quarto document. Commit and
+push to GitHub regularly.</li>
 <li>When you are finished, make sure to Render your Quarto document;
 this will produce a <code>hw_04.md</code> file which is easy to view on
 GitHub. Commit and push both the <code>hw_04.qmd</code> and
 <code>hw_04.md</code> files to GitHub</li>
-<li>The final question in the assignment will also have you create 10
-CSV files of course grades. Make sure to commit and push those CSV files
-too!</li>
-<li>Finally, <a href="https://sta279-f25.github.io/resources/github_instructions/#step-10-request-feedback">request
+<li>When your code generates figures (e.g., in question 6), you will
+also need to commit and push those figures to GitHub. These figures will
+be stored in a folder called something like
+<code>homework_4_files</code>, in the same directory as your
+<code>.qmd</code> and <code>.md</code> files. When you Git commit your
+work, <strong>add</strong> the image files <em>as well</em> as the
+<code>.qmd</code> and <code>.md</code> files.</li>
+<li>Finally, <a href="https://sta261-f26.github.io/resources/github_instructions/#step-10-request-feedback">request
 feedback</a> on your assignment on the “Feedback” pull request on your
 HW 4 repository</li>
 </ol>
-<p><strong>Important:</strong> Make sure to include both the
-<code>.qmd</code> and <code>.md</code> files, and the CSV files from the
-last question, when you submit to receive full credit</p>
+<p><strong>Important:</strong> Make sure to include the
+<code>.qmd</code> and <code>.md</code> files, and any images, when you
+submit!</p>
+<p><strong>Collaborators and AI statement:</strong> At the top of your
+assignment, list any collaborators (Dr. Evans does not count – he is a
+resource, not a collaborator), and provide an AI statement describing
+your use of AI to complete the questions. If you did not use AI in any
+way, let me know that too. If you did use AI, provide: the model used,
+the HW questions on which you used AI, and a summary of the ways in
+which AI provided assistance. As described in the syllabus, AI use is
+permitted on homework assignments, but submissions without a complete AI
+statement may not receive full credit.</p>
 <p><strong>Code guidelines:</strong></p>
 <ul>
 <li>If a question requires code, and code is not provided, you will not
 receive full credit</li>
 <li>You will be graded on the quality of your code. In addition to being
 correct, your code should also be easy to read</li>
+<li>Some questions require both code and discussion of the results. If
+you are missing a discussion of the results, you will not receive full
+credit</li>
 </ul>
-<p><strong>Resources:</strong></p>
-<ul>
-<li><a href="https://r4ds.hadley.nz/functions.html">Chapter 25</a>
-(functions) in <em>R for Data Science</em> (2nd edition)</li>
-<li><a href="https://r4ds.hadley.nz/iteration.html">Chapter 26</a>
-(iteration) in <em>R for Data Science</em> (2nd edition)</li>
-</ul>
-<div id="practice-writing-functions" class="section level2">
-<h2>Practice writing functions</h2>
-<p>In the first part of this assignment, you will practice writing some
-short functions to calculate two quantities which appear often in
-statistics and data science. These will be functions which take in a
-vector, like in <a href="https://r4ds.hadley.nz/functions.html#vector-functions">Section
-25.2</a> of <em>R for Data Science</em> (2nd edition).</p>
-<p>The goal of these two functions will be to assess the performance of
-a prediction model. When we fit a model (for example, a linear or
-logistic regression model), we are trying to describe the relation
-between the explanatory variable(s) and the response variable. The goal
-is that our model predictions should be “close” to the true, observed
-values of the response variable.</p>
-<p>Formally, suppose that you have data with <span class="math inline">\(n\)</span> observations. Let <span class="math inline">\(y_1,...,y_n\)</span> denote the observed values of
-the response variable for these <span class="math inline">\(n\)</span>
-observations, and let <span class="math inline">\(\widehat{y}_1,...,\widehat{y}_n\)</span> denote
-the <em>predicted</em> values from some model. We want the <span class="math inline">\(\widehat{y}\)</span> values to be “close” to the
-true <span class="math inline">\(y\)</span> values.</p>
-<p>How do we formalize this idea of “close”?</p>
-<div id="mean-squared-error-mse" class="section level3">
-<h3>Mean squared error (MSE)</h3>
-<p>If the response <span class="math inline">\(y\)</span> is a
-continuous variable, it is most common to use the <em>mean squared
-error</em> (MSE), which measures the average squared distance between
-the predictions and the true response:</p>
-<p><span class="math display">\[MSE = \frac{1}{n} \sum \limits_{i=1}^n
-(y_i - \widehat{y}_i)^2\]</span></p>
-<p>For the first question, you will write a function to compute the MSE.
-When writing your function, it will help to notice that many arithmetic
-operations in R are <em>vectorized</em> – that is, you can
-simultaneously apply an operation to every element of a vector. For
-example:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>x</span></code></pre></div>
-<pre><code>## [1] 1 2 3 4 5</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>x <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div>
-<pre><code>## [1] 2 3 4 5 6</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> x</span></code></pre></div>
-<pre><code>## [1]  2  4  6  8 10</code></pre>
+<div id="exam-practice" class="section level1">
+<h1>Exam practice</h1>
+<p>Because this is a computing course, exams will involve reading and
+writing small pieces of code and interpreting output. As it is not
+feasible for these to be done electronically, you will be expected to
+write small portions of code by hand.</p>
+<p>The amount you will need to do by hand is not as extensive as the
+amount of code on a homework assignment! However, you will need to be
+familiar with the fundamental types of functions and operations we have
+used in the course.</p>
+<p>To help you practice those skills, I have included some sample
+questions on this homework assignment that are similar to some of the
+questions I could ask on an exam. I suggest that you try <strong>writing
+these by hand</strong> on a piece of paper, before typing the
+answers.</p>
+<div id="writing-code" class="section level2">
+<h2>Writing code</h2>
+<p>In each of the questions below, write code to produce the output from
+the original data. Note that you cannot actually run this code, since
+you don’t have easy access the original data! That is ok. Use
+<code>eval = FALSE</code> in your chunk options to show the code but
+prevent it running.</p>
 <div id="question-1" class="section level4 question">
 <h4>Question 1</h4>
-<p>Write a function called <code>my_mse</code> to compute the MSE, which
-satisfies the following requirements:</p>
-<ul>
-<li><p>Inputs:</p>
-<ul>
-<li><code>yhat</code>: vector of predictions</li>
-<li><code>y</code>: vector of true responses</li>
-</ul></li>
-<li><p>Output: the MSE, as described in the formula above</p></li>
-</ul>
-<p>Other requirements:</p>
-<ul>
-<li>Your function should leverage R’s vectorized operations</li>
-<li>Do not use any existing MSE implementations</li>
-<li>You <em>may</em> assume that the two input vectors are numeric and
-of the same length</li>
-</ul>
-<p>Examples:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">my_mse</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</span></code></pre></div>
-<pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">my_mse</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</span></code></pre></div>
-<pre><code>## [1] 0.3333333</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">my_mse</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</span></code></pre></div>
-<pre><code>## [1] 1</code></pre>
+<p>Original data:</p>
+<pre><code>## # A tibble: 10 × 4
+##    species   island bill_length_mm bill_depth_mm
+##    &lt;fct&gt;     &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+##  1 Gentoo    Biscoe           43.3          14  
+##  2 Gentoo    Biscoe           59.6          17  
+##  3 Adelie    Dream            39.7          17.9
+##  4 Adelie    Dream            39.2          21.1
+##  5 Chinstrap Dream            50.8          19  
+##  6 Gentoo    Biscoe           49.9          16.1
+##  7 Chinstrap Dream            50.7          19.7
+##  8 Gentoo    Biscoe           47.3          15.3
+##  9 Gentoo    Biscoe           49.3          15.7
+## 10 Adelie    Dream            37.5          18.9</code></pre>
+<p>Output:</p>
+<pre><code>## # A tibble: 3 × 3
+##   species   island     n
+##   &lt;fct&gt;     &lt;fct&gt;  &lt;int&gt;
+## 1 Adelie    Dream      3
+## 2 Chinstrap Dream      2
+## 3 Gentoo    Biscoe     5</code></pre>
 </div>
-</div>
-<div id="binary-cross-entropy-bce" class="section level3">
-<h3>Binary cross-entropy (BCE)</h3>
-<p>MSE is a common choice when the response is continuous. But what if
-the response is <em>binary</em> (as in logistic regression)?</p>
-<p>Suppose that our true values <span class="math inline">\(y_1,...,y_n\)</span> are binary, taking values
-either 0 or 1. And suppose that our predictions <span class="math inline">\(\widehat{y}_1,...,\widehat{y}_n\)</span> are all
-predicted <em>probabilities</em>, taking values between 0 and 1. Then,
-the <em>binary cross-entropy</em> (BCE) is defined as</p>
-<p><span class="math display">\[BCE = \frac{1}{n} \sum \limits_{i=1}^n
-[y_i \log(\widehat{y}_i) + (1 - y_i) \log(1 - \widehat{y}_i)
-]\]</span></p>
-<p>(Here log is the natural log).</p>
 <div id="question-2" class="section level4 question">
 <h4>Question 2</h4>
-<p>Write a function called <code>my_bce</code> to compute the BCE, which
-satisfies the following requirements:</p>
-<ul>
-<li><p>Inputs:</p>
-<ul>
-<li><code>yhat</code>: vector of predictions</li>
-<li><code>y</code>: vector of true responses</li>
-</ul></li>
-<li><p>Output: the BCE, as described in the formula above</p></li>
-</ul>
-<p>Other requirements:</p>
-<ul>
-<li>Your function should leverage R’s vectorized operations</li>
-<li>Do not use any existing BCE implementations</li>
-<li>You <em>may</em> assume that the two input vectors are of the same
-length</li>
-<li>You <em>may</em> assume that the values of <code>y</code> are all 0s
-and 1s</li>
-<li>You <em>may</em> assume that the values of <code>yhat</code> are all
-between 0 and 1, with no values exactly equal to 0 or 1</li>
-</ul>
-<p>Examples:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">my_bce</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span></code></pre></div>
-<pre><code>## [1] -0.6931472</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">my_bce</span>(<span class="fu">c</span>(<span class="fl">0.99</span>, <span class="fl">0.01</span>, <span class="fl">0.02</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span></code></pre></div>
-<pre><code>## [1] -0.01343446</code></pre>
+<p>Original data:</p>
+<pre><code>##   id x_1 x_2 y_1 y_2
+## 1  1   3   5   0   2
+## 2  2   1   8   1   7
+## 3  3   4   9   2   9</code></pre>
+<p>Output:</p>
+<pre><code>## # A tibble: 12 × 4
+##       id group obs   value
+##    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
+##  1     1 x     1         3
+##  2     1 x     2         5
+##  3     1 y     1         0
+##  4     1 y     2         2
+##  5     2 x     1         1
+##  6     2 x     2         8
+##  7     2 y     1         1
+##  8     2 y     2         7
+##  9     3 x     1         4
+## 10     3 x     2         9
+## 11     3 y     1         2
+## 12     3 y     2         9</code></pre>
 </div>
-</div>
-<div id="comparing-model-performance" class="section level3">
-<h3>Comparing model performance</h3>
-<p>Model performance metrics such as MSE and BCE can be used to compare
-different models. The repository for this assignment contains a CSV
-file, <code>pred_data.csv</code>, with the following columns:</p>
-<ul>
-<li><code>truth</code>: the true response values <span class="math inline">\(y\)</span> for 200 observations</li>
-<li><code>pred_knn</code>: the predictions for a k-nearest neighbors
-(kNN) model</li>
-<li><code>pred_random_forest</code>: the predictions for a random forest
-model</li>
-<li><code>pred_lasso</code>: the predictions for a lasso model</li>
-<li><code>pred_linear</code>: the predictions for a linear regression
-model (no penalty term)</li>
-</ul>
 <div id="question-3" class="section level4 question">
 <h4>Question 3</h4>
-<p>Using your MSE function from question 1, and the <code>across</code>
-function from <code>dplyr</code>, calculate the MSE for each model (kNN,
-random forest, lasso, linear regression). Which model has the lowest
-MSE?</p>
+<p>Original data:</p>
+<pre><code>##   id group value
+## 1  1     x     5
+## 2  1     y     2
+## 3  2     x     5
+## 4  2     y     4
+## 5  3     x     5
+## 6  3     y     5</code></pre>
+<p>Output:</p>
+<pre><code>## # A tibble: 3 × 3
+##      id     x     y
+##   &lt;dbl&gt; &lt;int&gt; &lt;int&gt;
+## 1     1     5     2
+## 2     2     5     4
+## 3     3     5     5</code></pre>
 </div>
-</div>
-</div>
-<div id="practice-with-iteration" class="section level2">
-<h2>Practice with iteration</h2>
-<p>In HW 3, you wrote code to compute students’ overall course grades,
-given their scores on homeworks, exams, and projects. In this
-assignment, you will use that code to compute course grades across
-multiple classes and save the results as CSV files.</p>
-<p>The repository for this assignment contains a folder called
-<code>intro_stats_grades</code>, which contains CSV files with
-gradebooks for 10 different sections of intro stats at a university. As
-the head TA for intro stats, your job is to calculate the overall grade
-for students in each of the 10 sections.</p>
-<p>Here is information on how the grades are calculated:</p>
-<ul>
-<li>Different sections have different numbers of hw assignments. Some
-have 5, some have 6, some have 7, etc.</li>
-<li>Each section has 2 midterms, a final exam, and a project</li>
-<li>Each homework is scored out of 10. All other assignments are scored
-out of 100</li>
-<li>If a student did not submit an assignment, it is marked as
-<code>NA</code> in the CSV file. These missing assignments should
-receive a score of 0</li>
-<li>For all sections: Homework is worth 15% of the course grade; midterm
-1 is worth 15%; midterm 2 is worth 15%; the final exam is worth 25%; and
-the project is worth 30%</li>
-<li>The possible letter grades at the university are A, B, C, D, and F.
-There are no plus/minus options. Grades are assigned on a standard
-scale:
-<ul>
-<li>&lt; 60 is F</li>
-<li>60 - 69 is D</li>
-<li>70 - 79 is C</li>
-<li>80 - 89 is B</li>
-<li>90+ is A</li>
-</ul></li>
-</ul>
-<p>Your task is to calculate the overall course grade, reporting both
-the percentage and the letter grade. For each section, you will create a
-CSV file containing these overall grades, in the
-<code>intro_stats_grades</code> folder.</p>
 <div id="question-4" class="section level4 question">
 <h4>Question 4</h4>
-<p>Adapting your code from HW 3, write a function to calculate course
-grades for a section called <code>calc_overall_grade</code> which
-satisfies the following requirements:</p>
-<ul>
-<li>Inputs:
-<ul>
-<li><code>df</code>: a data frame containing the gradebook for the
-section (e.g., the contents of CSV files like
-<code>intro_stats_grades/section_1.csv</code>)</li>
-</ul></li>
-<li>Output:
-<ul>
-<li>a data frame containing three columns:
-<ul>
-<li><code>student_id</code>: the student’s id number</li>
-<li><code>class_grade</code>: the student’s overall percentage in the
-course, calculated as described above</li>
-<li><code>letter_grade</code>: the student’s corresponding letter grade
-(A, B, C, etc.)</li>
-</ul></li>
-</ul></li>
-</ul>
-<p>Test your function on the data from a couple csv files in the
-<code>intro_stats_grades</code> folder.</p>
+<p>Here there are two original datasets (<code>df1</code> and
+<code>df2</code>):</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>df1</span></code></pre></div>
+<pre><code>##   a_x a_y b_x b_y
+## 1   1   2   2   3</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>df2</span></code></pre></div>
+<pre><code>##   id z
+## 1  a 4
+## 2  b 5</code></pre>
+<p>Output:</p>
+<pre><code>## # A tibble: 2 × 4
+##   id        x     y     z
+##   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 a         1     2     4
+## 2 b         2     3     5</code></pre>
 </div>
 <div id="question-5" class="section level4 question">
 <h4>Question 5</h4>
-<p>Now use your function from question 4 to calculate the overall grades
-for students in each section of the course. Save the results as 10 CSV
-files (one per section) in the <code>intro_stats_grades</code> folder,
-with names <code>course_grades_section_1.csv</code>,
-<code>course_grades_section_2.csv</code>, etc.</p>
+<p>Create a list <code>x</code> in R such that:</p>
 <ul>
-<li>Use functions from the <code>purrr</code> package, as discussed in
-<a href="https://r4ds.hadley.nz/iteration.html">Chapter 26</a> of <em>R
-for Data Science</em> (2nd edition). You may <em>not</em> use any loops
-(for loops, while loops, etc.)</li>
-<li>Do not list any files or datasets explicitly. For example, you
-should not manually write out all the names of the files in the
-<code>intro_stats_grades</code> folder. Instead, use tools like
-<code>list.files</code></li>
+<li><code>x[[1]]</code> returns the function <code>mean</code></li>
+<li><code>x[[2]]</code> returns the function <code>sd</code></li>
+<li><code>x[[3]][[1]]</code> returns the vector
+<code>c(0, 1, 2)</code></li>
+<li><code>x[[3]][[2]]</code> returns a function which calculates the
+cube root of a vector</li>
 </ul>
+</div>
+</div>
+</div>
+<div id="simpsons-data" class="section level1">
+<h1>Simpsons data</h1>
+<div id="motivation" class="section level2">
+<h2>Motivation</h2>
+<p><em>The Simpsons</em> is a long-run animated sitcom which has had a
+big effect on popular culture over the years. The data for this
+assignment is composed of four files that contain the characters,
+locations, episode details, and script lines for approximately 600
+Simpsons episodes between 2010 and 2016.</p>
+<div id="data" class="section level3">
+<h3>Data</h3>
+<p>The code below will download the different datasets:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>simpsons_characters <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-02-04/simpsons_characters.csv&#39;</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>simpsons_episodes <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-02-04/simpsons_episodes.csv&#39;</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>simpsons_locations <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-02-04/simpsons_locations.csv&#39;</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>simpsons_script_lines <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-02-04/simpsons_script_lines.csv&#39;</span>)</span></code></pre></div>
+</div>
+<div id="simpsons_characters.csv" class="section level3">
+<h3><code>simpsons_characters.csv</code></h3>
+<table>
+<colgroup>
+<col width="23%" />
+<col width="15%" />
+<col width="61%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">variable</th>
+<th align="left">class</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">id</td>
+<td align="left">double</td>
+<td align="left">Unique identifier for each character record.</td>
+</tr>
+<tr class="even">
+<td align="left">name</td>
+<td align="left">character</td>
+<td align="left">Full name associated with the character record.</td>
+</tr>
+<tr class="odd">
+<td align="left">normalized_name</td>
+<td align="left">character</td>
+<td align="left">Lowercase version of the character name.</td>
+</tr>
+<tr class="even">
+<td align="left">gender</td>
+<td align="left">character</td>
+<td align="left">Gender associated with the character record.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="simpsons_episodes.csv" class="section level3">
+<h3><code>simpsons_episodes.csv</code></h3>
+<table>
+<colgroup>
+<col width="27%" />
+<col width="12%" />
+<col width="59%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">variable</th>
+<th align="left">class</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">id</td>
+<td align="left">double</td>
+<td align="left">Unique identifier for each episode record.</td>
+</tr>
+<tr class="even">
+<td align="left">image_url</td>
+<td align="left">character</td>
+<td align="left">URL linking to the image associated with the episode
+record.</td>
+</tr>
+<tr class="odd">
+<td align="left">imdb_rating</td>
+<td align="left">double</td>
+<td align="left">IMDb rating for the episode.</td>
+</tr>
+<tr class="even">
+<td align="left">imdb_votes</td>
+<td align="left">double</td>
+<td align="left">Number of votes received on IMDb for the episode.</td>
+</tr>
+<tr class="odd">
+<td align="left">number_in_season</td>
+<td align="left">double</td>
+<td align="left">Episode number within the season.</td>
+</tr>
+<tr class="even">
+<td align="left">number_in_series</td>
+<td align="left">double</td>
+<td align="left">Episode number within the series.</td>
+</tr>
+<tr class="odd">
+<td align="left">original_air_date</td>
+<td align="left">date</td>
+<td align="left">Date the episode originally aired.</td>
+</tr>
+<tr class="even">
+<td align="left">original_air_year</td>
+<td align="left">double</td>
+<td align="left">Year the episode originally aired.</td>
+</tr>
+<tr class="odd">
+<td align="left">production_code</td>
+<td align="left">character</td>
+<td align="left">Code used in production to identify the episode.</td>
+</tr>
+<tr class="even">
+<td align="left">season</td>
+<td align="left">double</td>
+<td align="left">Season number of the episode.</td>
+</tr>
+<tr class="odd">
+<td align="left">title</td>
+<td align="left">character</td>
+<td align="left">Title of the episode.</td>
+</tr>
+<tr class="even">
+<td align="left">us_viewers_in_millions</td>
+<td align="left">double</td>
+<td align="left">Number of viewers in the U.S. in millions.</td>
+</tr>
+<tr class="odd">
+<td align="left">video_url</td>
+<td align="left">character</td>
+<td align="left">URL linking to the video associated with the
+record.</td>
+</tr>
+<tr class="even">
+<td align="left">views</td>
+<td align="left">double</td>
+<td align="left">Total number of views recorded for the episode video
+URL.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="simpsons_locations.csv" class="section level3">
+<h3><code>simpsons_locations.csv</code></h3>
+<table>
+<colgroup>
+<col width="23%" />
+<col width="15%" />
+<col width="61%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">variable</th>
+<th align="left">class</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">id</td>
+<td align="left">double</td>
+<td align="left">Unique identifier for each location.</td>
+</tr>
+<tr class="even">
+<td align="left">name</td>
+<td align="left">character</td>
+<td align="left">Name of the location.</td>
+</tr>
+<tr class="odd">
+<td align="left">normalized_name</td>
+<td align="left">character</td>
+<td align="left">Lowercase version of the location name.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="simpsons_script_lines.csv" class="section level3">
+<h3><code>simpsons_script_lines.csv</code></h3>
+<table>
+<colgroup>
+<col width="22%" />
+<col width="12%" />
+<col width="64%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">variable</th>
+<th align="left">class</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">id</td>
+<td align="left">double</td>
+<td align="left">Unique identifier for each script line.</td>
+</tr>
+<tr class="even">
+<td align="left">episode_id</td>
+<td align="left">double</td>
+<td align="left">Identifier for the episode in which the line
+appears.</td>
+</tr>
+<tr class="odd">
+<td align="left">number</td>
+<td align="left">double</td>
+<td align="left">Sequential number of the line within the episode.</td>
+</tr>
+<tr class="even">
+<td align="left">raw_text</td>
+<td align="left">character</td>
+<td align="left">The original text of the script line.</td>
+</tr>
+<tr class="odd">
+<td align="left">timestamp_in_ms</td>
+<td align="left">double</td>
+<td align="left">Timestamp of the line in milliseconds.</td>
+</tr>
+<tr class="even">
+<td align="left">speaking_line</td>
+<td align="left">logical</td>
+<td align="left">Indicates whether the line is spoken by a
+character.</td>
+</tr>
+<tr class="odd">
+<td align="left">character_id</td>
+<td align="left">double</td>
+<td align="left">Identifier for the character speaking the line.</td>
+</tr>
+<tr class="even">
+<td align="left">location_id</td>
+<td align="left">double</td>
+<td align="left">Identifier for the location where the line is
+spoken.</td>
+</tr>
+<tr class="odd">
+<td align="left">raw_character_text</td>
+<td align="left">character</td>
+<td align="left">Original text of the character’s name.</td>
+</tr>
+<tr class="even">
+<td align="left">raw_location_text</td>
+<td align="left">character</td>
+<td align="left">Original text of the location name.</td>
+</tr>
+<tr class="odd">
+<td align="left">spoken_words</td>
+<td align="left">character</td>
+<td align="left">Words spoken by the character in the line.</td>
+</tr>
+<tr class="even">
+<td align="left">normalized_text</td>
+<td align="left">character</td>
+<td align="left">Lowercase version of the script line.</td>
+</tr>
+<tr class="odd">
+<td align="left">word_count</td>
+<td align="left">double</td>
+<td align="left">Number of words in the line.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="questions-of-interest" class="section level2">
+<h2>Questions of interest</h2>
+<ul>
+<li>Which character has the most spoken lines across all episodes, and
+how has their dialogue volume changed over the seasons?</li>
+<li>What are the most frequently used locations in the series, and do
+specific locations correspond to higher IMDb ratings for episodes?</li>
+<li>Is there a relationship between the number of U.S. viewers (in
+millions) and the IMDb ratings or votes for episodes?</li>
+</ul>
+</div>
+<div id="your-task" class="section level2">
+<h2>Your task</h2>
+<ol style="list-style-type: decimal">
+<li>Examine the data in R, and make sure you understand what information
+is contained in each dataset.</li>
+<li><strong>Before you do any data wrangling or write any code</strong>,
+brainstorm some ideas for how you will answer the questions of interest.
+What data wrangling steps might be involved? How would you quantify the
+questions of interest? Do you need to combine or reshape any of the
+datasets? (You do <strong>not</strong> need to submit this
+brainstorming, but it is good practice to think about your analysis
+before you start writing the code.)</li>
+<li>Use the data wrangling tools in <code>R</code> we have learned in
+this class to implement your ideas from (2) and explore the questions of
+interest.</li>
+</ol>
+</div>
+<div id="what-you-will-submit" class="section level2">
+<h2>What you will submit</h2>
+<div id="question-6" class="section level4 question">
+<h4>Question 6</h4>
+<p>Submit a summary of your analysis that answers the three questions of
+interest. The summary must meet the following requirements:</p>
+<ul>
+<li>All questions must be addressed</li>
+<li>At least one visualization must be made for each question</li>
+<li>If a statistical model would be appropriate to answer a research
+question, it should be used</li>
+<li>All results (summary statistics, visualizations, models, etc.) must
+be discussed</li>
+<li>Discussion does not have to be long, but it should answer the
+questions and be written in full sentences</li>
+</ul>
+</div>
+<p><strong>Acknowledgment:</strong> This assignment is borrowed from the
+<a href="https://github.com/rfordatascience/tidytuesday/blob/main/data/2026/2026-03-10/readme.md">TidyTuesday</a>
+challenge from February 4, 2025, which was curated by Nicolas Foss,
+Prashant Banerjee, and Todd W. Schneider.</p>
 </div>
 </div>
 

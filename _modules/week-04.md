@@ -18,3 +18,4 @@ September 18
   : [slides (html)](https://sta261-f26.github.io/slides/lecture_10.html), [slides (pdf)](https://sta261-f26.github.io/slides/lecture_10.pdf), [Class Activity](https://sta261-f26.github.io/class_activities/ca_10.html)
   
 : **Homework 4 released**{: .label .label-yellow }
+  : [HW 4](https://sta261-f26.github.io/homework/hw_04.html)
