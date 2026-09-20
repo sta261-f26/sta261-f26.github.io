@@ -1,0 +1,900 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Activity: pandas data structures\"\n",
+        "format: html\n",
+        "editor: source\n",
+        "callout-icon: false\n",
+        "ipynb-shell-interactivity: all\n",
+        "---\n",
+        "\n",
+        "**Instructions:** \n",
+        "\n",
+        "* Work with a neighbor to answer the following questions \n",
+        "* You do **not** need to submit anything for this activity\n",
+        "\n",
+        "**Working in Python:** To work in Python, we will use [Google Colab](https://colab.research.google.com/):\n",
+        "\n",
+        "* Click on the link to go to Colab\n",
+        "* Log in with your WFU google account\n",
+        "* Click \"New Notebook\"\n",
+        "\n",
+        "**Turning off AI assistance:** Google Colab is annoying and will give you a ton of AI assistance by default. Here is how to turn that off:\n",
+        "\n",
+        "* In your notebook, go to Tools -> Settings\n",
+        "* From the Settings menu, choose \"AI Assistance\"\n",
+        "* **Uncheck** the boxes \"Show AI-powered inline completions\" and \"Consented to use generative AI features\"\n",
+        "* **Check** the boxe \"Hide generative AI features\"\n",
+        "\n",
+        "\n",
+        "## Series\n",
+        "\n",
+        "Recall that in `R`, a `data.frame` is a collection of atomic vectors. In `pandas`, a `DataFrame` is a collection of `Series`.\n",
+        "\n",
+        "What is a `Series`? A `Series` is a one-dimensional object for storing data. E.g.:"
+      ],
+      "id": "143e9a0a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "s1 = pd.Series([1.0, 2.0, 3.0])\n",
+        "s1"
+      ],
+      "id": "0c52e0ae",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "In many respects a `Series` behaves like an `R` vector. \n",
+        "\n",
+        "For example, we can compute statistics like the sum or the mean:"
+      ],
+      "id": "5d8d74b5"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s1.sum()"
+      ],
+      "id": "c0174719",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s1.mean()"
+      ],
+      "id": "f01526bd",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "We can do arithmetic with a `Series`, which will update each entry:"
+      ],
+      "id": "5f575954"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s1 + 1"
+      ],
+      "id": "a8e509ce",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s1**2 #(squaring)"
+      ],
+      "id": "f074eb36",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Note that not all mathematical operations are built into base Python or `pandas`; for those operations, we will need to load an additional package, usually `NumPy`. For example, to take a square root:"
+      ],
+      "id": "5562933f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import numpy as np\n",
+        "\n",
+        "np.sqrt(s1)"
+      ],
+      "id": "420a838b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "And we can do arithmetic with multiple `Series`:"
+      ],
+      "id": "be2914d4"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s1 = pd.Series([1.0, 2.0, 3.0])\n",
+        "s2 = pd.Series([4.0, 5.0, 6.0])\n",
+        "\n",
+        "s1 + s2"
+      ],
+      "id": "f0fe84cb",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s1 * s2"
+      ],
+      "id": "21c3653c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Practice question: correlation\n",
+        "\n",
+        "The **sample correlation** between $(X_1,...,X_n)$ and $(Y_1,...,Y_n)$ is given by \n",
+        "\n",
+        "$$r = \\dfrac{\\sum \\limits_{i=1}^n (X_i - \\overline{X})(Y_i - \\overline{Y})}{\\sqrt{\\sum \\limits_{i=1}^n (X_i - \\overline{X})^2} \\sqrt{\\sum \\limits_{i=1}^n (Y_i - \\overline{Y})^2}}$$\n",
+        "\n",
+        "where $\\overline{X}$ and $\\overline{Y}$ are the sample means.\n",
+        "\n",
+        "::: {.callout-tip}\n",
+        "## Question\n",
+        "\n",
+        "Create the following two series in `pandas`:"
+      ],
+      "id": "9abf4f3a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: false\n",
+        "x = pd.Series([2.0, 2.5, 7.0, 9.5])\n",
+        "y = pd.Series([-1.0, 3.0, 0.5, 0.9])"
+      ],
+      "id": "46cf57c9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "x"
+      ],
+      "id": "8fdb701e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "y"
+      ],
+      "id": "721e8fe1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        ":::\n",
+        "\n",
+        "::: {.callout-tip}\n",
+        "## Question\n",
+        "\n",
+        "Compute the correlation between the two series, using the formula and the arithmetic operations described above. (The answer should be approximately -0.168)"
+      ],
+      "id": "270e8783"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| include: false\n",
+        "\n",
+        "sum((x - x.mean()) * (y - y.mean())) / (\n",
+        "  np.sqrt((x - x.mean()).pow(2).sum()) * \n",
+        "  np.sqrt((y - y.mean()).pow(2).sum())\n",
+        ")"
+      ],
+      "id": "eb1b627c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        ":::\n",
+        "\n",
+        "## Indexes\n",
+        "\n",
+        "We said that a `Series` behaves, in some ways, like an atomic vector in `R`. However, there are some important differences.\n",
+        "\n",
+        "One **key difference** is that a `Series` always has an **Index** -- this is like a label for each entry in the `Series`. The Index can be specified when creating the Series:"
+      ],
+      "id": "d66fd2cd"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s1 = pd.Series([1, 2, 3], index = ['a', 'b', 'c'])\n",
+        "s1"
+      ],
+      "id": "1ecb9a5c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "**Important:** The `a, b, c` that is printed on the left is **not** another column in the `Series`. Rather, this is the Index!\n",
+        "\n",
+        "If we don't specify an index, `pandas` will default to a range index starting at 0:"
+      ],
+      "id": "a5727776"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s2 = pd.Series([\"hello\", \"world\"])\n",
+        "s2"
+      ],
+      "id": "8350e937",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Choosing entries with the Index\n",
+        "\n",
+        "The Index can be used to choose entries from the `Series`:"
+      ],
+      "id": "a4c895ac"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s1['a']"
+      ],
+      "id": "27f3ba79",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s1[['a', 'b']]"
+      ],
+      "id": "cb762c8e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "**Notes:**\n",
+        "\n",
+        "* If a single entry is selected, we **reduce the dimensionality** of the resulting object. That is, `s1['a']` returns a single number (the integer `1`), rather than a `Series`\n",
+        "* To select multiple entries, we usually need to include them in a Python `list`. That is: `s1[['a', 'b']]` will work, but `s1['a', 'b']` will not!\n",
+        "\n",
+        "::: {.callout-tip}\n",
+        "## Question\n",
+        "\n",
+        "Verify that running the following code does not work:"
+      ],
+      "id": "91c8dc3b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| eval: false\n",
+        "s1 = pd.Series([1, 2, 3], index = ['a', 'b', 'c'])\n",
+        "s1['a', 'b']"
+      ],
+      "id": "5888b29e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        ":::\n",
+        "\n",
+        "::: {.callout-tip}\n",
+        "## Question\n",
+        "\n",
+        "Consider the following `Series`:"
+      ],
+      "id": "5f69193e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "x = pd.Series([\"Statistics\", \"Mathematics\", \"Computer Science\", \"Spanish\"], \n",
+        "              index = ['u', 'v', 'y', 'z'])"
+      ],
+      "id": "c55b0191",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Extract just \"Statistics\" and \"Mathematics\", using the Index labels.\n",
+        "\n",
+        ":::\n",
+        "\n",
+        "\n",
+        "### Positional indexing\n",
+        "\n",
+        "Indexes in `pandas` often feel weird to `R` users, because we usually don't have row names for our vectors or data frames (it is sometimes possible, but it is not common). In `R`, we are instead used to indexing our vectors by *position*.\n",
+        "\n",
+        "Fortunately, using `.iloc` we can index a `Series` by position too!"
+      ],
+      "id": "d7b189ca"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s1 = pd.Series([11, 23, 35], index = ['a', 'b', 'c'])\n",
+        "s1.iloc[0]"
+      ],
+      "id": "76ff91a9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s1.iloc[1]"
+      ],
+      "id": "fb8c3525",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s1.iloc[1:2] # right endpoint is not inlcuded!"
+      ],
+      "id": "8f677d8f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s1.iloc[1:3]"
+      ],
+      "id": "25fa0d01",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "**Notes:**\n",
+        "\n",
+        "* **In Python, positional indexing begins at 0!!** (whereas in `R`, it begins at 1)\n",
+        "* In `R`, doing `1:3` will include both endpoints in the slice. In `Python`, the left endpoint will be included, but the right endpoint will *not*\n",
+        "\n",
+        "::: {.callout-tip}\n",
+        "## Question\n",
+        "\n",
+        "Consider the following `Series`:"
+      ],
+      "id": "9d86cf4e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "x = pd.Series([\"Statistics\", \"Mathematics\", \"Computer Science\", \"Spanish\"], \n",
+        "              index = ['u', 'v', 'y', 'z'])"
+      ],
+      "id": "38e9bb91",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Extract just \"Statistics\" and \"Mathematics\", using *positional* indexing.\n",
+        "\n",
+        ":::\n",
+        "\n",
+        "The difference between label indexing with `[]` and positional indexing with `.iloc[]` can cause problems for unwary users. Consider the following example:"
+      ],
+      "id": "5ac4045e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s3 = pd.Series(['a', 'b', 'c', 'd', 'e'], \n",
+        "                  index = [2, 3, 5, 7, 1])\n",
+        "\n",
+        "s3[1]"
+      ],
+      "id": "2243aed3",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| error: true\n",
+        "s3[0]"
+      ],
+      "id": "9e062229",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "::: {.callout-tip}\n",
+        "## Question\n",
+        "\n",
+        "Explain why `s3[0]` fails, but `s3[1]` returns an answer.\n",
+        ":::\n",
+        "\n",
+        "### Index is preserved\n",
+        "\n",
+        "Finally, it is important to note that subsetting a `Series` will subset the corresponding `Index`:"
+      ],
+      "id": "3259150e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s3[[2, 7]]"
+      ],
+      "id": "80a1b79b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "This can again cause problems for unwary `R` users who forget about differences between label-based indexing and positional indexing. For example:"
+      ],
+      "id": "8c92a875"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s1 = pd.Series(['a', 'b', 'c', 'd', 'e'])\n",
+        "s1[1:3] # now the index values are 1 and 2, because we subset"
+      ],
+      "id": "d316d23a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| error: true\n",
+        "s1[1:3][0] # fails because 0 is no longer in the index"
+      ],
+      "id": "55c00b91",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s1[1:3].iloc[0] # works if we remember to use iloc"
+      ],
+      "id": "5e152652",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Indexing and arithmetic\n",
+        "\n",
+        "When we combined two `Series` above, they had the same index (the default range index starting at 0). What happens if they have *different* indices?"
+      ],
+      "id": "8d78447d"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s1 = pd.Series([1.0, 2.0, 3.0], index = ['a', 'b', 'c'])\n",
+        "s2 = pd.Series([4.0, 5.0, 6.0], index = ['c', 'd', 'b'])\n",
+        "\n",
+        "s1 + s2"
+      ],
+      "id": "6f05ac0e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s1 * s2"
+      ],
+      "id": "16d4aafe",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "::: {.callout-tip}\n",
+        "## Question\n",
+        "\n",
+        "How `pandas` handles arithmetic with `Series` of different indexes?\n",
+        ":::\n",
+        "\n",
+        "A big advantage of having an Index is that it makes it very easy to align different objects, without having to worry about position!\n",
+        "\n",
+        "## DataFrame\n",
+        "\n",
+        "A `DataFrame` in `pandas` is just a collection of `Series`:"
+      ],
+      "id": "12b3e3fa"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s1 = pd.Series([1.0, 2.0, 3.0])\n",
+        "s2 = pd.Series([4.0, 5.0, 6.0])\n",
+        "\n",
+        "df1 = pd.DataFrame({\"x\": s1, \"y\": s2})\n",
+        "df1"
+      ],
+      "id": "8379f085",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Like a `Series`, a `DataFrame` has an index, which labels the *rows*:"
+      ],
+      "id": "ba388188"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s1 = pd.Series([1.0, 2.0, 3.0], index = ['a', 'b', 'c'])\n",
+        "s2 = pd.Series([4.0, 5.0, 6.0], index = ['a', 'b', 'c'])\n",
+        "\n",
+        "df1 = pd.DataFrame({\"x\": s1, \"y\": s2})\n",
+        "df1"
+      ],
+      "id": "2bb31bb8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "::: {.callout-tip}\n",
+        "## Question\n",
+        "\n",
+        "What happens if the `Series` used to construct a `DataFrame` have different indexes? Here is an example:"
+      ],
+      "id": "ab1c130c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "s1 = pd.Series([1.0, 2.0, 3.0], index = ['a', 'b', 'c'])\n",
+        "s2 = pd.Series([4.0, 5.0, 6.0], index = ['c', 'd', 'b'])\n",
+        "\n",
+        "df1 = pd.DataFrame({\"x\": s1, \"y\": s2})\n",
+        "df1"
+      ],
+      "id": "66401ad3",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Explain the output.\n",
+        ":::\n",
+        "\n",
+        "Again: a big advantage of having an Index is that it makes it very easy to align different objects, without having to worry about position!\n",
+        "\n",
+        "## Indexing DataFrames\n",
+        "\n",
+        "To extract one or more columns by column name:"
+      ],
+      "id": "e6c2683c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df1['x']"
+      ],
+      "id": "5217458b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df1[['x', 'y']]"
+      ],
+      "id": "ba7b6820",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "To extract one or more columns by *position*:"
+      ],
+      "id": "4d27854b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df1.iloc[:,0]"
+      ],
+      "id": "9540196d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df1.iloc[:,1]"
+      ],
+      "id": "dd9402fc",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df1.iloc[:,0:2]"
+      ],
+      "id": "d9db752e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df1.iloc[:, [0, 1]]"
+      ],
+      "id": "967b4ab8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "To extract rows by label, use `.loc`:"
+      ],
+      "id": "7b65a0c4"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df1.loc['b']"
+      ],
+      "id": "4d9d6399",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df1.loc[['b', 'c']]"
+      ],
+      "id": "281d08e7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "To extract rows by position, use `.iloc`:"
+      ],
+      "id": "7a69017e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df1.iloc[0]"
+      ],
+      "id": "aa49fd18",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df1.iloc[1:3]"
+      ],
+      "id": "b11af3d5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "We can also slice rows by a boolean vector:"
+      ],
+      "id": "b4729e1f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df1[df1['x'] <= 2]"
+      ],
+      "id": "dd364237",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df1[(df1['x'] <= 3) & (df1['y'] <= 5)]"
+      ],
+      "id": "f7a52033",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Practice\n",
+        "\n",
+        "\n",
+        "\n",
+        "Consider the following `DataFrame` in `pandas`:"
+      ],
+      "id": "67f8ea31"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "advisors = pd.DataFrame({\n",
+        "  \"name\" : [\"Dr. Beavers\", \"Dr. Huang\", \"Dr. Evans\", \"Dr. Mason\", \"Dr. Alarcon\"],\n",
+        "  \"program\" : [\"Statistics\", \"Statistics\", \"Statistics\", \"Math\", \"Spanish\"],\n",
+        "  \"office\" : [\"MAN 337\", \"MAN 340\", \"MAN 329\", \"MAN 334\", \"GRN 519\"]\n",
+        "})\n",
+        "\n",
+        "advisors"
+      ],
+      "id": "11233a30",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "::: {.callout-tip}\n",
+        "## Question\n",
+        "\n",
+        "Extract only the first and third columns of the `advisors` data frame, using column names.\n",
+        ":::\n",
+        "\n",
+        "::: {.callout-tip}\n",
+        "## Question\n",
+        "\n",
+        "Extract only the first and third columns of the `advisors` data frame, using positional indexing.\n",
+        ":::\n",
+        "\n",
+        "::: {.callout-tip}\n",
+        "## Question\n",
+        "\n",
+        "Select only the rows of the `advisors` data frame corresponding to the statistics program\n",
+        ":::\n"
+      ],
+      "id": "026cc067"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Users/ciaranevans/anaconda3/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

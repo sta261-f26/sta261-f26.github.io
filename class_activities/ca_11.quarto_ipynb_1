@@ -1,0 +1,1987 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "1ff02705",
+   "metadata": {},
+   "source": [
+    "---\n",
+    "title: \"Activity: pandas data structures\"\n",
+    "format: html\n",
+    "editor: source\n",
+    "callout-icon: false\n",
+    "ipynb-shell-interactivity: all\n",
+    "---\n",
+    "\n",
+    "**Instructions:** \n",
+    "\n",
+    "* Work with a neighbor to answer the following questions \n",
+    "* You do **not** need to submit anything for this activity\n",
+    "\n",
+    "**Working in Python:** To work in Python, we will use [Google Colab](https://colab.research.google.com/):\n",
+    "\n",
+    "* Click on the link to go to Colab\n",
+    "* Log in with your WFU google account\n",
+    "* Click \"New Notebook\"\n",
+    "\n",
+    "**Turning off AI assistance:** Google Colab is annoying and will give you a ton of AI assistance by default. Here is how to turn that off:\n",
+    "\n",
+    "* In your notebook, go to Tools -> Settings\n",
+    "* From the Settings menu, choose \"AI Assistance\"\n",
+    "* **Uncheck** the boxes \"Show AI-powered inline completions\" and \"Consented to use generative AI features\"\n",
+    "* **Check** the boxe \"Hide generative AI features\"\n",
+    "\n",
+    "\n",
+    "## Series\n",
+    "\n",
+    "Recall that in `R`, a `data.frame` is a collection of atomic vectors. In `pandas`, a `DataFrame` is a collection of `Series`.\n",
+    "\n",
+    "What is a `Series`? A `Series` is a one-dimensional object for storing data. E.g.:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "cec06453",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0    1.0\n",
+       "1    2.0\n",
+       "2    3.0\n",
+       "dtype: float64"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import pandas as pd\n",
+    "\n",
+    "s1 = pd.Series([1.0, 2.0, 3.0])\n",
+    "s1"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b8941aee",
+   "metadata": {},
+   "source": [
+    "In many respects a `Series` behaves like an `R` vector. \n",
+    "\n",
+    "For example, we can compute statistics like the sum or the mean:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "59c52557",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "np.float64(6.0)"
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s1.sum()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "d05b3654",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "np.float64(2.0)"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s1.mean()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "36177ddc",
+   "metadata": {},
+   "source": [
+    "We can do arithmetic with a `Series`, which will update each entry:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "c4df7b39",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0    2.0\n",
+       "1    3.0\n",
+       "2    4.0\n",
+       "dtype: float64"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s1 + 1"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "ee43c7e2",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0    1.0\n",
+       "1    4.0\n",
+       "2    9.0\n",
+       "dtype: float64"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s1**2 #(squaring)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "93e9e798",
+   "metadata": {},
+   "source": [
+    "Note that not all mathematical operations are built into base Python or `pandas`; for those operations, we will need to load an additional package, usually `NumPy`. For example, to take a square root:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "d1ab6488",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0    1.000000\n",
+       "1    1.414214\n",
+       "2    1.732051\n",
+       "dtype: float64"
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import numpy as np\n",
+    "\n",
+    "np.sqrt(s1)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "785811e5",
+   "metadata": {},
+   "source": [
+    "And we can do arithmetic with multiple `Series`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "2e4eaf4c",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0    5.0\n",
+       "1    7.0\n",
+       "2    9.0\n",
+       "dtype: float64"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s1 = pd.Series([1.0, 2.0, 3.0])\n",
+    "s2 = pd.Series([4.0, 5.0, 6.0])\n",
+    "\n",
+    "s1 + s2"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "41a7be46",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0     4.0\n",
+       "1    10.0\n",
+       "2    18.0\n",
+       "dtype: float64"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s1 * s2"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "eace35d5",
+   "metadata": {},
+   "source": [
+    "### Practice question: correlation\n",
+    "\n",
+    "The **sample correlation** between $(X_1,...,X_n)$ and $(Y_1,...,Y_n)$ is given by \n",
+    "\n",
+    "$$r = \\dfrac{\\sum \\limits_{i=1}^n (X_i - \\overline{X})(Y_i - \\overline{Y})}{\\sqrt{\\sum \\limits_{i=1}^n (X_i - \\overline{X})^2} \\sqrt{\\sum \\limits_{i=1}^n (Y_i - \\overline{Y})^2}}$$\n",
+    "\n",
+    "where $\\overline{X}$ and $\\overline{Y}$ are the sample means.\n",
+    "\n",
+    "::: {.callout-tip}\n",
+    "## Question\n",
+    "\n",
+    "Create the following two series in `pandas`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "e82c7ee1",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#| echo: false\n",
+    "x = pd.Series([2.0, 2.5, 7.0, 9.5])\n",
+    "y = pd.Series([-1.0, 3.0, 0.5, 0.9])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "9b4946a5",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0    2.0\n",
+       "1    2.5\n",
+       "2    7.0\n",
+       "3    9.5\n",
+       "dtype: float64"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "x"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "db59399d",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0   -1.0\n",
+       "1    3.0\n",
+       "2    0.5\n",
+       "3    0.9\n",
+       "dtype: float64"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "y"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0c25470a",
+   "metadata": {},
+   "source": [
+    ":::\n",
+    "\n",
+    "::: {.callout-tip}\n",
+    "## Question\n",
+    "\n",
+    "Compute the correlation between the two series, using the formula and the arithmetic operations described above. (The answer should be approximately -0.168)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "41b44752",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "np.float64(-0.016752915420927886)"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "#| include: false\n",
+    "\n",
+    "sum((x - x.mean()) * (y - y.mean())) / (\n",
+    "  np.sqrt((x - x.mean()).pow(2).sum()) * \n",
+    "  np.sqrt((y - y.mean()).pow(2).sum())\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f19c19e0",
+   "metadata": {},
+   "source": [
+    ":::\n",
+    "\n",
+    "## Indexes\n",
+    "\n",
+    "We said that a `Series` behaves, in some ways, like an atomic vector in `R`. However, there are some important differences.\n",
+    "\n",
+    "One **key difference** is that a `Series` always has an **Index** -- this is like a label for each entry in the `Series`. The Index can be specified when creating the Series:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "d01cbec1",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "a    1\n",
+       "b    2\n",
+       "c    3\n",
+       "dtype: int64"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s1 = pd.Series([1, 2, 3], index = ['a', 'b', 'c'])\n",
+    "s1"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8478d3d1",
+   "metadata": {},
+   "source": [
+    "**Important:** The `a, b, c` that is printed on the left is **not** another column in the `Series`. Rather, this is the Index!\n",
+    "\n",
+    "If we don't specify an index, `pandas` will default to a range index starting at 0:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "9e57c14d",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0    hello\n",
+       "1    world\n",
+       "dtype: object"
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s2 = pd.Series([\"hello\", \"world\"])\n",
+    "s2"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "9958f6cf",
+   "metadata": {},
+   "source": [
+    "### Choosing entries with the Index\n",
+    "\n",
+    "The Index can be used to choose entries from the `Series`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "id": "c5ab1710",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "np.int64(1)"
+      ]
+     },
+     "execution_count": 15,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s1['a']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "id": "a8ca3c85",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "a    1\n",
+       "b    2\n",
+       "dtype: int64"
+      ]
+     },
+     "execution_count": 16,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s1[['a', 'b']]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "38cf2ee4",
+   "metadata": {},
+   "source": [
+    "**Notes:**\n",
+    "\n",
+    "* If a single entry is selected, we **reduce the dimensionality** of the resulting object. That is, `s1['a']` returns a single number (the integer `1`), rather than a `Series`\n",
+    "* To select multiple entries, we usually need to include them in a Python `list`. That is: `s1[['a', 'b']]` will work, but `s1['a', 'b']` will not!\n",
+    "\n",
+    "::: {.callout-tip}\n",
+    "## Question\n",
+    "\n",
+    "Verify that running the following code does not work:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "07d5c850",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#| eval: false\n",
+    "s1 = pd.Series([1, 2, 3], index = ['a', 'b', 'c'])\n",
+    "s1['a', 'b']"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "7bed58a5",
+   "metadata": {},
+   "source": [
+    ":::\n",
+    "\n",
+    "::: {.callout-tip}\n",
+    "## Question\n",
+    "\n",
+    "Consider the following `Series`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "b88a17ba",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "x = pd.Series([\"Statistics\", \"Mathematics\", \"Computer Science\", \"Spanish\"], \n",
+    "              index = ['u', 'v', 'y', 'z'])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5c44debb",
+   "metadata": {},
+   "source": [
+    "Extract just \"Statistics\" and \"Mathematics\", using the Index labels.\n",
+    "\n",
+    ":::\n",
+    "\n",
+    "\n",
+    "### Positional indexing\n",
+    "\n",
+    "Indexes in `pandas` often feel weird to `R` users, because we usually don't have row names for our vectors or data frames (it is sometimes possible, but it is not common). In `R`, we are instead used to indexing our vectors by *position*.\n",
+    "\n",
+    "Fortunately, using `.iloc` we can index a `Series` by position too!"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "id": "aa6c7fe8",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "np.int64(11)"
+      ]
+     },
+     "execution_count": 18,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s1 = pd.Series([11, 23, 35], index = ['a', 'b', 'c'])\n",
+    "s1.iloc[0]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "id": "64400978",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "np.int64(23)"
+      ]
+     },
+     "execution_count": 19,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s1.iloc[1]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "id": "d37a7dd8",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "b    23\n",
+       "dtype: int64"
+      ]
+     },
+     "execution_count": 20,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s1.iloc[1:2] # right endpoint is not inlcuded!"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "id": "d79914c9",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "b    23\n",
+       "c    35\n",
+       "dtype: int64"
+      ]
+     },
+     "execution_count": 21,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s1.iloc[1:3]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "3257b4dc",
+   "metadata": {},
+   "source": [
+    "**Notes:**\n",
+    "\n",
+    "* **In Python, positional indexing begins at 0!!** (whereas in `R`, it begins at 1)\n",
+    "* In `R`, doing `1:3` will include both endpoints in the slice. In `Python`, the left endpoint will be included, but the right endpoint will *not*\n",
+    "\n",
+    "::: {.callout-tip}\n",
+    "## Question\n",
+    "\n",
+    "Consider the following `Series`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "id": "c186b16e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "x = pd.Series([\"Statistics\", \"Mathematics\", \"Computer Science\", \"Spanish\"], \n",
+    "              index = ['u', 'v', 'y', 'z'])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "24a5337d",
+   "metadata": {},
+   "source": [
+    "Extract just \"Statistics\" and \"Mathematics\", using *positional* indexing.\n",
+    "\n",
+    ":::\n",
+    "\n",
+    "The difference between label indexing with `[]` and positional indexing with `.iloc[]` can cause problems for unwary users. Consider the following example:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "id": "6d507146",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'e'"
+      ]
+     },
+     "execution_count": 23,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s3 = pd.Series(['a', 'b', 'c', 'd', 'e'], \n",
+    "                  index = [2, 3, 5, 7, 1])\n",
+    "\n",
+    "s3[1]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "id": "7d9debc5",
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "KeyError",
+     "evalue": "0",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mKeyError\u001b[0m                                  Traceback (most recent call last)",
+      "File \u001b[0;32m~/anaconda3/lib/python3.13/site-packages/pandas/core/indexes/base.py:3805\u001b[0m, in \u001b[0;36mIndex.get_loc\u001b[0;34m(self, key)\u001b[0m\n\u001b[1;32m   3804\u001b[0m \u001b[38;5;28;01mtry\u001b[39;00m:\n\u001b[0;32m-> 3805\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_engine\u001b[38;5;241m.\u001b[39mget_loc(casted_key)\n\u001b[1;32m   3806\u001b[0m \u001b[38;5;28;01mexcept\u001b[39;00m \u001b[38;5;167;01mKeyError\u001b[39;00m \u001b[38;5;28;01mas\u001b[39;00m err:\n",
+      "File \u001b[0;32mindex.pyx:167\u001b[0m, in \u001b[0;36mpandas._libs.index.IndexEngine.get_loc\u001b[0;34m()\u001b[0m\n",
+      "File \u001b[0;32mindex.pyx:196\u001b[0m, in \u001b[0;36mpandas._libs.index.IndexEngine.get_loc\u001b[0;34m()\u001b[0m\n",
+      "File \u001b[0;32mpandas/_libs/hashtable_class_helper.pxi:2606\u001b[0m, in \u001b[0;36mpandas._libs.hashtable.Int64HashTable.get_item\u001b[0;34m()\u001b[0m\n",
+      "File \u001b[0;32mpandas/_libs/hashtable_class_helper.pxi:2630\u001b[0m, in \u001b[0;36mpandas._libs.hashtable.Int64HashTable.get_item\u001b[0;34m()\u001b[0m\n",
+      "\u001b[0;31mKeyError\u001b[0m: 0",
+      "\nThe above exception was the direct cause of the following exception:\n",
+      "\u001b[0;31mKeyError\u001b[0m                                  Traceback (most recent call last)",
+      "Cell \u001b[0;32mIn[24], line 1\u001b[0m\n\u001b[0;32m----> 1\u001b[0m s3[\u001b[38;5;241m0\u001b[39m]\n",
+      "File \u001b[0;32m~/anaconda3/lib/python3.13/site-packages/pandas/core/series.py:1121\u001b[0m, in \u001b[0;36mSeries.__getitem__\u001b[0;34m(self, key)\u001b[0m\n\u001b[1;32m   1118\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_values[key]\n\u001b[1;32m   1120\u001b[0m \u001b[38;5;28;01melif\u001b[39;00m key_is_scalar:\n\u001b[0;32m-> 1121\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_get_value(key)\n\u001b[1;32m   1123\u001b[0m \u001b[38;5;66;03m# Convert generator to list before going through hashable part\u001b[39;00m\n\u001b[1;32m   1124\u001b[0m \u001b[38;5;66;03m# (We will iterate through the generator there to check for slices)\u001b[39;00m\n\u001b[1;32m   1125\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m is_iterator(key):\n",
+      "File \u001b[0;32m~/anaconda3/lib/python3.13/site-packages/pandas/core/series.py:1237\u001b[0m, in \u001b[0;36mSeries._get_value\u001b[0;34m(self, label, takeable)\u001b[0m\n\u001b[1;32m   1234\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_values[label]\n\u001b[1;32m   1236\u001b[0m \u001b[38;5;66;03m# Similar to Index.get_value, but we do not fall back to positional\u001b[39;00m\n\u001b[0;32m-> 1237\u001b[0m loc \u001b[38;5;241m=\u001b[39m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mindex\u001b[38;5;241m.\u001b[39mget_loc(label)\n\u001b[1;32m   1239\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m is_integer(loc):\n\u001b[1;32m   1240\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_values[loc]\n",
+      "File \u001b[0;32m~/anaconda3/lib/python3.13/site-packages/pandas/core/indexes/base.py:3812\u001b[0m, in \u001b[0;36mIndex.get_loc\u001b[0;34m(self, key)\u001b[0m\n\u001b[1;32m   3807\u001b[0m     \u001b[38;5;28;01mif\u001b[39;00m \u001b[38;5;28misinstance\u001b[39m(casted_key, \u001b[38;5;28mslice\u001b[39m) \u001b[38;5;129;01mor\u001b[39;00m (\n\u001b[1;32m   3808\u001b[0m         \u001b[38;5;28misinstance\u001b[39m(casted_key, abc\u001b[38;5;241m.\u001b[39mIterable)\n\u001b[1;32m   3809\u001b[0m         \u001b[38;5;129;01mand\u001b[39;00m \u001b[38;5;28many\u001b[39m(\u001b[38;5;28misinstance\u001b[39m(x, \u001b[38;5;28mslice\u001b[39m) \u001b[38;5;28;01mfor\u001b[39;00m x \u001b[38;5;129;01min\u001b[39;00m casted_key)\n\u001b[1;32m   3810\u001b[0m     ):\n\u001b[1;32m   3811\u001b[0m         \u001b[38;5;28;01mraise\u001b[39;00m InvalidIndexError(key)\n\u001b[0;32m-> 3812\u001b[0m     \u001b[38;5;28;01mraise\u001b[39;00m \u001b[38;5;167;01mKeyError\u001b[39;00m(key) \u001b[38;5;28;01mfrom\u001b[39;00m\u001b[38;5;250m \u001b[39m\u001b[38;5;21;01merr\u001b[39;00m\n\u001b[1;32m   3813\u001b[0m \u001b[38;5;28;01mexcept\u001b[39;00m \u001b[38;5;167;01mTypeError\u001b[39;00m:\n\u001b[1;32m   3814\u001b[0m     \u001b[38;5;66;03m# If we have a listlike key, _check_indexing_error will raise\u001b[39;00m\n\u001b[1;32m   3815\u001b[0m     \u001b[38;5;66;03m#  InvalidIndexError. Otherwise we fall through and re-raise\u001b[39;00m\n\u001b[1;32m   3816\u001b[0m     \u001b[38;5;66;03m#  the TypeError.\u001b[39;00m\n\u001b[1;32m   3817\u001b[0m     \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_check_indexing_error(key)\n",
+      "\u001b[0;31mKeyError\u001b[0m: 0"
+     ]
+    }
+   ],
+   "source": [
+    "#| error: true\n",
+    "s3[0]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "10efb826",
+   "metadata": {},
+   "source": [
+    "::: {.callout-tip}\n",
+    "## Question\n",
+    "\n",
+    "Explain why `s3[0]` fails, but `s3[1]` returns an answer.\n",
+    ":::\n",
+    "\n",
+    "### Index is preserved\n",
+    "\n",
+    "Finally, it is important to note that subsetting a `Series` will subset the corresponding `Index`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "id": "7d7367d9",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "2    a\n",
+       "7    d\n",
+       "dtype: object"
+      ]
+     },
+     "execution_count": 25,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s3[[2, 7]]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "4ac9565e",
+   "metadata": {},
+   "source": [
+    "This can again cause problems for unwary `R` users who forget about differences between label-based indexing and positional indexing. For example:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "id": "cc76c74c",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "1    b\n",
+       "2    c\n",
+       "dtype: object"
+      ]
+     },
+     "execution_count": 26,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s1 = pd.Series(['a', 'b', 'c', 'd', 'e'])\n",
+    "s1[1:3] # now the index values are 1 and 2, because we subset"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "id": "8653febf",
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "KeyError",
+     "evalue": "0",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mValueError\u001b[0m                                Traceback (most recent call last)",
+      "File \u001b[0;32m~/anaconda3/lib/python3.13/site-packages/pandas/core/indexes/range.py:413\u001b[0m, in \u001b[0;36mRangeIndex.get_loc\u001b[0;34m(self, key)\u001b[0m\n\u001b[1;32m    412\u001b[0m \u001b[38;5;28;01mtry\u001b[39;00m:\n\u001b[0;32m--> 413\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_range\u001b[38;5;241m.\u001b[39mindex(new_key)\n\u001b[1;32m    414\u001b[0m \u001b[38;5;28;01mexcept\u001b[39;00m \u001b[38;5;167;01mValueError\u001b[39;00m \u001b[38;5;28;01mas\u001b[39;00m err:\n",
+      "\u001b[0;31mValueError\u001b[0m: 0 is not in range",
+      "\nThe above exception was the direct cause of the following exception:\n",
+      "\u001b[0;31mKeyError\u001b[0m                                  Traceback (most recent call last)",
+      "Cell \u001b[0;32mIn[27], line 1\u001b[0m\n\u001b[0;32m----> 1\u001b[0m s1[\u001b[38;5;241m1\u001b[39m:\u001b[38;5;241m3\u001b[39m][\u001b[38;5;241m0\u001b[39m]\n",
+      "File \u001b[0;32m~/anaconda3/lib/python3.13/site-packages/pandas/core/series.py:1121\u001b[0m, in \u001b[0;36mSeries.__getitem__\u001b[0;34m(self, key)\u001b[0m\n\u001b[1;32m   1118\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_values[key]\n\u001b[1;32m   1120\u001b[0m \u001b[38;5;28;01melif\u001b[39;00m key_is_scalar:\n\u001b[0;32m-> 1121\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_get_value(key)\n\u001b[1;32m   1123\u001b[0m \u001b[38;5;66;03m# Convert generator to list before going through hashable part\u001b[39;00m\n\u001b[1;32m   1124\u001b[0m \u001b[38;5;66;03m# (We will iterate through the generator there to check for slices)\u001b[39;00m\n\u001b[1;32m   1125\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m is_iterator(key):\n",
+      "File \u001b[0;32m~/anaconda3/lib/python3.13/site-packages/pandas/core/series.py:1237\u001b[0m, in \u001b[0;36mSeries._get_value\u001b[0;34m(self, label, takeable)\u001b[0m\n\u001b[1;32m   1234\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_values[label]\n\u001b[1;32m   1236\u001b[0m \u001b[38;5;66;03m# Similar to Index.get_value, but we do not fall back to positional\u001b[39;00m\n\u001b[0;32m-> 1237\u001b[0m loc \u001b[38;5;241m=\u001b[39m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mindex\u001b[38;5;241m.\u001b[39mget_loc(label)\n\u001b[1;32m   1239\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m is_integer(loc):\n\u001b[1;32m   1240\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_values[loc]\n",
+      "File \u001b[0;32m~/anaconda3/lib/python3.13/site-packages/pandas/core/indexes/range.py:415\u001b[0m, in \u001b[0;36mRangeIndex.get_loc\u001b[0;34m(self, key)\u001b[0m\n\u001b[1;32m    413\u001b[0m         \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_range\u001b[38;5;241m.\u001b[39mindex(new_key)\n\u001b[1;32m    414\u001b[0m     \u001b[38;5;28;01mexcept\u001b[39;00m \u001b[38;5;167;01mValueError\u001b[39;00m \u001b[38;5;28;01mas\u001b[39;00m err:\n\u001b[0;32m--> 415\u001b[0m         \u001b[38;5;28;01mraise\u001b[39;00m \u001b[38;5;167;01mKeyError\u001b[39;00m(key) \u001b[38;5;28;01mfrom\u001b[39;00m\u001b[38;5;250m \u001b[39m\u001b[38;5;21;01merr\u001b[39;00m\n\u001b[1;32m    416\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m \u001b[38;5;28misinstance\u001b[39m(key, Hashable):\n\u001b[1;32m    417\u001b[0m     \u001b[38;5;28;01mraise\u001b[39;00m \u001b[38;5;167;01mKeyError\u001b[39;00m(key)\n",
+      "\u001b[0;31mKeyError\u001b[0m: 0"
+     ]
+    }
+   ],
+   "source": [
+    "#| error: true\n",
+    "s1[1:3][0] # fails because 0 is no longer in the index"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 29,
+   "id": "67693ac6",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'b'"
+      ]
+     },
+     "execution_count": 28,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s1[1:3].iloc[0] # works if we remember to use iloc"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "55642026",
+   "metadata": {},
+   "source": [
+    "### Indexing and arithmetic\n",
+    "\n",
+    "When we combined two `Series` above, they had the same index (the default range index starting at 0). What happens if they have *different* indices?"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "id": "36fe91a0",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "a    NaN\n",
+       "b    8.0\n",
+       "c    7.0\n",
+       "d    NaN\n",
+       "dtype: float64"
+      ]
+     },
+     "execution_count": 29,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s1 = pd.Series([1.0, 2.0, 3.0], index = ['a', 'b', 'c'])\n",
+    "s2 = pd.Series([4.0, 5.0, 6.0], index = ['c', 'd', 'b'])\n",
+    "\n",
+    "s1 + s2"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 31,
+   "id": "d94c1e22",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "a     NaN\n",
+       "b    12.0\n",
+       "c    12.0\n",
+       "d     NaN\n",
+       "dtype: float64"
+      ]
+     },
+     "execution_count": 30,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s1 * s2"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "6e41508c",
+   "metadata": {},
+   "source": [
+    "::: {.callout-tip}\n",
+    "## Question\n",
+    "\n",
+    "How `pandas` handles arithmetic with `Series` of different indexes?\n",
+    ":::\n",
+    "\n",
+    "A big advantage of having an Index is that it makes it very easy to align different objects, without having to worry about position!\n",
+    "\n",
+    "## DataFrame\n",
+    "\n",
+    "A `DataFrame` in `pandas` is just a collection of `Series`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 32,
+   "id": "1164aff5",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>x</th>\n",
+       "      <th>y</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>1.0</td>\n",
+       "      <td>4.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>2.0</td>\n",
+       "      <td>5.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>3.0</td>\n",
+       "      <td>6.0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "     x    y\n",
+       "0  1.0  4.0\n",
+       "1  2.0  5.0\n",
+       "2  3.0  6.0"
+      ]
+     },
+     "execution_count": 31,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s1 = pd.Series([1.0, 2.0, 3.0])\n",
+    "s2 = pd.Series([4.0, 5.0, 6.0])\n",
+    "\n",
+    "df1 = pd.DataFrame({\"x\": s1, \"y\": s2})\n",
+    "df1"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "11525a48",
+   "metadata": {},
+   "source": [
+    "Like a `Series`, a `DataFrame` has an index, which labels the *rows*:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 33,
+   "id": "3150eaab",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>x</th>\n",
+       "      <th>y</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>a</th>\n",
+       "      <td>1.0</td>\n",
+       "      <td>4.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>b</th>\n",
+       "      <td>2.0</td>\n",
+       "      <td>5.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>c</th>\n",
+       "      <td>3.0</td>\n",
+       "      <td>6.0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "     x    y\n",
+       "a  1.0  4.0\n",
+       "b  2.0  5.0\n",
+       "c  3.0  6.0"
+      ]
+     },
+     "execution_count": 32,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s1 = pd.Series([1.0, 2.0, 3.0], index = ['a', 'b', 'c'])\n",
+    "s2 = pd.Series([4.0, 5.0, 6.0], index = ['a', 'b', 'c'])\n",
+    "\n",
+    "df1 = pd.DataFrame({\"x\": s1, \"y\": s2})\n",
+    "df1"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e5c865b8",
+   "metadata": {},
+   "source": [
+    "::: {.callout-tip}\n",
+    "## Question\n",
+    "\n",
+    "What happens if the `Series` used to construct a `DataFrame` have different indexes? Here is an example:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 34,
+   "id": "95ba1d2d",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>x</th>\n",
+       "      <th>y</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>a</th>\n",
+       "      <td>1.0</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>b</th>\n",
+       "      <td>2.0</td>\n",
+       "      <td>6.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>c</th>\n",
+       "      <td>3.0</td>\n",
+       "      <td>4.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>d</th>\n",
+       "      <td>NaN</td>\n",
+       "      <td>5.0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "     x    y\n",
+       "a  1.0  NaN\n",
+       "b  2.0  6.0\n",
+       "c  3.0  4.0\n",
+       "d  NaN  5.0"
+      ]
+     },
+     "execution_count": 33,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s1 = pd.Series([1.0, 2.0, 3.0], index = ['a', 'b', 'c'])\n",
+    "s2 = pd.Series([4.0, 5.0, 6.0], index = ['c', 'd', 'b'])\n",
+    "\n",
+    "df1 = pd.DataFrame({\"x\": s1, \"y\": s2})\n",
+    "df1"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "db17e77a",
+   "metadata": {},
+   "source": [
+    "Explain the output.\n",
+    ":::\n",
+    "\n",
+    "Again: a big advantage of having an Index is that it makes it very easy to align different objects, without having to worry about position!\n",
+    "\n",
+    "## Indexing DataFrames\n",
+    "\n",
+    "To extract one or more columns by column name:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 35,
+   "id": "bf672a87",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "a    1.0\n",
+       "b    2.0\n",
+       "c    3.0\n",
+       "d    NaN\n",
+       "Name: x, dtype: float64"
+      ]
+     },
+     "execution_count": 34,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df1['x']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 36,
+   "id": "84c3565e",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>x</th>\n",
+       "      <th>y</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>a</th>\n",
+       "      <td>1.0</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>b</th>\n",
+       "      <td>2.0</td>\n",
+       "      <td>6.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>c</th>\n",
+       "      <td>3.0</td>\n",
+       "      <td>4.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>d</th>\n",
+       "      <td>NaN</td>\n",
+       "      <td>5.0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "     x    y\n",
+       "a  1.0  NaN\n",
+       "b  2.0  6.0\n",
+       "c  3.0  4.0\n",
+       "d  NaN  5.0"
+      ]
+     },
+     "execution_count": 35,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df1[['x', 'y']]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "c6dfde4e",
+   "metadata": {},
+   "source": [
+    "To extract one or more columns by *position*:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 37,
+   "id": "617ed7b2",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "a    1.0\n",
+       "b    2.0\n",
+       "c    3.0\n",
+       "d    NaN\n",
+       "Name: x, dtype: float64"
+      ]
+     },
+     "execution_count": 36,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df1.iloc[:,0]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 38,
+   "id": "57a776fb",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "a    NaN\n",
+       "b    6.0\n",
+       "c    4.0\n",
+       "d    5.0\n",
+       "Name: y, dtype: float64"
+      ]
+     },
+     "execution_count": 37,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df1.iloc[:,1]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 39,
+   "id": "d29b0120",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>x</th>\n",
+       "      <th>y</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>a</th>\n",
+       "      <td>1.0</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>b</th>\n",
+       "      <td>2.0</td>\n",
+       "      <td>6.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>c</th>\n",
+       "      <td>3.0</td>\n",
+       "      <td>4.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>d</th>\n",
+       "      <td>NaN</td>\n",
+       "      <td>5.0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "     x    y\n",
+       "a  1.0  NaN\n",
+       "b  2.0  6.0\n",
+       "c  3.0  4.0\n",
+       "d  NaN  5.0"
+      ]
+     },
+     "execution_count": 38,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df1.iloc[:,0:2]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 40,
+   "id": "dd148498",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>x</th>\n",
+       "      <th>y</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>a</th>\n",
+       "      <td>1.0</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>b</th>\n",
+       "      <td>2.0</td>\n",
+       "      <td>6.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>c</th>\n",
+       "      <td>3.0</td>\n",
+       "      <td>4.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>d</th>\n",
+       "      <td>NaN</td>\n",
+       "      <td>5.0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "     x    y\n",
+       "a  1.0  NaN\n",
+       "b  2.0  6.0\n",
+       "c  3.0  4.0\n",
+       "d  NaN  5.0"
+      ]
+     },
+     "execution_count": 39,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df1.iloc[:, [0, 1]]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d869cbf6",
+   "metadata": {},
+   "source": [
+    "To extract rows by label, use `.loc`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 41,
+   "id": "50f0b502",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "x    2.0\n",
+       "y    6.0\n",
+       "Name: b, dtype: float64"
+      ]
+     },
+     "execution_count": 40,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df1.loc['b']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 42,
+   "id": "0204182c",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>x</th>\n",
+       "      <th>y</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>b</th>\n",
+       "      <td>2.0</td>\n",
+       "      <td>6.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>c</th>\n",
+       "      <td>3.0</td>\n",
+       "      <td>4.0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "     x    y\n",
+       "b  2.0  6.0\n",
+       "c  3.0  4.0"
+      ]
+     },
+     "execution_count": 41,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df1.loc[['b', 'c']]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "bc0c8739",
+   "metadata": {},
+   "source": [
+    "To extract rows by position, use `.iloc`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 43,
+   "id": "25c61304",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "x    1.0\n",
+       "y    NaN\n",
+       "Name: a, dtype: float64"
+      ]
+     },
+     "execution_count": 42,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df1.iloc[0]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 44,
+   "id": "d9603640",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>x</th>\n",
+       "      <th>y</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>b</th>\n",
+       "      <td>2.0</td>\n",
+       "      <td>6.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>c</th>\n",
+       "      <td>3.0</td>\n",
+       "      <td>4.0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "     x    y\n",
+       "b  2.0  6.0\n",
+       "c  3.0  4.0"
+      ]
+     },
+     "execution_count": 43,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df1.iloc[1:3]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "81ec0f03",
+   "metadata": {},
+   "source": [
+    "We can also slice rows by a boolean vector:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 45,
+   "id": "bf33f949",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>x</th>\n",
+       "      <th>y</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>a</th>\n",
+       "      <td>1.0</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>b</th>\n",
+       "      <td>2.0</td>\n",
+       "      <td>6.0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "     x    y\n",
+       "a  1.0  NaN\n",
+       "b  2.0  6.0"
+      ]
+     },
+     "execution_count": 44,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df1[df1['x'] <= 2]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 46,
+   "id": "b2ea4051",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>x</th>\n",
+       "      <th>y</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>c</th>\n",
+       "      <td>3.0</td>\n",
+       "      <td>4.0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "     x    y\n",
+       "c  3.0  4.0"
+      ]
+     },
+     "execution_count": 45,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df1[(df1['x'] <= 3) & (df1['y'] <= 5)]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "67416433",
+   "metadata": {},
+   "source": [
+    "### Practice\n",
+    "\n",
+    "\n",
+    "\n",
+    "Consider the following `DataFrame` in `pandas`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 47,
+   "id": "7e198d7c",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>name</th>\n",
+       "      <th>program</th>\n",
+       "      <th>office</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>Dr. Beavers</td>\n",
+       "      <td>Statistics</td>\n",
+       "      <td>MAN 337</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>Dr. Huang</td>\n",
+       "      <td>Statistics</td>\n",
+       "      <td>MAN 340</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>Dr. Evans</td>\n",
+       "      <td>Statistics</td>\n",
+       "      <td>MAN 329</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>Dr. Mason</td>\n",
+       "      <td>Math</td>\n",
+       "      <td>MAN 334</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>Dr. Alarcon</td>\n",
+       "      <td>Spanish</td>\n",
+       "      <td>GRN 519</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "          name     program   office\n",
+       "0  Dr. Beavers  Statistics  MAN 337\n",
+       "1    Dr. Huang  Statistics  MAN 340\n",
+       "2    Dr. Evans  Statistics  MAN 329\n",
+       "3    Dr. Mason        Math  MAN 334\n",
+       "4  Dr. Alarcon     Spanish  GRN 519"
+      ]
+     },
+     "execution_count": 46,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "advisors = pd.DataFrame({\n",
+    "  \"name\" : [\"Dr. Beavers\", \"Dr. Huang\", \"Dr. Evans\", \"Dr. Mason\", \"Dr. Alarcon\"],\n",
+    "  \"program\" : [\"Statistics\", \"Statistics\", \"Statistics\", \"Math\", \"Spanish\"],\n",
+    "  \"office\" : [\"MAN 337\", \"MAN 340\", \"MAN 329\", \"MAN 334\", \"GRN 519\"]\n",
+    "})\n",
+    "\n",
+    "advisors"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "c5d113df",
+   "metadata": {},
+   "source": [
+    "::: {.callout-tip}\n",
+    "## Question\n",
+    "\n",
+    "Extract only the first and third columns of the `advisors` data frame, using column names.\n",
+    ":::\n",
+    "\n",
+    "::: {.callout-tip}\n",
+    "## Question\n",
+    "\n",
+    "Extract only the first and third columns of the `advisors` data frame, using positional indexing.\n",
+    ":::\n",
+    "\n",
+    "::: {.callout-tip}\n",
+    "## Question\n",
+    "\n",
+    "Select only the rows of the `advisors` data frame corresponding to the statistics program\n",
+    ":::\n"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3",
+   "path": "/Users/ciaranevans/anaconda3/share/jupyter/kernels/python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.13.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
