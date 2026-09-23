@@ -11,6 +11,7 @@ September 21
 
 September 23
 : Data wrangling in Python
+  : [slides (html)](https://sta261-f26.github.io/slides/lecture_12.html), [slides (pdf)](https://sta261-f26.github.io/slides/lecture_12.pdf), [Class Activity](https://sta261-f26.github.io/class_activities/ca_12.html)
 
 September 25
 : Data wrangling in Python

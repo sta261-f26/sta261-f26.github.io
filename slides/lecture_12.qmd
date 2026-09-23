@@ -1,0 +1,339 @@
+---
+title: "Reshaping data in pandas"
+format: 
+  revealjs:
+    theme: theme.scss
+editor: source
+execute: 
+  echo: true
+editor_options: 
+  chunk_output_type: console
+---
+
+## Exam information{.small}
+
+* Exam 1 is next Friday (10/2)
+* Covers data wrangling in R and Python (heavier emphasis on R)
+    * Material up through 9/25 (this Friday)
+* What I might ask:
+    * Provide output for a given chunk of code
+    * Write a small chunk of code to produce desired output
+    * Explain data wrangling steps you would take to answer a research question
+* Current HW has some questions that are some examples of exam-type questions
+
+## Last time
+
+Key difference between R (tidyverse) and Python (pandas):
+
+* Series and DataFrames in pandas always have an index!
+* We can index Series and DataFrames by index label, or by their position
+
+**Today:** some other wrangling tools in pandas, and thinking more about the index
+
+## Grouping and aggregating
+
+**Question:** What is the index when we group and aggregate?
+
+```{python}
+#| echo: false
+import seaborn as sns
+
+penguins = sns.load_dataset("penguins")
+```
+
+```{python}
+(penguins.groupby('species')
+         .agg(
+           mean_bill = ('bill_length_mm', 'mean'),
+           sd_bill = ('bill_length_mm', 'std')
+           ))
+```
+
+## Grouping and aggregating
+
+```{python}
+penguins_summary = (penguins.groupby('species')
+         .agg(
+           mean_bill = ('bill_length_mm', 'mean'),
+           sd_bill = ('bill_length_mm', 'std')
+           ))
+
+penguins_summary
+```
+
+What if I just want the Adelies?
+
+## Grouping and aggregating
+
+```{python}
+penguins_summary = (penguins.groupby('species')
+         .agg(
+           mean_bill = ('bill_length_mm', 'mean'),
+           sd_bill = ('bill_length_mm', 'std')
+           ))
+
+penguins_summary
+```
+
+```{python}
+penguins_summary.loc['Adelie']
+```
+
+## Grouping and aggregating
+
+What is the index now?
+
+```{python}
+(penguins.groupby(['species', 'island'])
+         .agg(
+           mean_bill = ('bill_length_mm', 'mean'),
+           sd_bill = ('bill_length_mm', 'std')
+           ))
+```
+
+## Grouping and aggregating
+
+```{python}
+(penguins.groupby(['species', 'island'])
+         .agg(
+           mean_bill = ('bill_length_mm', 'mean'),
+           sd_bill = ('bill_length_mm', 'std')
+           )).index
+```
+
+## MultiIndex{.small}
+
+```{python}
+penguin_summary = (penguins.groupby(['species', 'island'])
+         .agg(
+           mean_bill = ('bill_length_mm', 'mean'),
+           sd_bill = ('bill_length_mm', 'std')
+           ))
+           
+penguin_summary
+           
+penguin_summary.loc['Adelie']
+```
+
+## MultiIndex{.small}
+
+```{python}
+penguin_summary = (penguins.groupby(['species', 'island'])
+         .agg(
+           mean_bill = ('bill_length_mm', 'mean'),
+           sd_bill = ('bill_length_mm', 'std')
+           ))
+           
+penguin_summary
+           
+penguin_summary.loc[('Adelie', 'Biscoe')]
+```
+
+## Avoiding changing the index
+
+```{python}
+(penguins.groupby(['species', 'island'], 
+                  as_index = False)
+         .agg(
+           mean_bill = ('bill_length_mm', 'mean'),
+           sd_bill = ('bill_length_mm', 'std')
+           ))
+```
+
+## Reshaping data
+
+```{r, include=F}
+library(tidyverse)
+library(googlesheets4)
+gs4_deauth()
+litF <- read_sheet("https://docs.google.com/spreadsheets/d/1hDinTIRHQIaZg1RUn6Z_6mo12PtKwEPFIz_mJVF6P5I/pub?gid=0") |>
+  rename(country = starts_with("Adult"))
+```
+
+```{r, echo=F}
+litF
+```
+
+**Question:** How do we want to reshape this data?
+
+
+## Tidy data
+
+![](https://r4ds.hadley.nz/images/tidy-1.png)
+
+(Image from *R for Data Science*)
+
+## In R: `pivot_longer`
+
+```{r}
+litF |>
+  pivot_longer(
+    cols = -country,
+    names_to = "year",
+    values_to = "literacy_rate"
+  ) |>
+  drop_na()
+```
+
+## In pandas: `melt`
+
+```{python}
+#| echo: false
+
+import pandas as pd
+litF = r.litF
+```
+
+```{python}
+(litF.melt(id_vars = 'country',
+          var_name = 'year',
+          value_name = 'literacy_rate')
+      .dropna(axis = 0))
+```
+
+## In pandas: `melt`
+
+```{python}
+(litF.melt(id_vars = 'country',
+          var_name = 'year',
+          value_name = 'literacy_rate')
+      .dropna(axis = 0)
+      .sort_values(['country', 'year']))
+```
+
+## In pandas: `melt`
+
+**Question:** How does `melt` affect the index of the data?
+
+```{python}
+(litF.melt(id_vars = 'country',
+          var_name = 'year',
+          value_name = 'literacy_rate')
+      .dropna(axis = 0)
+      .sort_values(['country', 'year']))
+```
+
+
+
+## `melt` and indexes
+
+We can choose for `melt` to keep the original index.
+
+**Question:** what are the implications of having duplicate values in the index?
+
+```{python}
+(litF.melt(id_vars = 'country',
+          var_name = 'year',
+          value_name = 'literacy_rate',
+          ignore_index = False)
+      .dropna(axis = 0)
+      .sort_values(['country', 'year']))
+```
+
+## `melt` and indexes
+
+```{python}
+(litF.melt(id_vars = 'country',
+          var_name = 'year',
+          value_name = 'literacy_rate',
+          ignore_index = False)
+      .dropna(axis = 0)
+      .sort_values(['country', 'year'])).loc[0]
+```
+
+## Another example{.small}
+
+Consider the following example data:
+
+```{r, echo=F}
+df_3 = data.frame(id = c(1, 2, 3),
+                 bp_1 = c(100, 120, 125),
+                 bp_2 = c(120, 115, 130),
+                 hr_1 = c(60, 75, 80),
+                 hr_2 = c(77, 81, 93))
+df_3
+```
+
+What if we want the data to look like this:
+
+```{r, echo=F}
+df_3 |>
+  pivot_longer(cols = -id, 
+               names_to = c(".value", "stage"), 
+               names_sep = "_")
+```
+
+## In R
+
+```{r}
+df_3
+
+df_3 |>
+  pivot_longer(cols = -id, 
+               names_to = c(".value", "stage"), 
+               names_sep = "_")
+```
+
+## In pandas: `wide_to_long`
+
+```{python}
+#| echo: false
+df_3 = r.df_3
+```
+
+```{python}
+pd.wide_to_long(df_3, stubnames = ['bp', 'hr'],
+                i = 'id', j = 'stage', sep = "_")
+```
+
+## In pandas: `wide_to_long`
+
+How does pandas treat the index when using `wide_to_long`?
+
+```{python}
+pd.wide_to_long(df_3, stubnames = ['bp', 'hr'],
+                i = 'id', j = 'stage', sep = "_")
+```
+
+## Pivoting wider
+
+```{r, include=F}
+air_quality = read_csv("https://raw.githubusercontent.com/pandas-dev/pandas/main/doc/data/air_quality_long.csv") |>
+  filter(parameter == "pm25") |>
+  select(date.utc, location, value)
+```
+
+```{r}
+air_quality
+```
+
+## Pivoting wider
+
+```{r}
+air_quality |>
+  pivot_wider(id_cols = date.utc,
+              names_from = location,
+              values_from = value) |>
+  arrange(date.utc)
+```
+
+## In pandas: `pivot`
+
+```{python}
+#| echo: false
+air_quality = r.air_quality
+```
+
+```{python}
+air_quality.pivot(columns = 'location', 
+                  values = 'value', 
+                  index = 'date.utc')
+```
+
+
+
+## Class activity
+
+* Work with a neighbor on the class activity
+* No need to submit this activity
+

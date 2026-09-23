@@ -1,0 +1,179 @@
+---
+title: "Activity: practice with data wrangling in pandas"
+format: html
+editor: source
+callout-icon: false
+ipynb-shell-interactivity: all
+---
+
+**Instructions:** 
+
+* Work with a neighbor to answer the following questions 
+* You do **not** need to submit anything for this activity
+
+**Working in Python:** To work in Python, we will use [Google Colab](https://colab.research.google.com/):
+
+* Click on the link to go to Colab
+* Log in with your WFU google account
+* Click "New Notebook"
+
+**Turning off AI assistance:** Google Colab is annoying and will give you a ton of AI assistance by default. Here is how to turn that off:
+
+* In your notebook, go to Tools -> Settings
+* From the Settings menu, choose "AI Assistance"
+* **Uncheck** the boxes "Show AI-powered inline completions" and "Consented to use generative AI features"
+* **Check** the boxe "Hide generative AI features"
+
+## Reshaping data
+
+On homework 2, you reshaped the following example data frame:
+
+```{python}
+import pandas as pd
+
+df = pd.DataFrame({
+  "id" : [1, 2, 3]*2,
+  "group" : ['T']*3 + ['C']*3,
+  "vals" : [4, 6, 8, 5, 6, 10]
+})
+```
+
+::: {.callout-tip}
+## Question
+
+Create a new data frame, called `df_new`, which looks like this:
+
+```{python}
+#| echo: false
+
+df_new = df.pivot(columns = 'group', values = 'vals', index = 'id')
+df_new
+```
+:::
+
+::: {.callout-tip}
+## Question
+
+Use the [assign](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.assign.html) method to add a new column to `df_new`, so the resulting data looks like:
+
+```{python}
+#| echo: false
+df_new.assign(diff = df_new['T'] - df_new['C'])
+```
+
+
+:::
+
+## More data reshaping
+
+Consider the following data frame:
+
+```{python}
+df = pd.DataFrame({
+  "id" : [1, 2, 3],
+  "bp_1" : [100, 120, 125],
+  "bp_2" : [120, 115, 130],
+  "hr_1" : [60, 75, 80],
+  "hr_2" : [77, 81, 93]
+})
+```
+
+In the lecture, we used `wide_to_long` to reshape this data:
+
+```{python}
+pd.wide_to_long(df, stubnames = ['bp', 'hr'],
+                i = 'id', j = 'stage', sep = "_")
+```
+
+But now suppose the names of our columns are slightly different:
+
+```{python}
+df = pd.DataFrame({
+  "id" : [1, 2, 3],
+  "bp_a" : [100, 120, 125],
+  "bp_b" : [120, 115, 130],
+  "hr_a" : [60, 75, 80],
+  "hr_b" : [77, 81, 93]
+})
+```
+
+::: {.callout-tip}
+## Question
+
+What happens if you try to use `wide_to_long` in the same way, to reshape this data frame?
+
+```{python}
+#| eval: false
+pd.wide_to_long(df, stubnames = ['bp', 'hr'],
+                i = 'id', j = 'stage', sep = "_")
+```
+:::
+
+The issue is that `wide_to_long` expects the suffix (everything after the underscore) to be a number -- when it sees a letter instead (`a` or `b`), it gets confused.
+
+The solution is to tell the function what type of suffix to expect! To do this, we can use a *regular expression* (we will see more of this later in the course):
+
+```{python}
+pd.wide_to_long(df, stubnames = ['bp', 'hr'],
+                i = 'id', j = 'stage', sep = "_",
+                suffix = '.+')
+```
+
+## Back to the dog data
+
+On the first day of class, we discussed an experiment which investigated whether interacting with dogs can help exam stress for college students. After cleaning the raw measurements, the experiment data looks like this:
+
+
+```{python}
+#| echo: false
+cleaned_data = pd.read_csv("https://sta261-f26.github.io/class_activities/cleaned_dog_data.csv")
+```
+
+```{python}
+cleaned_data
+```
+
+The data can be imported into Python with the following code:
+
+```{python}
+#| eval: false
+cleaned_data = pd.read_csv("https://sta261-f26.github.io/class_activities/cleaned_dog_data.csv")
+```
+
+::: {.callout-tip}
+## Question
+
+Reshape the `cleaned_data` in pandas so it looks like this:
+
+```{python}
+#| echo: false
+pd.wide_to_long(cleaned_data, 
+                stubnames = ['pa', 'happiness', 'sc', 'fs', 'stress', 'homesick', 'lonely', 'na'],
+                i = ['RID', 'GroupAssignment'],
+                j = 'stage',
+                sep = "_",
+                suffix = ".*")
+```
+
+It may help to look at the column names (`cleaned_data.columns`)
+:::
+
+## Avoiding listing columns
+
+In the previous problem, you likely had to list *many* column stub names! This is tedious and error-prone. How can we avoid it?
+
+One way is to extract the information we care about from the column names, with a regular expression. Here is one way we could do this (there are many different options, and it is ok if you don't understand this code right now!):
+
+```{python}
+measurement_types = set([s[0] for s in cleaned_data.columns.str.split('_') 
+if len(s) > 1])
+
+measurement_types
+```
+
+::: {.callout-tip}
+## Question
+
+Modify your code to the previous question to use the `measurement_types` list we created, rather than explicitly listing all the stub names.
+:::
+
