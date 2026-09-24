@@ -1,0 +1,357 @@
+---
+title: "Activity: practice with data wrangling in pandas"
+format: html
+editor: source
+callout-icon: false
+ipynb-shell-interactivity: all
+---
+
+**Instructions:** 
+
+* Work with a neighbor to answer the following questions 
+* You do **not** need to submit anything for this activity
+
+**Working in Python:** To work in Python, we will use [Google Colab](https://colab.research.google.com/):
+
+* Click on the link to go to Colab
+* Log in with your WFU google account
+* Click "New Notebook"
+
+**Turning off AI assistance:** Google Colab is annoying and will give you a ton of AI assistance by default. Here is how to turn that off:
+
+* In your notebook, go to Tools -> Settings
+* From the Settings menu, choose "AI Assistance"
+* **Uncheck** the boxes "Show AI-powered inline completions" and "Consented to use generative AI features"
+* **Check** the boxe "Hide generative AI features"
+
+# Wrangling with exam grades
+
+You work in the Office of Institutional Research at a large university, and your boss asks you to investigate the relationship between student evaluations and scores on the final exam in introductory statistics courses.
+
+We have two CSV files to investigate this question. The `exam_grades.csv` file contains last semester's final exam scores for 800 students taking introductory statistics across 30 different sections. The columns include:
+
+* `student_id`: a unique 4-digit identifier for each student
+* `classid`: which of the 30 sections the student was enrolled in
+* `professor_name`: the name of the professor which whom the student took the class. Each professor teaches several sections
+* `exam_score`: the student's score on the final exam. All introductory students take the same final exam, regardless of course section
+
+Your boss also provides you with information on each professor's course evaluations. The `professor_evals.csv` file contains evaluations for each of the 10 professors teaching introductory statistics. The `classid_1`, `classid_2`, and `classid_3` columns identify the 3 sections taught by each professor, while the three `evalscore` columns contain the professor's corresponding course evaluation scores (out of 5) for each class.
+
+You can import the data with
+
+```{python}
+import pandas as pd
+
+professor_evals = pd.read_csv("https://sta261-f26.github.io/class_activities/professor_evals.csv")
+exam_grades = pd.read_csv("https://sta261-f26.github.io/class_activities/exam_grades.csv")
+```
+
+
+::: {.callout-tip}
+## Question
+
+Reshape the `professor_evals` data so it looks like this:
+
+```{python}
+#| echo: false
+
+pivoted_evals = pd.wide_to_long(professor_evals,
+  stubnames = ['classid', 'evalscore'],
+  i = 'name',
+  j = 'class',
+  sep = "_")
+  
+pivoted_evals
+```
+
+:::
+
+::: {.callout-tip}
+## Question
+
+Using the `exam_grades` data, compute the mean score for each professor and class:
+
+```{python}
+#| echo: false
+mean_scores = exam_grades.groupby(['professor_name', 'classid']).agg(mean_score = ('exam_score', 'mean'))
+
+mean_scores
+```
+
+:::
+
+::: {.callout-tip}
+## Question
+
+Use `merge` to combine the results from the last two questions into a single data frame:
+
+```{python}
+#| echo: false
+comb_data = mean_scores.reset_index().merge(pivoted_evals.reset_index(), how='left', left_on = ['professor_name', 'classid'], right_on = ['name', 'classid']).drop(['class', 'name'], axis=1)
+comb_data
+```
+
+**Note:** to include columns in the final data frame which are indexes in the previous data frames, you may need to reset the index before merging. This can be done with [`reset_index`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.reset_index.html)
+
+:::
+
+### Plotting
+
+After creating the combined data in the previous question, we may want to look at the relationship between mean exam score and course evaluation score. There are a variety of options for creating graphics in Python; one possibility is the `plotly` package. Here is an example:
+
+```{python}
+import plotly.express as px
+
+fig = px.scatter(comb_data, x = 'mean_score', y = 'evalscore',
+  hover_data = ['professor_name', 'classid'],
+  labels = {'mean_score': 'Mean exam score', 
+    'evalscore': 'Average course evaluation score',
+    'professor_name': 'Professor',
+    'classid': 'Class'},
+  trendline = 'ols')
+fig.show()
+```
+
+# UFC Fights
+
+In the second part of this activity, we will work with data on UFC fights and athletes.
+
+**Question:** How do physical attribute advantages such as height, reach, or age differences correlate with the likelihood of winning a bout?
+
+## Data
+
+We have two different datasets available: `ufc_athletes.csv` contains information on each fighter, while `ufc_fights.csv` contains information on each fight. These datasets can be loaded into Python with:
+
+```{python}
+ufc_athletes = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-07-07/ufc_athletes.csv')
+ufc_fights = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-07-07/ufc_fights.csv')
+```
+
+
+### `ufc_athletes.csv`
+
+|variable              |class     |description                           |
+|:---------------------|:---------|:-------------------------------------|
+|name                  |character |Athlete name as listed in the dataset.|
+|nickname              |character |Athlete nickname, where available. |
+|weight_class          |character |Athlete's listed UFC weight class. |
+|url                   |character |URL for the athlete's UFC profile page. |
+|profile_name          |character |Athlete name as shown on the UFC profile page. |
+|profile_nickname      |character |Athlete nickname as shown on the UFC profile page, where available. |
+|status                |character |Athlete status, such as '"Active"' or '"Not Fighting"'. |
+|place_of_birth        |character |Athlete's listed place of birth. |
+|age                   |double    |Athlete age in years, where available. |
+|height                |double    |Athlete height in inches, where available. |
+|weight                |double    |Athlete listed weight in pounds, where available. |
+|octagon_debut         |date      |Date of the athlete's UFC debut, where available. |
+|sig_strikes_landed    |double    |Total significant strikes landed in UFC competition. |
+|sig_strikes_attempted |double    |Total significant strikes attempted in UFC competition. |
+|sig_str_landed        |double    |Significant strikes landed per minute. |
+|sig_str_absorbed      |double    |Significant strikes absorbed per minute. |
+|takedown_avg          |double    |Average takedowns landed per 15 minutes. |
+|submission_avg        |double    |Average submission attempts per 15 minutes. |
+|sig_str_defense       |double    |Significant strike defense rate, expressed as a proportion. |
+|takedown_defense      |double    |Takedown defense rate, expressed as a proportion. |
+|knockdown_avg         |double    |Average knockdowns landed per 15 minutes. |
+|average_fight_time    |Period    |Athlete's average UFC fight time, where available. |
+|takedowns_attempted   |double    |Total takedown attempts in UFC competition, where available. |
+|fighting_style        |character |Athlete's listed fighting style, where available. |
+|reach                 |double    |Athlete reach in inches, where available. |
+|leg_reach             |double    |Athlete leg reach in inches, where available. |
+|takedowns_landed      |double    |Total takedowns landed in UFC competition, where available. |
+|trains_at             |character |Athlete's listed gym or training affiliation, where available. |
+|wins                  |character |Athlete's listed career wins. |
+|losses                |character |Athlete's listed career losses. |
+|draws                 |character |Athlete's listed career draws. |
+|standing_count        |double    |Number of significant strikes landed at distance. |
+|standing_pct          |double    |Proportion of significant strikes landed at distance. |
+|clinch_count          |double    |Number of significant strikes landed in the clinch. |
+|clinch_percent        |double    |Proportion of significant strikes landed in the clinch. |
+|ground_count          |double    |Number of significant strikes landed on the ground. |
+|ground_percent        |double    |Proportion of significant strikes landed on the ground. |
+|ko_tko_win            |double    |Number of wins by knockout or technical knockout. |
+|ko_tko_percent        |double    |Proportion of wins by knockout or technical knockout. |
+|dec_wins              |double    |Number of wins by decision. |
+|dec_percent           |double    |Proportion of wins by decision. |
+|sub_wins              |double    |Number of wins by submission. |
+|sub_percent           |double    |Proportion of wins by submission. |
+
+### `ufc_fights.csv`
+
+|variable             |class     |description                           |
+|:--------------------|:---------|:-------------------------------------|
+|fight_url            |character |URL for the fight details page on [http://ufcstats.com/](http://ufcstats.com/) |
+|event_name           |character |Event Name |
+|date                 |date      |Date of the UFC event. |
+|location             |character |Event location, usually formatted as city and country or city and state. |
+|f1_name              |character |Name of the first listed fighter. |
+|f1_result            |character |Result for the first listed fighter, typically "W" for win or "L" for loss. Missing for scheduled or incomplete bouts. |
+|f2_name              |character |Name of the second listed fighter. |
+|f2_result            |character |Result for the second listed fighter, typically "W" for win or "L" for loss. Missing for scheduled or incomplete bouts. |
+|weight_class         |character | Weight class or bout category, such as "Bantamweight Bout" or "Heavyweight Bout". |
+|method               |character |Method of victory, such as "Decision - Unanimous", "KO/TKO", or "Submission". Missing for scheduled or incomplete bouts. |
+|round                |double    |Round in which the fight ended. Missing for scheduled or incomplete bouts. |
+|time                 |Period    |Time elapsed in the final round when the fight ended. Missing for scheduled or incomplete bouts. |
+|time_format          |character |Scheduled fight format, such as "3 Rnd (5-5-5)" or "5 Rnd (5-5-5-5-5)". |
+|referee              |character |Name of the referee. Missing for scheduled or incomplete bouts. |
+|judging_details      |character | Judges' score card details; If fight ends with a KO, TKO or Submission, details are provided|
+
+## Questions
+
+To answer the question, we will need to combine information from the `ufc_fights` and `ufc_athletes` datasets. To combine this information correctly, we need to understand what information uniquely identifies an athlete.
+
+### Duplicate athletes?
+
+::: {.callout-tip}
+## Question
+
+Does name uniquely identify a row in the `ufc_athletes` data? To help answer this question, the following code identifies all rows in the `ufc_athletes` data with a *duplicated* name:
+
+```{python}
+ufc_athletes[ufc_athletes.duplicated(['name'], keep = False)]
+```
+
+Look at the other columns in the data. For the individuals with duplicate names, which ones appear to be the *same* person (showing up multiple times) and which appear to be *different* people (who just happen to have the same name)?
+
+:::
+
+::: {.callout-tip}
+## Question
+
+Based on your answer to the previous question, can you find a set of columns that uniquely identify each athlete, and which are also available in the `ufc_fights` data?
+
+:::
+
+We only want to keep one row per athlete in the `ufc_athletes` data. The `drop_duplicates` function will remove rows which have duplicate information in a specified set of columns:
+
+```{python}
+#| eval: false
+
+ufc_athletes = ufc_athletes.drop_duplicates([...])
+```
+
+::: {.callout-tip}
+## Question
+
+Fill in the code (the `...`), using the columns you chose in the previous question to uniquely identify each athlete.
+
+:::
+
+### Weight class?
+
+We want to `merge` the `ufc_athletes` and the `ufc_fights` datasets together. One column that will help us merge is the `weight_class` column, which appears in each dataset.
+
+However, we need to check that `weight_class` is recorded in the same way for each table!
+
+::: {.callout-tip}
+## Question
+
+Use [`unique`](https://pandas.pydata.org/docs/reference/api/pandas.Series.unique.html) to identify the unique weight classes in the `ufc_athletes` data and the `ufc_fights` data. Do the weight classes agree?
+:::
+
+
+### Cleaning weight class
+
+To make the weight classes match between the two data frames, we need to clean the entries in the `ufc_fights` data. Carrying out all the necessary cleaning steps is a bit beyond what we have covered in class so far, so I will provide the code here -- but we will discuss some of this material later in the class!
+
+The code below converts the weight classes in the `ufc_fights` data into values that match the `ufc_athletes` data, and stores the resulting output in `ufc_fights_clean`.
+
+```{python}
+import numpy as np
+from itertools import chain
+
+# unique weight classes from athletes data (converted to string)
+athlete_weights = ufc_athletes['weight_class'].dropna().unique().astype('U')
+
+# separate into an array of key words
+# (We will keep only key words from this array in the 
+# ufc_fights data)
+athlete_weights = np.char.split(athlete_weights)
+weight_keywords = np.unique(list(chain.from_iterable(athlete_weights)))
+
+# function to extract just the pieces of weight class that are 
+# in the weight_keywords
+def filter_words(split_words):
+  return ' '.join([s for s in split_words if s in weight_keywords])
+
+# apply the function to the ufc_fights data
+ufc_fights_clean = ufc_fights.assign(weight_class = 
+  ufc_fights['weight_class'].str.split(' ').apply(filter_words))
+```
+
+### Merging datasets
+
+::: {.callout-tip}
+## Question
+
+Combine the `ufc_fights_clean` dataset and the `ufc_athletes` dataset into a single table that looks like the one below (I am only showing the first few rows), to add information about fighter 1 (`f1_name`).
+
+Note:
+
+* I have kept only the `weight_class`, `f1_name`, `f2_name`, and `f1_result` columns from `ufc_fights_clean`
+* I included only the `name`, `weight_class`, `height`, `reach`, and `leg_reach` columns from `ufc_athletes`
+* If you have duplicate columns after the merge, you can use [`drop`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.drop.html)
+
+
+```{python}
+#| echo: false
+
+comb_data = ufc_fights_clean[['weight_class', 'f1_name', 'f2_name', 'f1_result']].merge(ufc_athletes[['name', 'weight_class', 'height', 'reach', 'leg_reach']], how = 'inner', 
+left_on = ['f1_name', 'weight_class'], 
+right_on = ['name', 'weight_class']).drop('name', axis=1)
+
+comb_data.head()
+```
+
+:::
+
+::: {.callout-tip}
+## Question
+
+Merge your result from the previous question with the `ufc_athletes` dataset again, this time to add information about fighter 2 (`f2_name`).
+
+For this second merge, the `suffixes` argument in the `merge` function may be useful!
+
+```{python}
+#| echo: false
+
+comb_data = comb_data.merge(ufc_athletes[['name', 'weight_class', 'height', 'reach', 'leg_reach']], how = 'inner', 
+left_on = ['f2_name', 'weight_class'], 
+right_on = ['name', 'weight_class'],
+suffixes = ['_1', '_2'])
+
+comb_data.head()
+```
+
+:::
+
+::: {.callout-tip}
+## Question
+
+Use the `assign` function to create columns for the difference in height, reach, and leg reach between the fighters.
+
+```{python}
+#| include: false
+
+comb_data = comb_data.assign(height_diff = comb_data['height_1'] - comb_data['height_2'])
+```
+
+:::
+
+### Plotting
+
+Finally, let's make a plot to examine the relationship between differences in physical characteristics, and the outcome of the fight. One option would be to make some boxplots using `plotly.express`:
+
+```{python}
+fig = px.box(comb_data, x="f1_result", y="height_diff")
+fig.show()
+```
+
+
+
+### Acknowledgment
+
+This data was borrowed from the [TidyTuesday](https://github.com/rfordatascience/tidytuesday/blob/main/data/2026/2026-07-07/readme.md) from July 7, 2026. The data were curated by Benjamin Smith.
+
+
+

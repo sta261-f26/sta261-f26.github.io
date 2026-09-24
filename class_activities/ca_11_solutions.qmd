@@ -1,0 +1,460 @@
+---
+title: "Activity: pandas data structures"
+format: html
+editor: source
+callout-icon: false
+ipynb-shell-interactivity: all
+---
+
+
+## Series
+
+Recall that in `R`, a `data.frame` is a collection of atomic vectors. In `pandas`, a `DataFrame` is a collection of `Series`.
+
+What is a `Series`? A `Series` is a one-dimensional object for storing data. E.g.:
+
+```{python}
+import pandas as pd
+
+s1 = pd.Series([1.0, 2.0, 3.0])
+s1
+```
+In many respects a `Series` behaves like an `R` vector. 
+
+For example, we can compute statistics like the sum or the mean:
+
+```{python}
+s1.sum()
+```
+
+```{python}
+s1.mean()
+```
+
+We can do arithmetic with a `Series`, which will update each entry:
+
+```{python}
+s1 + 1
+```
+
+```{python}
+s1**2 #(squaring)
+```
+
+Note that not all mathematical operations are built into base Python or `pandas`; for those operations, we will need to load an additional package, usually `NumPy`. For example, to take a square root:
+
+```{python}
+import numpy as np
+
+np.sqrt(s1)
+```
+
+And we can do arithmetic with multiple `Series`:
+
+```{python}
+s1 = pd.Series([1.0, 2.0, 3.0])
+s2 = pd.Series([4.0, 5.0, 6.0])
+
+s1 + s2
+```
+
+```{python}
+s1 * s2
+```
+### Practice question: correlation
+
+The **sample correlation** between $(X_1,...,X_n)$ and $(Y_1,...,Y_n)$ is given by 
+
+$$r = \dfrac{\sum \limits_{i=1}^n (X_i - \overline{X})(Y_i - \overline{Y})}{\sqrt{\sum \limits_{i=1}^n (X_i - \overline{X})^2} \sqrt{\sum \limits_{i=1}^n (Y_i - \overline{Y})^2}}$$
+
+where $\overline{X}$ and $\overline{Y}$ are the sample means.
+
+::: {.callout-tip}
+## Question
+
+Create the following two series in `pandas`:
+
+```{python}
+#| echo: false
+x = pd.Series([2.0, 2.5, 7.0, 9.5])
+y = pd.Series([-1.0, 3.0, 0.5, 0.9])
+```
+
+```{python}
+x
+```
+
+```{python}
+y
+```
+:::
+
+**Solution:**
+
+```{python}
+x = pd.Series([2.0, 2.5, 7.0, 9.5])
+y = pd.Series([-1.0, 3.0, 0.5, 0.9])
+```
+
+
+::: {.callout-tip}
+## Question
+
+Compute the correlation between the two series, using the formula and the arithmetic operations described above. (The answer should be approximately -0.0168)
+
+:::
+
+**Solution:**
+
+```{python}
+sum((x - x.mean()) * (y - y.mean())) / (
+  np.sqrt((x - x.mean()).pow(2).sum()) * 
+  np.sqrt((y - y.mean()).pow(2).sum())
+)
+```
+
+## Indexes
+
+We said that a `Series` behaves, in some ways, like an atomic vector in `R`. However, there are some important differences.
+
+One **key difference** is that a `Series` always has an **Index** -- this is like a label for each entry in the `Series`. The Index can be specified when creating the Series:
+
+```{python}
+s1 = pd.Series([1, 2, 3], index = ['a', 'b', 'c'])
+s1
+```
+**Important:** The `a, b, c` that is printed on the left is **not** another column in the `Series`. Rather, this is the Index!
+
+If we don't specify an index, `pandas` will default to a range index starting at 0:
+
+```{python}
+s2 = pd.Series(["hello", "world"])
+s2
+```
+
+
+### Choosing entries with the Index
+
+The Index can be used to choose entries from the `Series`:
+
+```{python}
+s1['a']
+```
+
+```{python}
+s1[['a', 'b']]
+```
+
+**Notes:**
+
+* If a single entry is selected, we **reduce the dimensionality** of the resulting object. That is, `s1['a']` returns a single number (the integer `1`), rather than a `Series`
+* To select multiple entries, we usually need to include them in a Python `list`. That is: `s1[['a', 'b']]` will work, but `s1['a', 'b']` will not!
+
+::: {.callout-tip}
+## Question
+
+Verify that running the following code does not work:
+
+```{python}
+#| eval: false
+s1 = pd.Series([1, 2, 3], index = ['a', 'b', 'c'])
+s1['a', 'b']
+```
+
+:::
+
+::: {.callout-tip}
+## Question
+
+Consider the following `Series`:
+
+```{python}
+x = pd.Series(["Statistics", "Mathematics", "Computer Science", "Spanish"], 
+              index = ['u', 'v', 'y', 'z'])
+```
+
+Extract just "Statistics" and "Mathematics", using the Index labels.
+
+:::
+
+**Solution:**
+
+```{python}
+x[['u', 'v']]
+```
+
+
+### Positional indexing
+
+Indexes in `pandas` often feel weird to `R` users, because we usually don't have row names for our vectors or data frames (it is sometimes possible, but it is not common). In `R`, we are instead used to indexing our vectors by *position*.
+
+Fortunately, using `.iloc` we can index a `Series` by position too!
+
+```{python}
+s1 = pd.Series([11, 23, 35], index = ['a', 'b', 'c'])
+s1.iloc[0]
+```
+
+```{python}
+s1.iloc[1]
+```
+
+```{python}
+s1.iloc[1:2] # right endpoint is not inlcuded!
+```
+
+```{python}
+s1.iloc[1:3]
+```
+
+**Notes:**
+
+* **In Python, positional indexing begins at 0!!** (whereas in `R`, it begins at 1)
+* In `R`, doing `1:3` will include both endpoints in the slice. In `Python`, the left endpoint will be included, but the right endpoint will *not*
+
+::: {.callout-tip}
+## Question
+
+Consider the following `Series`:
+
+```{python}
+x = pd.Series(["Statistics", "Mathematics", "Computer Science", "Spanish"], 
+              index = ['u', 'v', 'y', 'z'])
+```
+
+Extract just "Statistics" and "Mathematics", using *positional* indexing.
+
+:::
+
+```{python}
+x.iloc[0:2]
+```
+
+
+The difference between label indexing with `[]` and positional indexing with `.iloc[]` can cause problems for unwary users. Consider the following example:
+
+```{python}
+s3 = pd.Series(['a', 'b', 'c', 'd', 'e'], 
+                  index = [2, 3, 5, 7, 1])
+
+s3[1]
+```
+
+```{python}
+#| error: true
+s3[0]
+```
+
+::: {.callout-tip}
+## Question
+
+Explain why `s3[0]` fails, but `s3[1]` returns an answer.
+:::
+
+**Solution:** `s3[0]` is looking for an index with *label* 0 (not the first *position* of the series). However, the label 0 does not appear in the index of the series. But the label 1 does!
+
+### Index is preserved
+
+Finally, it is important to note that subsetting a `Series` will subset the corresponding `Index`:
+
+```{python}
+s3[[2, 7]]
+```
+
+This can again cause problems for unwary `R` users who forget about differences between label-based indexing and positional indexing. For example:
+
+```{python}
+s1 = pd.Series(['a', 'b', 'c', 'd', 'e'])
+s1[1:3] # now the index values are 1 and 2, because we subset
+```
+
+```{python}
+#| error: true
+s1[1:3][0] # fails because 0 is no longer in the index
+```
+
+```{python}
+s1[1:3].iloc[0] # works if we remember to use iloc
+```
+
+
+### Indexing and arithmetic
+
+When we combined two `Series` above, they had the same index (the default range index starting at 0). What happens if they have *different* indices?
+
+```{python}
+s1 = pd.Series([1.0, 2.0, 3.0], index = ['a', 'b', 'c'])
+s2 = pd.Series([4.0, 5.0, 6.0], index = ['c', 'd', 'b'])
+
+s1 + s2
+```
+
+```{python}
+s1 * s2
+```
+::: {.callout-tip}
+## Question
+
+How `pandas` handles arithmetic with `Series` of different indexes?
+:::
+
+**Solution:** The resulting series has an index that is the union of the indexes of the initial series. If an index level does not appear in all of the series, then the result will be `NaN` in the output. If an index level does appear in all of the series, then values are matched based on the index to compute the result.
+
+A big advantage of having an Index is that it makes it very easy to align different objects, without having to worry about position!
+
+## DataFrame
+
+A `DataFrame` in `pandas` is just a collection of `Series`:
+
+```{python}
+s1 = pd.Series([1.0, 2.0, 3.0])
+s2 = pd.Series([4.0, 5.0, 6.0])
+
+df1 = pd.DataFrame({"x": s1, "y": s2})
+df1
+```
+
+Like a `Series`, a `DataFrame` has an index, which labels the *rows*:
+
+```{python}
+s1 = pd.Series([1.0, 2.0, 3.0], index = ['a', 'b', 'c'])
+s2 = pd.Series([4.0, 5.0, 6.0], index = ['a', 'b', 'c'])
+
+df1 = pd.DataFrame({"x": s1, "y": s2})
+df1
+```
+::: {.callout-tip}
+## Question
+
+What happens if the `Series` used to construct a `DataFrame` have different indexes? Here is an example:
+
+```{python}
+s1 = pd.Series([1.0, 2.0, 3.0], index = ['a', 'b', 'c'])
+s2 = pd.Series([4.0, 5.0, 6.0], index = ['c', 'd', 'b'])
+
+df1 = pd.DataFrame({"x": s1, "y": s2})
+df1
+```
+
+Explain the output.
+:::
+
+**Solution:** The resulting data frame has an index that is the union of the indexes of the initial series. If an index level does not appear in all of the series, then the result will be `NaN` in the corresponding column. Values are aligned in the data frame based on index label.
+
+Again: a big advantage of having an Index is that it makes it very easy to align different objects, without having to worry about position!
+
+## Indexing DataFrames
+
+To extract one or more columns by column name:
+
+```{python}
+df1['x']
+```
+
+```{python}
+df1[['x', 'y']]
+```
+
+To extract one or more columns by *position*:
+
+```{python}
+df1.iloc[:,0]
+```
+
+```{python}
+df1.iloc[:,1]
+```
+
+```{python}
+df1.iloc[:,0:2]
+```
+
+```{python}
+df1.iloc[:, [0, 1]]
+```
+
+To extract rows by label, use `.loc`:
+
+```{python}
+df1.loc['b']
+```
+
+```{python}
+df1.loc[['b', 'c']]
+```
+
+To extract rows by position, use `.iloc`:
+
+```{python}
+df1.iloc[0]
+```
+
+```{python}
+df1.iloc[1:3]
+```
+
+We can also slice rows by a boolean vector:
+
+```{python}
+df1[df1['x'] <= 2]
+```
+
+```{python}
+df1[(df1['x'] <= 3) & (df1['y'] <= 5)]
+```
+
+### Practice
+
+
+
+Consider the following `DataFrame` in `pandas`:
+
+```{python}
+advisors = pd.DataFrame({
+  "name" : ["Dr. Beavers", "Dr. Huang", "Dr. Evans", "Dr. Mason", "Dr. Alarcon"],
+  "program" : ["Statistics", "Statistics", "Statistics", "Math", "Spanish"],
+  "office" : ["MAN 337", "MAN 340", "MAN 329", "MAN 334", "GRN 519"]
+})
+
+advisors
+```
+
+::: {.callout-tip}
+## Question
+
+Extract only the first and third columns of the `advisors` data frame, using column names.
+:::
+
+**Solution:** 
+
+```{python}
+advisors[['name', 'office']]
+```
+
+
+::: {.callout-tip}
+## Question
+
+Extract only the first and third columns of the `advisors` data frame, using positional indexing.
+:::
+
+**Solution:**
+
+```{python}
+advisors.iloc[:,[0,2]]
+```
+
+
+::: {.callout-tip}
+## Question
+
+Select only the rows of the `advisors` data frame corresponding to the statistics program
+:::
+
+**Solution:**
+
+```{python}
+advisors[advisors['program'] == 'Statistics']
+```
+
+

@@ -6,24 +6,6 @@ callout-icon: false
 ipynb-shell-interactivity: all
 ---
 
-**Instructions:** 
-
-* Work with a neighbor to answer the following questions 
-* You do **not** need to submit anything for this activity
-
-**Working in Python:** To work in Python, we will use [Google Colab](https://colab.research.google.com/):
-
-* Click on the link to go to Colab
-* Log in with your WFU google account
-* Click "New Notebook"
-
-**Turning off AI assistance:** Google Colab is annoying and will give you a ton of AI assistance by default. Here is how to turn that off:
-
-* In your notebook, go to Tools -> Settings
-* From the Settings menu, choose "AI Assistance"
-* **Uncheck** the boxes "Show AI-powered inline completions" and "Consented to use generative AI features"
-* **Check** the boxe "Hide generative AI features"
-
 ## Reshaping data
 
 On homework 2, you reshaped the following example data frame:
@@ -51,6 +33,14 @@ df_new
 ```
 :::
 
+**Solution:**
+
+```{python}
+df_new = df.pivot(columns = 'group', values = 'vals', index = 'id')
+df_new
+```
+
+
 ::: {.callout-tip}
 ## Question
 
@@ -63,6 +53,13 @@ df_new.assign(diff = df_new['T'] - df_new['C'])
 
 
 :::
+
+**Solution:**
+
+```{python}
+df_new = df_new.assign(diff = df_new['T'] - df_new['C'])
+df_new
+```
 
 ## More data reshaping
 
@@ -158,6 +155,17 @@ pd.wide_to_long(cleaned_data,
 It may help to look at the column names (`cleaned_data.columns`)
 :::
 
+**Solution:**
+
+```{python}
+pd.wide_to_long(cleaned_data, 
+                stubnames = ['pa', 'happiness', 'sc', 'fs', 'stress', 'homesick', 'lonely', 'na'],
+                i = ['RID', 'GroupAssignment'],
+                j = 'stage',
+                sep = "_",
+                suffix = ".*")
+```
+
 ## Avoiding listing columns
 
 In the previous problem, you likely had to list *many* column stub names! This is tedious and error-prone. How can we avoid it?
@@ -177,4 +185,14 @@ measurement_types
 Modify your code to the previous question to use the `measurement_types` list we created, rather than explicitly listing all the stub names.
 :::
 
+**Solution:**
+
+```{python}
+pd.wide_to_long(cleaned_data, 
+                stubnames = measurement_types,
+                i = ['RID', 'GroupAssignment'],
+                j = 'stage',
+                sep = "_",
+                suffix = ".*")
+```
 

@@ -61,17 +61,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="ca_12_files/libs/clipboard/clipboard.min.js"></script>
-<script src="ca_12_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="ca_12_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="ca_12_files/libs/quarto-html/popper.min.js"></script>
-<script src="ca_12_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="ca_12_files/libs/quarto-html/anchor.min.js"></script>
-<link href="ca_12_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="ca_12_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="ca_12_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="ca_12_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="ca_12_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="ca_12_solutions_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ca_12_solutions_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="ca_12_solutions_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="ca_12_solutions_files/libs/quarto-html/popper.min.js"></script>
+<script src="ca_12_solutions_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="ca_12_solutions_files/libs/quarto-html/anchor.min.js"></script>
+<link href="ca_12_solutions_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ca_12_solutions_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="ca_12_solutions_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="ca_12_solutions_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="ca_12_solutions_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
@@ -104,28 +104,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><strong>Instructions:</strong></p>
-<ul>
-<li>Work with a neighbor to answer the following questions</li>
-<li>You do <strong>not</strong> need to submit anything for this activity</li>
-</ul>
-<p><strong>Working in Python:</strong> To work in Python, we will use <a href="https://colab.research.google.com/">Google Colab</a>:</p>
-<ul>
-<li>Click on the link to go to Colab</li>
-<li>Log in with your WFU google account</li>
-<li>Click “New Notebook”</li>
-</ul>
-<p><strong>Turning off AI assistance:</strong> Google Colab is annoying and will give you a ton of AI assistance by default. Here is how to turn that off:</p>
-<ul>
-<li>In your notebook, go to Tools -&gt; Settings</li>
-<li>From the Settings menu, choose “AI Assistance”</li>
-<li><strong>Uncheck</strong> the boxes “Show AI-powered inline completions” and “Consented to use generative AI features”</li>
-<li><strong>Check</strong> the boxe “Hide generative AI features”</li>
-</ul>
 <section id="reshaping-data" class="level2">
 <h2 class="anchored" data-anchor-id="reshaping-data">Reshaping data</h2>
 <p>On homework 2, you reshaped the following example data frame:</p>
-<div id="352f931b" class="cell" data-execution_count="1">
+<div id="d288d2f4" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({</span>
@@ -145,7 +127,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-body-container callout-body">
 <p>Create a new data frame, called <code>df_new</code>, which looks like this:</p>
-<div id="89b67f33" class="cell" data-execution_count="2">
+<div id="5f52b40e" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
@@ -187,6 +169,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<p><strong>Solution:</strong></p>
+<div id="af3af7ea" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df_new <span class="op">=</span> df.pivot(columns <span class="op">=</span> <span class="st">'group'</span>, values <span class="op">=</span> <span class="st">'vals'</span>, index <span class="op">=</span> <span class="st">'id'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df_new</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">group</th>
+<th data-quarto-table-cell-role="th">C</th>
+<th data-quarto-table-cell-role="th">T</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">id</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>5</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2</th>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">3</th>
+<td>10</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -198,8 +223,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-body-container callout-body">
 <p>Use the <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.assign.html">assign</a> method to add a new column to <code>df_new</code>, so the resulting data looks like:</p>
-<div id="c4807c33" class="cell" data-execution_count="3">
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div id="7abb98e7" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <div>
 
 
@@ -245,24 +270,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<p><strong>Solution:</strong></p>
+<div id="ce9da79e" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_new <span class="op">=</span> df_new.assign(diff <span class="op">=</span> df_new[<span class="st">'T'</span>] <span class="op">-</span> df_new[<span class="st">'C'</span>])</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df_new</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">group</th>
+<th data-quarto-table-cell-role="th">C</th>
+<th data-quarto-table-cell-role="th">T</th>
+<th data-quarto-table-cell-role="th">diff</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">id</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>5</td>
+<td>4</td>
+<td>-1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2</th>
+<td>6</td>
+<td>6</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">3</th>
+<td>10</td>
+<td>8</td>
+<td>-2</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 </section>
 <section id="more-data-reshaping" class="level2">
 <h2 class="anchored" data-anchor-id="more-data-reshaping">More data reshaping</h2>
 <p>Consider the following data frame:</p>
-<div id="2af66936" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"id"</span> : [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>],</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"bp_1"</span> : [<span class="dv">100</span>, <span class="dv">120</span>, <span class="dv">125</span>],</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"bp_2"</span> : [<span class="dv">120</span>, <span class="dv">115</span>, <span class="dv">130</span>],</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"hr_1"</span> : [<span class="dv">60</span>, <span class="dv">75</span>, <span class="dv">80</span>],</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"hr_2"</span> : [<span class="dv">77</span>, <span class="dv">81</span>, <span class="dv">93</span>]</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="a0fec78a" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"id"</span> : [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>],</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"bp_1"</span> : [<span class="dv">100</span>, <span class="dv">120</span>, <span class="dv">125</span>],</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"bp_2"</span> : [<span class="dv">120</span>, <span class="dv">115</span>, <span class="dv">130</span>],</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"hr_1"</span> : [<span class="dv">60</span>, <span class="dv">75</span>, <span class="dv">80</span>],</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"hr_2"</span> : [<span class="dv">77</span>, <span class="dv">81</span>, <span class="dv">93</span>]</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>In the lecture, we used <code>wide_to_long</code> to reshape this data:</p>
-<div id="120248ac" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pd.wide_to_long(df, stubnames <span class="op">=</span> [<span class="st">'bp'</span>, <span class="st">'hr'</span>],</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                i <span class="op">=</span> <span class="st">'id'</span>, j <span class="op">=</span> <span class="st">'stage'</span>, sep <span class="op">=</span> <span class="st">"_"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div id="c3aaedfc" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pd.wide_to_long(df, stubnames <span class="op">=</span> [<span class="st">'bp'</span>, <span class="st">'hr'</span>],</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                i <span class="op">=</span> <span class="st">'id'</span>, j <span class="op">=</span> <span class="st">'stage'</span>, sep <span class="op">=</span> <span class="st">"_"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
 <div>
 
 
@@ -325,14 +398,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>But now suppose the names of our columns are slightly different:</p>
-<div id="7bd5eb44" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"id"</span> : [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>],</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"bp_a"</span> : [<span class="dv">100</span>, <span class="dv">120</span>, <span class="dv">125</span>],</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"bp_b"</span> : [<span class="dv">120</span>, <span class="dv">115</span>, <span class="dv">130</span>],</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"hr_a"</span> : [<span class="dv">60</span>, <span class="dv">75</span>, <span class="dv">80</span>],</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"hr_b"</span> : [<span class="dv">77</span>, <span class="dv">81</span>, <span class="dv">93</span>]</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="c9f7f818" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"id"</span> : [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>],</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"bp_a"</span> : [<span class="dv">100</span>, <span class="dv">120</span>, <span class="dv">125</span>],</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"bp_b"</span> : [<span class="dv">120</span>, <span class="dv">115</span>, <span class="dv">130</span>],</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"hr_a"</span> : [<span class="dv">60</span>, <span class="dv">75</span>, <span class="dv">80</span>],</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"hr_b"</span> : [<span class="dv">77</span>, <span class="dv">81</span>, <span class="dv">93</span>]</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -345,19 +418,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-body-container callout-body">
 <p>What happens if you try to use <code>wide_to_long</code> in the same way, to reshape this data frame?</p>
-<div id="40518d22" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pd.wide_to_long(df, stubnames <span class="op">=</span> [<span class="st">'bp'</span>, <span class="st">'hr'</span>],</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                i <span class="op">=</span> <span class="st">'id'</span>, j <span class="op">=</span> <span class="st">'stage'</span>, sep <span class="op">=</span> <span class="st">"_"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="074c788e" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pd.wide_to_long(df, stubnames <span class="op">=</span> [<span class="st">'bp'</span>, <span class="st">'hr'</span>],</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                i <span class="op">=</span> <span class="st">'id'</span>, j <span class="op">=</span> <span class="st">'stage'</span>, sep <span class="op">=</span> <span class="st">"_"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
 <p>The issue is that <code>wide_to_long</code> expects the suffix (everything after the underscore) to be a number – when it sees a letter instead (<code>a</code> or <code>b</code>), it gets confused.</p>
 <p>The solution is to tell the function what type of suffix to expect! To do this, we can use a <em>regular expression</em> (we will see more of this later in the course):</p>
-<div id="36cc5416" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pd.wide_to_long(df, stubnames <span class="op">=</span> [<span class="st">'bp'</span>, <span class="st">'hr'</span>],</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                i <span class="op">=</span> <span class="st">'id'</span>, j <span class="op">=</span> <span class="st">'stage'</span>, sep <span class="op">=</span> <span class="st">"_"</span>,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                suffix <span class="op">=</span> <span class="st">'.+'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div id="733810fc" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pd.wide_to_long(df, stubnames <span class="op">=</span> [<span class="st">'bp'</span>, <span class="st">'hr'</span>],</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                i <span class="op">=</span> <span class="st">'id'</span>, j <span class="op">=</span> <span class="st">'stage'</span>, sep <span class="op">=</span> <span class="st">"_"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                suffix <span class="op">=</span> <span class="st">'.+'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 
 
@@ -423,9 +496,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="back-to-the-dog-data" class="level2">
 <h2 class="anchored" data-anchor-id="back-to-the-dog-data">Back to the dog data</h2>
 <p>On the first day of class, we discussed an experiment which investigated whether interacting with dogs can help exam stress for college students. After cleaning the raw measurements, the experiment data looks like this:</p>
-<div id="c917c893" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>cleaned_data</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div id="aac3ebef" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>cleaned_data</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 
 
@@ -693,8 +766,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>The data can be imported into Python with the following code:</p>
-<div id="97e3b80c" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cleaned_data <span class="op">=</span> pd.read_csv(<span class="st">"https://sta261-f26.github.io/class_activities/cleaned_dog_data.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="8cf0d274" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cleaned_data <span class="op">=</span> pd.read_csv(<span class="st">"https://sta261-f26.github.io/class_activities/cleaned_dog_data.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -707,8 +780,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-body-container callout-body">
 <p>Reshape the <code>cleaned_data</code> in pandas so it looks like this:</p>
-<div id="840b2faa" class="cell" data-execution_count="12">
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div id="66c5fdcc" class="cell" data-execution_count="14">
+<div class="cell-output cell-output-display" data-execution_count="12">
 <div>
 
 
@@ -887,17 +960,201 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>It may help to look at the column names (<code>cleaned_data.columns</code>)</p>
 </div>
 </div>
+<p><strong>Solution:</strong></p>
+<div id="e26f5196" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>pd.wide_to_long(cleaned_data, </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                stubnames <span class="op">=</span> [<span class="st">'pa'</span>, <span class="st">'happiness'</span>, <span class="st">'sc'</span>, <span class="st">'fs'</span>, <span class="st">'stress'</span>, <span class="st">'homesick'</span>, <span class="st">'lonely'</span>, <span class="st">'na'</span>],</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                i <span class="op">=</span> [<span class="st">'RID'</span>, <span class="st">'GroupAssignment'</span>],</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                j <span class="op">=</span> <span class="st">'stage'</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                sep <span class="op">=</span> <span class="st">"_"</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                suffix <span class="op">=</span> <span class="st">".*"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">pa</th>
+<th data-quarto-table-cell-role="th">happiness</th>
+<th data-quarto-table-cell-role="th">sc</th>
+<th data-quarto-table-cell-role="th">fs</th>
+<th data-quarto-table-cell-role="th">stress</th>
+<th data-quarto-table-cell-role="th">homesick</th>
+<th data-quarto-table-cell-role="th">lonely</th>
+<th data-quarto-table-cell-role="th">na</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">RID</th>
+<th data-quarto-table-cell-role="th">GroupAssignment</th>
+<th data-quarto-table-cell-role="th">stage</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th rowspan="2" data-quarto-table-cell-role="th" data-valign="top">1</th>
+<th rowspan="2" data-quarto-table-cell-role="th" data-valign="top">Control</th>
+<th data-quarto-table-cell-role="th">pre</th>
+<td>3.2</td>
+<td>2.333333</td>
+<td>3.900000</td>
+<td>6.125</td>
+<td>2</td>
+<td>3</td>
+<td>2.25</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">post</th>
+<td>3.8</td>
+<td>3.333333</td>
+<td>3.800000</td>
+<td>6.000</td>
+<td>2</td>
+<td>3</td>
+<td>1.70</td>
+<td>1.2</td>
+</tr>
+<tr class="odd">
+<th rowspan="2" data-quarto-table-cell-role="th" data-valign="top">2</th>
+<th rowspan="2" data-quarto-table-cell-role="th" data-valign="top">Direct</th>
+<th data-quarto-table-cell-role="th">pre</th>
+<td>3.0</td>
+<td>3.333333</td>
+<td>5.150000</td>
+<td>5.250</td>
+<td>2</td>
+<td>4</td>
+<td>1.90</td>
+<td>1.8</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">post</th>
+<td>3.2</td>
+<td>4.000000</td>
+<td>5.263158</td>
+<td>6.000</td>
+<td>1</td>
+<td>2</td>
+<td>1.60</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">3</th>
+<th data-quarto-table-cell-role="th">Indirect</th>
+<th data-quarto-table-cell-role="th">pre</th>
+<td>2.8</td>
+<td>2.666667</td>
+<td>4.100000</td>
+<td>5.375</td>
+<td>4</td>
+<td>3</td>
+<td>2.25</td>
+<td>1.6</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">282</th>
+<th data-quarto-table-cell-role="th">Control</th>
+<th data-quarto-table-cell-role="th">post</th>
+<td>3.2</td>
+<td>5.000000</td>
+<td>5.550000</td>
+<td>6.000</td>
+<td>3</td>
+<td>2</td>
+<td>1.15</td>
+<td>1.2</td>
+</tr>
+<tr class="even">
+<th rowspan="2" data-quarto-table-cell-role="th" data-valign="top">283</th>
+<th rowspan="2" data-quarto-table-cell-role="th" data-valign="top">Direct</th>
+<th data-quarto-table-cell-role="th">pre</th>
+<td>3.2</td>
+<td>2.000000</td>
+<td>4.650000</td>
+<td>4.750</td>
+<td>4</td>
+<td>1</td>
+<td>2.50</td>
+<td>3.6</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">post</th>
+<td>3.8</td>
+<td>3.333333</td>
+<td>4.450000</td>
+<td>4.625</td>
+<td>2</td>
+<td>1</td>
+<td>2.00</td>
+<td>1.8</td>
+</tr>
+<tr class="even">
+<th rowspan="2" data-quarto-table-cell-role="th" data-valign="top">300</th>
+<th rowspan="2" data-quarto-table-cell-role="th" data-valign="top">Indirect</th>
+<th data-quarto-table-cell-role="th">pre</th>
+<td>3.2</td>
+<td>4.000000</td>
+<td>4.450000</td>
+<td>5.875</td>
+<td>2</td>
+<td>1</td>
+<td>2.05</td>
+<td>2.2</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">post</th>
+<td>2.8</td>
+<td>4.000000</td>
+<td>4.700000</td>
+<td>5.625</td>
+<td>3</td>
+<td>2</td>
+<td>1.90</td>
+<td>2.6</td>
+</tr>
+</tbody>
+</table>
+
+<p>568 rows × 8 columns</p>
+</div>
+</div>
+</div>
 </section>
 <section id="avoiding-listing-columns" class="level2">
 <h2 class="anchored" data-anchor-id="avoiding-listing-columns">Avoiding listing columns</h2>
 <p>In the previous problem, you likely had to list <em>many</em> column stub names! This is tedious and error-prone. How can we avoid it?</p>
 <p>One way is to extract the information we care about from the column names, with a regular expression. Here is one way we could do this (there are many different options, and it is ok if you don’t understand this code right now!):</p>
-<div id="4c6388b3" class="cell" data-execution_count="13">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>measurement_types <span class="op">=</span> <span class="bu">set</span>([s[<span class="dv">0</span>] <span class="cf">for</span> s <span class="kw">in</span> cleaned_data.columns.<span class="bu">str</span>.split(<span class="st">'_'</span>) </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(s) <span class="op">&gt;</span> <span class="dv">1</span>])</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>measurement_types</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
+<div id="6fc1b746" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>measurement_types <span class="op">=</span> <span class="bu">set</span>([s[<span class="dv">0</span>] <span class="cf">for</span> s <span class="kw">in</span> cleaned_data.columns.<span class="bu">str</span>.split(<span class="st">'_'</span>) </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(s) <span class="op">&gt;</span> <span class="dv">1</span>])</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>measurement_types</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>{'fs', 'happiness', 'homesick', 'lonely', 'na', 'pa', 'sc', 'stress'}</code></pre>
 </div>
 </div>
@@ -912,6 +1169,190 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-body-container callout-body">
 <p>Modify your code to the previous question to use the <code>measurement_types</code> list we created, rather than explicitly listing all the stub names.</p>
+</div>
+</div>
+<p><strong>Solution:</strong></p>
+<div id="ecb7d6c7" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pd.wide_to_long(cleaned_data, </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                stubnames <span class="op">=</span> measurement_types,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                i <span class="op">=</span> [<span class="st">'RID'</span>, <span class="st">'GroupAssignment'</span>],</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                j <span class="op">=</span> <span class="st">'stage'</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                sep <span class="op">=</span> <span class="st">"_"</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                suffix <span class="op">=</span> <span class="st">".*"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">happiness</th>
+<th data-quarto-table-cell-role="th">pa</th>
+<th data-quarto-table-cell-role="th">stress</th>
+<th data-quarto-table-cell-role="th">sc</th>
+<th data-quarto-table-cell-role="th">fs</th>
+<th data-quarto-table-cell-role="th">homesick</th>
+<th data-quarto-table-cell-role="th">lonely</th>
+<th data-quarto-table-cell-role="th">na</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">RID</th>
+<th data-quarto-table-cell-role="th">GroupAssignment</th>
+<th data-quarto-table-cell-role="th">stage</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th rowspan="2" data-quarto-table-cell-role="th" data-valign="top">1</th>
+<th rowspan="2" data-quarto-table-cell-role="th" data-valign="top">Control</th>
+<th data-quarto-table-cell-role="th">pre</th>
+<td>2.333333</td>
+<td>3.2</td>
+<td>2</td>
+<td>3.900000</td>
+<td>6.125</td>
+<td>3</td>
+<td>2.25</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">post</th>
+<td>3.333333</td>
+<td>3.8</td>
+<td>2</td>
+<td>3.800000</td>
+<td>6.000</td>
+<td>3</td>
+<td>1.70</td>
+<td>1.2</td>
+</tr>
+<tr class="odd">
+<th rowspan="2" data-quarto-table-cell-role="th" data-valign="top">2</th>
+<th rowspan="2" data-quarto-table-cell-role="th" data-valign="top">Direct</th>
+<th data-quarto-table-cell-role="th">pre</th>
+<td>3.333333</td>
+<td>3.0</td>
+<td>2</td>
+<td>5.150000</td>
+<td>5.250</td>
+<td>4</td>
+<td>1.90</td>
+<td>1.8</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">post</th>
+<td>4.000000</td>
+<td>3.2</td>
+<td>1</td>
+<td>5.263158</td>
+<td>6.000</td>
+<td>2</td>
+<td>1.60</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">3</th>
+<th data-quarto-table-cell-role="th">Indirect</th>
+<th data-quarto-table-cell-role="th">pre</th>
+<td>2.666667</td>
+<td>2.8</td>
+<td>4</td>
+<td>4.100000</td>
+<td>5.375</td>
+<td>3</td>
+<td>2.25</td>
+<td>1.6</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">282</th>
+<th data-quarto-table-cell-role="th">Control</th>
+<th data-quarto-table-cell-role="th">post</th>
+<td>5.000000</td>
+<td>3.2</td>
+<td>3</td>
+<td>5.550000</td>
+<td>6.000</td>
+<td>2</td>
+<td>1.15</td>
+<td>1.2</td>
+</tr>
+<tr class="even">
+<th rowspan="2" data-quarto-table-cell-role="th" data-valign="top">283</th>
+<th rowspan="2" data-quarto-table-cell-role="th" data-valign="top">Direct</th>
+<th data-quarto-table-cell-role="th">pre</th>
+<td>2.000000</td>
+<td>3.2</td>
+<td>4</td>
+<td>4.650000</td>
+<td>4.750</td>
+<td>1</td>
+<td>2.50</td>
+<td>3.6</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">post</th>
+<td>3.333333</td>
+<td>3.8</td>
+<td>2</td>
+<td>4.450000</td>
+<td>4.625</td>
+<td>1</td>
+<td>2.00</td>
+<td>1.8</td>
+</tr>
+<tr class="even">
+<th rowspan="2" data-quarto-table-cell-role="th" data-valign="top">300</th>
+<th rowspan="2" data-quarto-table-cell-role="th" data-valign="top">Indirect</th>
+<th data-quarto-table-cell-role="th">pre</th>
+<td>4.000000</td>
+<td>3.2</td>
+<td>2</td>
+<td>4.450000</td>
+<td>5.875</td>
+<td>1</td>
+<td>2.05</td>
+<td>2.2</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">post</th>
+<td>4.000000</td>
+<td>2.8</td>
+<td>3</td>
+<td>4.700000</td>
+<td>5.625</td>
+<td>2</td>
+<td>1.90</td>
+<td>2.6</td>
+</tr>
+</tbody>
+</table>
+
+<p>568 rows × 8 columns</p>
+</div>
 </div>
 </div>
 </section>

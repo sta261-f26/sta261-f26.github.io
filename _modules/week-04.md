@@ -11,11 +11,11 @@ September 14
 
 September 16
 : Data types in R
-  : [slides (html)](https://sta261-f26.github.io/slides/lecture_09.html), [slides (pdf)](https://sta261-f26.github.io/slides/lecture_09.pdf), [Class Activity](https://sta261-f26.github.io/class_activities/ca_09.html)
+  : [slides (html)](https://sta261-f26.github.io/slides/lecture_09.html), [slides (pdf)](https://sta261-f26.github.io/slides/lecture_09.pdf), [Class Activity](https://sta261-f26.github.io/class_activities/ca_09.html), [Class Activity solutions](https://sta261-f26.github.io/class_activities/ca_09_solutions.html)
 
 September 18
 : Intro to data wrangling in Python
-  : [slides (html)](https://sta261-f26.github.io/slides/lecture_10.html), [slides (pdf)](https://sta261-f26.github.io/slides/lecture_10.pdf), [Class Activity](https://sta261-f26.github.io/class_activities/ca_10.html)
+  : [slides (html)](https://sta261-f26.github.io/slides/lecture_10.html), [slides (pdf)](https://sta261-f26.github.io/slides/lecture_10.pdf), [Class Activity](https://sta261-f26.github.io/class_activities/ca_10.html), [Class Activity solutions](https://sta261-f26.github.io/class_activities/ca_10_solutions.html)
   
 : **Homework 4 released**{: .label .label-yellow }
   : [HW 4](https://sta261-f26.github.io/homework/hw_04.html)
