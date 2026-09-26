@@ -255,24 +255,28 @@ For each of the following chunks of code, write down the output:
 9. 
 
 ```{python}
+#| eval: false
 gym_members.loc['c']
 ```
 
 10.
 
 ```{python}
+#| eval: false
 gym_members.iloc[3]
 ```
 
 11.
 
 ```{python}
+#| eval: false
 gym_members.groupby('type').agg(mean_age = ('age', 'mean'))
 ```
 
 12.
 
 ```{python}
+#| eval: false
 gym_members.assign(cost_per_visit = 
   gym_members['fee']/gym_members['visits'])
 ```
@@ -280,6 +284,7 @@ gym_members.assign(cost_per_visit =
 13.
 
 ```{python}
+#| eval: false
 (gym_members.groupby('type')
            .agg(median_visits = ('visits', 'median'))
            .agg(max = ('median_visits', 'max')))
