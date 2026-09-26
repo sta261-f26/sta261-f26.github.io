@@ -1,0 +1,595 @@
+---
+title: "Exam 1 review"
+format: html
+editor: source
+---
+
+Below are questions to help you study for Exam 1. These are some examples of the kinds of questions I might ask.
+
+* This is not a practice exam. There will be fewer questions on the actual exam.
+* The questions cover most, but not all, possible material for the exam.
+* The distribution of questions here is not necessarily reflective of the distribution of questions on the actual exam.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE)
+```
+
+# What you should know
+
+## Data wrangling
+
+You are expected to be familiar with the main ways we have discussed manipulating data:
+
+* Subsetting rows or columns
+* Grouping and summarizing
+* Combining datasets (merging/joining; difference between left and inner joins)
+* Reshaping data (pivoting)
+
+This means that you will need to be familiar with some of the key data wrangling functions that we have used from the `tidyverse` and from `pandas`. 
+
+### Functions to know from R
+
+* `mutate`
+* `select`
+* `filter`
+* `count`
+* `group_by`
+* `summarize`
+* `inner_join`
+* `left_join`
+* `pivot_longer`
+* `pivot_wider`
+* Within `pivot_longer`, you should also be familiar with passing multiple column names to `names_to`, and the use of `.value`
+* You should know the names of basic summary statistic functions: `mean`, `median`, `min`, `max`, `sd`
+* When calculating summary statistics (means, medians, standard deviations, etc.) you should know that missing values need to be ignored (`na.rm = T` in many functions) unless we want the result to be `NA`
+
+### Functions to know from pandas
+
+* `assign`
+* `groupby`
+* `agg`
+* `merge`
+* `melt`
+* `wide_to_long`
+* `pivot`
+* You should know that by default, `pandas` functions for computing summary statistics will skip missing values (unlike R!)
+* You should know the names of basic summary statistic functions: `mean`, `median`, `min`, `max`, `std`, `count`
+
+### How well do I need to know the functions?
+
+* You are expected to know which function to use in order to accomplish a specific task. For example: if you are asked to reshape data, and your answer uses `pivot_wider` when you should have used `pivot_longer`, you will lose points.
+
+* You are expected to be able to identify the order in which functions should be applied (which will depend on the specific problem).
+
+* You are expected to know the effect of these functions on data. E.g., `mutate` adds or modifies a column; `summarize` will produce one row of summary statistics for each group; the differences between `pivot_longer` and `pivot_wider`; etc.
+
+* You should *roughly* know the arguments that each function takes. For example, pivoting requires me to specify which columns to pivot, and what to do with names and values. **However**, you do **not** need to know the exact argument names. E.g., if you write `names` and `values` instead of `names_to` and `values_to`, I would not deduct any points.
+
+* I will **not** harshly penalize syntax mistakes. Some examples (not exhaustive):
+    * In `pandas`, you can create a named summary statistic in `agg` with something like `.agg(mean_length = ('bill_length', 'mean'))`. If you instead wrote `.agg(mean_length = mean(bill_length))`, you would get most of the points for that problem
+    * In `pandas`, when you want to pass multiple variable names in a function argument, you often need to pass it as a list. E.g., `pd.wide_to_long(..., i = ['RID', 'GroupAssignment'],...)`. If you instead wrote `i = 'RID', 'GroupAssignment'`, I would not deduct points
+    * If you write `groupby` instead of `group_by` (or vice versa), I don't care. You clearly know what function you want to use!
+
+### What about other functions we have seen?
+
+There are lots of other functions we have used on the homework and class activities (examples include `fct_collapse`, `case_when`, `drop_na`, `reset_index`, all of the plotting functions, etc.). I will **not** test you on these additional functions.
+
+This doesn't mean that those functions aren't important! Just that there is a limit to what I can reasonably expect you to memorize for a written exam, and I want you to focus on the core functions that implement the big data wrangling ideas (grouping, summarizing, mutating, reshaping, joining).
+
+### General skills
+
+* You should be familiar with the idea of piping/chaining multiple wrangling steps together in R and Python
+* Given input data and code, correctly determine the output of the code
+* Given input data and desired output, write a small chunk of code to produce the desired output
+* Given one or more datasets and a research question of interest, explain how you would use the data to address the question 
+
+## Data structures and indexing
+
+You are expected to be familiar with some of the basic structures that we have worked with in R and pandas. 
+
+### In R
+
+The data structures to know include:
+
+* vectors
+* lists
+* data frames
+
+You should be able to:
+
+* extract elements from a vector using `[]`
+* extract elements from a list using `[]` and `[[]]`
+* create a list containing desired elements
+* explain the relationship between a data frame and a list
+* You do **not** need to know the code for creating a data frame from scratch
+
+### In Python
+
+The data structures to know include:
+
+* pandas Series
+* pandas DataFrames
+
+You should be able to:
+
+* explain the difference between choosing elements by index label vs. choosing elements by position
+* extract elements from a Series using the index
+* extract elements from a Series using position ( with `.iloc`)
+* understand that different pandas functions interact with the index in different ways. **However**, you are **not** expected to memorize these different behaviors
+* You do **not** need to know the code for creating a data frame or Series from scratch
+
+# Study suggestions
+
+* Make flashcards for the key functions I listed above
+* Create small datasets in R or Python, and practice writing code to produce desired output
+* Team up with a friend to create practice problems: one person can write code and the other person can predict what the output will be. Or one person can create the data and output, and the other person can try to figure out what code was used!
+* Try doing the activities from class *without* looking at the slides, notes, solutions, or searching the internet for help.
+* Find real datasets online, and think about how you would analyze them. The [TidyTuesday](https://github.com/rfordatascience/tidytuesday/tree/main/data/2026) datasets are a *really* good source of real, messy data. (Just ignore any datasets that are focused mostly on text data, since we don't know how to work with text data or strings yet!)
+
+
+# Practice with data wrangling
+
+## Reading data wrangling code in R
+
+Here are two small datasets, `df1` and `df2`:
+
+```{r, include=F}
+set.seed(3)
+
+df1 <- data.frame(id = 1:5, 
+                  x = sample(1:10, 5, replace=T),
+                  y = sample(1:10, 5, replace=T),
+                  z = sample(1:10, 5, replace=T))
+
+df2 <- data.frame(id = 3:6,
+                  a = sample(1:10, 4, replace=T),
+                  b = sample(1:10, 4, replace=T))
+```
+
+```{r}
+df1
+
+df2
+```
+
+
+For each of the following chunks of code, write down the output or explain why it will cause an error.
+
+1.
+
+```{r, eval=F}
+df1 |>
+  count(z)
+```
+
+2.
+
+```{r, eval=F}
+df1 |>
+  left_join(df2, join_by(id))
+```
+
+3.
+
+```{r, eval=F}
+df1 |>
+  inner_join(df2, join_by(id))
+```
+
+4.
+
+```{r, eval=F}
+df1 |>
+  group_by(z) |>
+  summarize(max_b = max(b))
+```
+
+
+5.
+
+```{r, eval=F}
+df1 |>
+  select(x, y) |>
+  pivot_longer(cols = -id,
+               names_to = "measurement",
+               values_to = "value")
+```
+
+6.
+
+```{r, eval=F}
+df1 |>
+  select(id, x, y) |>
+  pivot_longer(cols = -id,
+               names_to = "measurement",
+               values_to = "value") |>
+  filter(id %in% c(1, 2, 3))
+```
+
+7.
+
+```{r, eval=F}
+df1 |>
+  left_join(df2, join_by(id)) |>
+  mutate(new_var = x + a) |>
+  group_by(z) |>
+  summarize(mean_new_var = mean(new_var))
+```
+
+
+8.
+
+```{r, eval=F}
+df1 |>
+  left_join(df2, join_by(id)) |>
+  mutate(new_var = x + a) |>
+  group_by(z) |>
+  summarize(mean_new_var = mean(new_var, na.rm=T)) |>
+  summarize(mean_b = mean(b))
+```
+
+## Reading code in Python
+
+Here is an example data frame, containing information on six members of a gym and their visits over the last month:
+
+```{python}
+#| echo: false
+import pandas as pd
+gym_members = pd.DataFrame({
+  'id' : [1003, 248, 392, 40193, 5, 6923],
+  'type' : ['student', 'adult', 'student', 'student', 'adult', 'senior'],
+  'age': [18, 50, 20, 19, 50, 92],
+  'visits': [10, 35, 2, 5, 5, 90],
+  'fee': [50, 70, 50, 50, 70, 45]
+  },
+  index = ['a', 'b', 'c', 'd', 'e', 'f'])
+```
+
+```{python}
+gym_members
+```
+
+
+For each of the following chunks of code, write down the output:
+
+9. 
+
+```{python}
+gym_members.loc['c']
+```
+
+10.
+
+```{python}
+gym_members.iloc[3]
+```
+
+11.
+
+```{python}
+gym_members.groupby('type').agg(mean_age = ('age', 'mean'))
+```
+
+12.
+
+```{python}
+gym_members.assign(cost_per_visit = 
+  gym_members['fee']/gym_members['visits'])
+```
+
+13.
+
+```{python}
+(gym_members.groupby('type')
+           .agg(median_visits = ('visits', 'median'))
+           .agg(max = ('median_visits', 'max')))
+```
+
+### Another example
+
+Here are two data frames:
+
+```{python}
+#| include: false
+patients = pd.DataFrame({
+  'id': [24, 56, 11],
+  'doctor': ['a', 'b', 'd'],
+  'age': [33, 19, 20],
+  'height': [155, 170, 160],
+  'bp': [120, 115, 130]
+})
+
+providers = pd.DataFrame({
+  'provider': ['a', 'b', 'c'],
+  'location': ['Greensboro', 'Winston-Salem', 'Durham']
+})
+```
+
+```{python}
+patients
+```
+
+```{python}
+providers
+```
+
+
+
+For each of the following chunks of code, write down the output. (Note: I am not going to take off points if the rows are in the wrong order).
+
+14.
+
+```{python}
+#| eval: false
+patients.melt(id_vars = ['id', 'age'],
+  value_vars = ['height', 'bp'],
+  var_name = 'measurement',
+  value_name = 'value')
+```
+
+15.
+
+```{python}
+#| eval: false
+patients.merge(providers, left_on = 'doctor', 
+               right_on = 'provider', how = 'left')
+```
+
+16. 
+
+```{python}
+#| eval: false
+patients.merge(providers, left_on = 'doctor', 
+               right_on = 'provider', how = 'inner')
+```
+
+### Another example
+
+Here is another example:
+
+```{python}
+#| include: false
+patients = pd.DataFrame({
+  'id': [24, 56, 11],
+  'doctor': ['a', 'b', 'd'],
+  'age': [33, 19, 20],
+  'bp_systolic': [120, 115, 130], 
+  'bp_diastolic': [82, 83, 90]
+})
+```
+
+```{python}
+patients
+```
+
+Write the output of the following code:
+
+17.
+
+```{python}
+#| eval: false
+pd.wide_to_long(patients, stubnames = 'bp',
+  i = ['id', 'doctor', 'age'],
+  j = 'type', sep = '_', suffix ='.+')
+```
+
+
+
+## Writing code
+
+In each of the questions below, write code to produce the output from the original data.
+
+18. Input data:
+
+
+```{r, include=F}
+library(tidyverse)
+advisors <- data.frame(
+  professor = c("Dr. Beavers", "Dr. Evans", "Dr. Hepler",
+           "Dr. Mason", "Dr. Mason", "Dr. Esarey"),
+  program = c("Statistics", "Statistics", "Statistics",
+              "Math", "Psychology", "Politics"),
+  office = c("MAN 337", "MAN 329", "MAN 341",
+             "MAN 334", "GRN 438", "KRB 319")
+)
+```
+
+```{r}
+advisors
+```
+
+
+Output data in R:
+
+```{r, echo=F}
+advisors |>
+  count(program)
+```
+
+Output data in Python:
+
+```{python}
+#| echo: false
+advisors = r.advisors
+
+advisors.groupby('program').agg(n = ('office', 'count'))
+```
+
+
+
+19. Input data:
+
+```{r, echo=F}
+students <- data.frame(
+  name = c("Ridwaan", "Coren", "Hallie", "Kathy", "Lianne"),
+  major = c("Statistics", "Statistics", "Math", "Politics", "Statistics"),
+  year = c(3, 2, 2, 4, 3),
+  advisor = c("Dr. Beavers", "Dr. Evans", "Dr. Mason", "Dr. Esarey", "Dr. Hepler")
+)
+```
+
+```{r}
+students
+```
+
+
+Output data in R:
+
+```{r, echo=F}
+students |>
+  group_by(major) |>
+  summarize(mean_year = mean(year))
+```
+
+Output data in Python:
+
+```{python}
+#| echo: false
+students = r.students
+students.groupby('major').agg(mean_year = ('year', 'mean'))
+```
+20.
+
+Input data:
+
+```{r}
+advisors
+```
+
+```{r}
+students
+```
+
+Output data in R:
+
+```{r, echo=F}
+students |>
+  left_join(advisors, join_by(advisor == professor,
+                              major == program))
+```
+
+
+
+Output data in Python:
+
+```{python}
+#| echo: false
+students.merge(advisors, left_on = ['advisor', 'major'],
+               right_on = ['professor', 'program'],
+               how = 'left').drop(['professor', 'program'],
+                                             axis = 1)
+```
+
+21. Input data:
+
+```{r, include=F}
+ex_df <- data.frame(
+  group = c('a', 'b', 'c'),
+  x_start = c(2, 3, 4),
+  x_end = c(5, 6, 7),
+  y_start = c(11, 12, 13),
+  y_end = c(21, 22, 23)
+)
+```
+
+```{r}
+ex_df
+```
+
+Output data in R:
+
+```{r, echo=F}
+ex_df |>
+  pivot_longer(cols = -group,
+               names_to = c(".value", "time"),
+               names_sep = "_")
+```
+
+Output data in Python:
+
+```{python}
+#| echo: false
+ex_df = r.ex_df
+pd.wide_to_long(ex_df, stubnames = ['x', 'y'], 
+  i = 'group', j = 'time', sep = '_', suffix = ".+")
+```
+
+## Indexing in R 
+
+22. Here is a vector in R. Write code to extract the third and fifth elements.
+
+
+```{r, include=F}
+x <- c(23, 48, 42, 19, 24, 67)
+```
+
+```{r}
+x
+```
+
+23. Here is a list in R. Write code to extract the vector `2 6 1`:
+
+```{r}
+x <- list(1, 2, list(6, c(2, 6, 1), 1))
+x
+```
+
+## Short answer
+
+24. Describe some differences between data frames in R vs. pandas.
+
+# Data analysis: water quality at Sydney beaches
+
+High rainfall during summer 2025 caused concern about the water quality of beaches in Sydney, Australia.
+
+To explore the relationship between rainfall and water quality, we have measurements on both water quality and weather data from 1991 to 2025.
+
+**Research question:** How is rainfall related to E-coli bacteria levels?
+
+## Data Dictionary
+
+### `water_quality.csv`
+
+|variable              |class     |description                           |
+|:---------------------|:---------|:-------------------------------------|
+|region                |character |Area of Sydney City |
+|council               |character |City council responsible for water quality |
+|swim_site             |character |Name of beach/swimming location |
+|date                  |date      |Date |
+|time                  |time      |Time of day |
+|enterococci_cfu_100ml |integer   |Enterococci bacteria levels in colony forming units (CFU) per 100 millilitres of water |
+|water_temperature_c   |integer   |Water temperature in degrees Celsius |
+|conductivity_ms_cm    |integer   |Conductivity in microsiemens per centimetre |
+|latitude              |double    |Latitude |
+|longitude             |double    |Longitude |
+
+### `weather.csv`
+
+|variable         |class  |description                           |
+|:----------------|:------|:-------------------------------------|
+|date             |date   |Date |
+|max_temp_C       |double |Maximum temperature in degrees Celsius |
+|min_temp_C       |double |Minimum temperature in degrees Celsius |
+|precipitation_mm |double |Rainfall in millimetres |
+|latitude         |double |Latitude |
+|longitude        |double |Longitude |
+
+## Your task
+
+Describe how you will use the available data to answer the research question. Your answer must include:
+
+* A description of any data wrangling steps you will perform. For example, if you plan to create any new columns or compute summary statistics, describe how these new variables/statistics will be calculated. If you plan to combine data from multiple tables, on which variable(s) will you join? 
+* An description of what the data will look like once you are done with any data wrangling (describe the rows and columns in your dataset).
+* A description of at least one plot you will make -- sketch an example of what that plot could look like, with clear labels on the axes
+* A description of at least one summary statistic or statistical model you will fit
+* You do **not** need to write any code (although you may if you wish), but your answer should be sufficiently detailed that I could turn it into code
+
+
+
+
+
+
+
+
+
+

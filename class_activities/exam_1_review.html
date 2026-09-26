@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Exam 1 review</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="exam_1_review_files/libs/clipboard/clipboard.min.js"></script>
+<script src="exam_1_review_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="exam_1_review_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="exam_1_review_files/libs/quarto-html/popper.min.js"></script>
+<script src="exam_1_review_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="exam_1_review_files/libs/quarto-html/anchor.min.js"></script>
+<link href="exam_1_review_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="exam_1_review_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="exam_1_review_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="exam_1_review_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="exam_1_review_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Exam 1 review</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Below are questions to help you study for Exam 1. These are some examples of the kinds of questions I might ask.</p>
+<ul>
+<li>This is not a practice exam. There will be fewer questions on the actual exam.</li>
+<li>The questions cover most, but not all, possible material for the exam.</li>
+<li>The distribution of questions here is not necessarily reflective of the distribution of questions on the actual exam.</li>
+</ul>
+<section id="what-you-should-know" class="level1">
+<h1>What you should know</h1>
+<section id="data-wrangling" class="level2">
+<h2 class="anchored" data-anchor-id="data-wrangling">Data wrangling</h2>
+<p>You are expected to be familiar with the main ways we have discussed manipulating data:</p>
+<ul>
+<li>Subsetting rows or columns</li>
+<li>Grouping and summarizing</li>
+<li>Combining datasets (merging/joining; difference between left and inner joins)</li>
+<li>Reshaping data (pivoting)</li>
+</ul>
+<p>This means that you will need to be familiar with some of the key data wrangling functions that we have used from the <code>tidyverse</code> and from <code>pandas</code>.</p>
+<section id="functions-to-know-from-r" class="level3">
+<h3 class="anchored" data-anchor-id="functions-to-know-from-r">Functions to know from R</h3>
+<ul>
+<li><code>mutate</code></li>
+<li><code>select</code></li>
+<li><code>filter</code></li>
+<li><code>count</code></li>
+<li><code>group_by</code></li>
+<li><code>summarize</code></li>
+<li><code>inner_join</code></li>
+<li><code>left_join</code></li>
+<li><code>pivot_longer</code></li>
+<li><code>pivot_wider</code></li>
+<li>Within <code>pivot_longer</code>, you should also be familiar with passing multiple column names to <code>names_to</code>, and the use of <code>.value</code></li>
+<li>You should know the names of basic summary statistic functions: <code>mean</code>, <code>median</code>, <code>min</code>, <code>max</code>, <code>sd</code></li>
+<li>When calculating summary statistics (means, medians, standard deviations, etc.) you should know that missing values need to be ignored (<code>na.rm = T</code> in many functions) unless we want the result to be <code>NA</code></li>
+</ul>
+</section>
+<section id="functions-to-know-from-pandas" class="level3">
+<h3 class="anchored" data-anchor-id="functions-to-know-from-pandas">Functions to know from pandas</h3>
+<ul>
+<li><code>assign</code></li>
+<li><code>groupby</code></li>
+<li><code>agg</code></li>
+<li><code>merge</code></li>
+<li><code>melt</code></li>
+<li><code>wide_to_long</code></li>
+<li><code>pivot</code></li>
+<li>You should know that by default, <code>pandas</code> functions for computing summary statistics will skip missing values (unlike R!)</li>
+<li>You should know the names of basic summary statistic functions: <code>mean</code>, <code>median</code>, <code>min</code>, <code>max</code>, <code>std</code>, <code>count</code></li>
+</ul>
+</section>
+<section id="how-well-do-i-need-to-know-the-functions" class="level3">
+<h3 class="anchored" data-anchor-id="how-well-do-i-need-to-know-the-functions">How well do I need to know the functions?</h3>
+<ul>
+<li><p>You are expected to know which function to use in order to accomplish a specific task. For example: if you are asked to reshape data, and your answer uses <code>pivot_wider</code> when you should have used <code>pivot_longer</code>, you will lose points.</p></li>
+<li><p>You are expected to be able to identify the order in which functions should be applied (which will depend on the specific problem).</p></li>
+<li><p>You are expected to know the effect of these functions on data. E.g., <code>mutate</code> adds or modifies a column; <code>summarize</code> will produce one row of summary statistics for each group; the differences between <code>pivot_longer</code> and <code>pivot_wider</code>; etc.</p></li>
+<li><p>You should <em>roughly</em> know the arguments that each function takes. For example, pivoting requires me to specify which columns to pivot, and what to do with names and values. <strong>However</strong>, you do <strong>not</strong> need to know the exact argument names. E.g., if you write <code>names</code> and <code>values</code> instead of <code>names_to</code> and <code>values_to</code>, I would not deduct any points.</p></li>
+<li><p>I will <strong>not</strong> harshly penalize syntax mistakes. Some examples (not exhaustive):</p>
+<ul>
+<li>In <code>pandas</code>, you can create a named summary statistic in <code>agg</code> with something like <code>.agg(mean_length = ('bill_length', 'mean'))</code>. If you instead wrote <code>.agg(mean_length = mean(bill_length))</code>, you would get most of the points for that problem</li>
+<li>In <code>pandas</code>, when you want to pass multiple variable names in a function argument, you often need to pass it as a list. E.g., <code>pd.wide_to_long(..., i = ['RID', 'GroupAssignment'],...)</code>. If you instead wrote <code>i = 'RID', 'GroupAssignment'</code>, I would not deduct points</li>
+<li>If you write <code>groupby</code> instead of <code>group_by</code> (or vice versa), I don’t care. You clearly know what function you want to use!</li>
+</ul></li>
+</ul>
+</section>
+<section id="what-about-other-functions-we-have-seen" class="level3">
+<h3 class="anchored" data-anchor-id="what-about-other-functions-we-have-seen">What about other functions we have seen?</h3>
+<p>There are lots of other functions we have used on the homework and class activities (examples include <code>fct_collapse</code>, <code>case_when</code>, <code>drop_na</code>, <code>reset_index</code>, all of the plotting functions, etc.). I will <strong>not</strong> test you on these additional functions.</p>
+<p>This doesn’t mean that those functions aren’t important! Just that there is a limit to what I can reasonably expect you to memorize for a written exam, and I want you to focus on the core functions that implement the big data wrangling ideas (grouping, summarizing, mutating, reshaping, joining).</p>
+</section>
+<section id="general-skills" class="level3">
+<h3 class="anchored" data-anchor-id="general-skills">General skills</h3>
+<ul>
+<li>You should be familiar with the idea of piping/chaining multiple wrangling steps together in R and Python</li>
+<li>Given input data and code, correctly determine the output of the code</li>
+<li>Given input data and desired output, write a small chunk of code to produce the desired output</li>
+<li>Given one or more datasets and a research question of interest, explain how you would use the data to address the question</li>
+</ul>
+</section>
+</section>
+<section id="data-structures-and-indexing" class="level2">
+<h2 class="anchored" data-anchor-id="data-structures-and-indexing">Data structures and indexing</h2>
+<p>You are expected to be familiar with some of the basic structures that we have worked with in R and pandas.</p>
+<section id="in-r" class="level3">
+<h3 class="anchored" data-anchor-id="in-r">In R</h3>
+<p>The data structures to know include:</p>
+<ul>
+<li>vectors</li>
+<li>lists</li>
+<li>data frames</li>
+</ul>
+<p>You should be able to:</p>
+<ul>
+<li>extract elements from a vector using <code>[]</code></li>
+<li>extract elements from a list using <code>[]</code> and <code>[[]]</code></li>
+<li>create a list containing desired elements</li>
+<li>explain the relationship between a data frame and a list</li>
+<li>You do <strong>not</strong> need to know the code for creating a data frame from scratch</li>
+</ul>
+</section>
+<section id="in-python" class="level3">
+<h3 class="anchored" data-anchor-id="in-python">In Python</h3>
+<p>The data structures to know include:</p>
+<ul>
+<li>pandas Series</li>
+<li>pandas DataFrames</li>
+</ul>
+<p>You should be able to:</p>
+<ul>
+<li>explain the difference between choosing elements by index label vs.&nbsp;choosing elements by position</li>
+<li>extract elements from a Series using the index</li>
+<li>extract elements from a Series using position ( with <code>.iloc</code>)</li>
+<li>understand that different pandas functions interact with the index in different ways. <strong>However</strong>, you are <strong>not</strong> expected to memorize these different behaviors</li>
+<li>You do <strong>not</strong> need to know the code for creating a data frame or Series from scratch</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="study-suggestions" class="level1">
+<h1>Study suggestions</h1>
+<ul>
+<li>Make flashcards for the key functions I listed above</li>
+<li>Create small datasets in R or Python, and practice writing code to produce desired output</li>
+<li>Team up with a friend to create practice problems: one person can write code and the other person can predict what the output will be. Or one person can create the data and output, and the other person can try to figure out what code was used!</li>
+<li>Try doing the activities from class <em>without</em> looking at the slides, notes, solutions, or searching the internet for help.</li>
+<li>Find real datasets online, and think about how you would analyze them. The <a href="https://github.com/rfordatascience/tidytuesday/tree/main/data/2026">TidyTuesday</a> datasets are a <em>really</em> good source of real, messy data. (Just ignore any datasets that are focused mostly on text data, since we don’t know how to work with text data or strings yet!)</li>
+</ul>
+</section>
+<section id="practice-with-data-wrangling" class="level1">
+<h1>Practice with data wrangling</h1>
+<section id="reading-data-wrangling-code-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="reading-data-wrangling-code-in-r">Reading data wrangling code in R</h2>
+<p>Here are two small datasets, <code>df1</code> and <code>df2</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  id  x  y z
+1  1  5  8 8
+2  2 10  8 8
+3  3  7  4 8
+4  4  4 10 5
+5  5 10  7 2</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  id a b
+1  3 5 9
+2  4 8 8
+3  5 5 6
+4  6 9 2</code></pre>
+</div>
+</div>
+<p>For each of the following chunks of code, write down the output or explain why it will cause an error.</p>
+<ol type="1">
+<li></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(z)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="2" type="1">
+<li></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(df2, <span class="fu">join_by</span>(id))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="3" type="1">
+<li></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(df2, <span class="fu">join_by</span>(id))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="4" type="1">
+<li></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(z) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">max_b =</span> <span class="fu">max</span>(b))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="5" type="1">
+<li></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(x, y) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>id,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"measurement"</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"value"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="6" type="1">
+<li></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, x, y) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>id,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"measurement"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"value"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="7" type="1">
+<li></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(df2, <span class="fu">join_by</span>(id)) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">new_var =</span> x <span class="sc">+</span> a) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(z) <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_new_var =</span> <span class="fu">mean</span>(new_var))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="8" type="1">
+<li></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(df2, <span class="fu">join_by</span>(id)) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">new_var =</span> x <span class="sc">+</span> a) <span class="sc">|&gt;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(z) <span class="sc">|&gt;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_new_var =</span> <span class="fu">mean</span>(new_var, <span class="at">na.rm=</span>T)) <span class="sc">|&gt;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_b =</span> <span class="fu">mean</span>(b))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="reading-code-in-python" class="level2">
+<h2 class="anchored" data-anchor-id="reading-code-in-python">Reading code in Python</h2>
+<p>Here is an example data frame, containing information on six members of a gym and their visits over the last month:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>gym_members</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      id     type  age  visits  fee
+a   1003  student   18      10   50
+b    248    adult   50      35   70
+c    392  student   20       2   50
+d  40193  student   19       5   50
+e      5    adult   50       5   70
+f   6923   senior   92      90   45</code></pre>
+</div>
+</div>
+<p>For each of the following chunks of code, write down the output:</p>
+<ol start="9" type="1">
+<li></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>gym_members.loc[<span class="st">'c'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>id            392
+type      student
+age            20
+visits          2
+fee            50
+Name: c, dtype: object</code></pre>
+</div>
+</div>
+<ol start="10" type="1">
+<li></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>gym_members.iloc[<span class="dv">3</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>id          40193
+type      student
+age            19
+visits          5
+fee            50
+Name: d, dtype: object</code></pre>
+</div>
+</div>
+<ol start="11" type="1">
+<li></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>gym_members.groupby(<span class="st">'type'</span>).agg(mean_age <span class="op">=</span> (<span class="st">'age'</span>, <span class="st">'mean'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         mean_age
+type             
+adult        50.0
+senior       92.0
+student      19.0</code></pre>
+</div>
+</div>
+<ol start="12" type="1">
+<li></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>gym_members.assign(cost_per_visit <span class="op">=</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  gym_members[<span class="st">'fee'</span>]<span class="op">/</span>gym_members[<span class="st">'visits'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      id     type  age  visits  fee  cost_per_visit
+a   1003  student   18      10   50             5.0
+b    248    adult   50      35   70             2.0
+c    392  student   20       2   50            25.0
+d  40193  student   19       5   50            10.0
+e      5    adult   50       5   70            14.0
+f   6923   senior   92      90   45             0.5</code></pre>
+</div>
+</div>
+<ol start="13" type="1">
+<li></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>(gym_members.groupby(<span class="st">'type'</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>           .agg(median_visits <span class="op">=</span> (<span class="st">'visits'</span>, <span class="st">'median'</span>))</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>           .agg(<span class="bu">max</span> <span class="op">=</span> (<span class="st">'median_visits'</span>, <span class="st">'max'</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     median_visits
+max           90.0</code></pre>
+</div>
+</div>
+<section id="another-example" class="level3">
+<h3 class="anchored" data-anchor-id="another-example">Another example</h3>
+<p>Here are two data frames:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>patients</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   id doctor  age  height   bp
+0  24      a   33     155  120
+1  56      b   19     170  115
+2  11      d   20     160  130</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>providers</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  provider       location
+0        a     Greensboro
+1        b  Winston-Salem
+2        c         Durham</code></pre>
+</div>
+</div>
+<p>For each of the following chunks of code, write down the output. (Note: I am not going to take off points if the rows are in the wrong order).</p>
+<ol start="14" type="1">
+<li></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>patients.melt(id_vars <span class="op">=</span> [<span class="st">'id'</span>, <span class="st">'age'</span>],</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  value_vars <span class="op">=</span> [<span class="st">'height'</span>, <span class="st">'bp'</span>],</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  var_name <span class="op">=</span> <span class="st">'measurement'</span>,</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  value_name <span class="op">=</span> <span class="st">'value'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="15" type="1">
+<li></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>patients.merge(providers, left_on <span class="op">=</span> <span class="st">'doctor'</span>, </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>               right_on <span class="op">=</span> <span class="st">'provider'</span>, how <span class="op">=</span> <span class="st">'left'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="16" type="1">
+<li></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>patients.merge(providers, left_on <span class="op">=</span> <span class="st">'doctor'</span>, </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>               right_on <span class="op">=</span> <span class="st">'provider'</span>, how <span class="op">=</span> <span class="st">'inner'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="another-example-1" class="level3">
+<h3 class="anchored" data-anchor-id="another-example-1">Another example</h3>
+<p>Here is another example:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>patients</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   id doctor  age  bp_systolic  bp_diastolic
+0  24      a   33          120            82
+1  56      b   19          115            83
+2  11      d   20          130            90</code></pre>
+</div>
+</div>
+<p>Write the output of the following code:</p>
+<ol start="17" type="1">
+<li></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>pd.wide_to_long(patients, stubnames <span class="op">=</span> <span class="st">'bp'</span>,</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  i <span class="op">=</span> [<span class="st">'id'</span>, <span class="st">'doctor'</span>, <span class="st">'age'</span>],</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  j <span class="op">=</span> <span class="st">'type'</span>, sep <span class="op">=</span> <span class="st">'_'</span>, suffix <span class="op">=</span><span class="st">'.+'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="writing-code" class="level2">
+<h2 class="anchored" data-anchor-id="writing-code">Writing code</h2>
+<p>In each of the questions below, write code to produce the output from the original data.</p>
+<ol start="18" type="1">
+<li>Input data:</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>advisors</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    professor    program  office
+1 Dr. Beavers Statistics MAN 337
+2   Dr. Evans Statistics MAN 329
+3  Dr. Hepler Statistics MAN 341
+4   Dr. Mason       Math MAN 334
+5   Dr. Mason Psychology GRN 438
+6  Dr. Esarey   Politics KRB 319</code></pre>
+</div>
+</div>
+<p>Output data in R:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>     program n
+1       Math 1
+2   Politics 1
+3 Psychology 1
+4 Statistics 3</code></pre>
+</div>
+</div>
+<p>Output data in Python:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>            n
+program      
+Math        1
+Politics    1
+Psychology  1
+Statistics  3</code></pre>
+</div>
+</div>
+<ol start="19" type="1">
+<li>Input data:</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>students</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     name      major year     advisor
+1 Ridwaan Statistics    3 Dr. Beavers
+2   Coren Statistics    2   Dr. Evans
+3  Hallie       Math    2   Dr. Mason
+4   Kathy   Politics    4  Dr. Esarey
+5  Lianne Statistics    3  Dr. Hepler</code></pre>
+</div>
+</div>
+<p>Output data in R:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  major      mean_year
+  &lt;chr&gt;          &lt;dbl&gt;
+1 Math            2   
+2 Politics        4   
+3 Statistics      2.67</code></pre>
+</div>
+</div>
+<p>Output data in Python:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>            mean_year
+major                
+Math         2.000000
+Politics     4.000000
+Statistics   2.666667</code></pre>
+</div>
+</div>
+<ol start="20" type="1">
+<li></li>
+</ol>
+<p>Input data:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>advisors</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    professor    program  office
+1 Dr. Beavers Statistics MAN 337
+2   Dr. Evans Statistics MAN 329
+3  Dr. Hepler Statistics MAN 341
+4   Dr. Mason       Math MAN 334
+5   Dr. Mason Psychology GRN 438
+6  Dr. Esarey   Politics KRB 319</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>students</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     name      major year     advisor
+1 Ridwaan Statistics    3 Dr. Beavers
+2   Coren Statistics    2   Dr. Evans
+3  Hallie       Math    2   Dr. Mason
+4   Kathy   Politics    4  Dr. Esarey
+5  Lianne Statistics    3  Dr. Hepler</code></pre>
+</div>
+</div>
+<p>Output data in R:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>     name      major year     advisor  office
+1 Ridwaan Statistics    3 Dr. Beavers MAN 337
+2   Coren Statistics    2   Dr. Evans MAN 329
+3  Hallie       Math    2   Dr. Mason MAN 334
+4   Kathy   Politics    4  Dr. Esarey KRB 319
+5  Lianne Statistics    3  Dr. Hepler MAN 341</code></pre>
+</div>
+</div>
+<p>Output data in Python:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>      name       major  year      advisor   office
+0  Ridwaan  Statistics   3.0  Dr. Beavers  MAN 337
+1    Coren  Statistics   2.0    Dr. Evans  MAN 329
+2   Hallie        Math   2.0    Dr. Mason  MAN 334
+3    Kathy    Politics   4.0   Dr. Esarey  KRB 319
+4   Lianne  Statistics   3.0   Dr. Hepler  MAN 341</code></pre>
+</div>
+</div>
+<ol start="21" type="1">
+<li>Input data:</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>ex_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  group x_start x_end y_start y_end
+1     a       2     5      11    21
+2     b       3     6      12    22
+3     c       4     7      13    23</code></pre>
+</div>
+</div>
+<p>Output data in R:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  group time      x     y
+  &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 a     start     2    11
+2 a     end       5    21
+3 b     start     3    12
+4 b     end       6    22
+5 c     start     4    13
+6 c     end       7    23</code></pre>
+</div>
+</div>
+<p>Output data in Python:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>               x     y
+group time            
+a     start  2.0  11.0
+b     start  3.0  12.0
+c     start  4.0  13.0
+a     end    5.0  21.0
+b     end    6.0  22.0
+c     end    7.0  23.0</code></pre>
+</div>
+</div>
+</section>
+<section id="indexing-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="indexing-in-r">Indexing in R</h2>
+<ol start="22" type="1">
+<li>Here is a vector in R. Write code to extract the third and fifth elements.</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 23 48 42 19 24 67</code></pre>
+</div>
+</div>
+<ol start="23" type="1">
+<li>Here is a list in R. Write code to extract the vector <code>2 6 1</code>:</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="fu">list</span>(<span class="dv">6</span>, <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">1</span>), <span class="dv">1</span>))</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] 1
+
+[[2]]
+[1] 2
+
+[[3]]
+[[3]][[1]]
+[1] 6
+
+[[3]][[2]]
+[1] 2 6 1
+
+[[3]][[3]]
+[1] 1</code></pre>
+</div>
+</div>
+</section>
+<section id="short-answer" class="level2">
+<h2 class="anchored" data-anchor-id="short-answer">Short answer</h2>
+<ol start="24" type="1">
+<li>Describe some differences between data frames in R vs.&nbsp;pandas.</li>
+</ol>
+</section>
+</section>
+<section id="data-analysis-water-quality-at-sydney-beaches" class="level1">
+<h1>Data analysis: water quality at Sydney beaches</h1>
+<p>High rainfall during summer 2025 caused concern about the water quality of beaches in Sydney, Australia.</p>
+<p>To explore the relationship between rainfall and water quality, we have measurements on both water quality and weather data from 1991 to 2025.</p>
+<p><strong>Research question:</strong> How is rainfall related to E-coli bacteria levels?</p>
+<section id="data-dictionary" class="level2">
+<h2 class="anchored" data-anchor-id="data-dictionary">Data Dictionary</h2>
+<section id="water_quality.csv" class="level3">
+<h3 class="anchored" data-anchor-id="water_quality.csv"><code>water_quality.csv</code></h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 14%">
+<col style="width: 54%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">variable</th>
+<th style="text-align: left;">class</th>
+<th style="text-align: left;">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">region</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">Area of Sydney City</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">council</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">City council responsible for water quality</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">swim_site</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">Name of beach/swimming location</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">date</td>
+<td style="text-align: left;">date</td>
+<td style="text-align: left;">Date</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">time</td>
+<td style="text-align: left;">time</td>
+<td style="text-align: left;">Time of day</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">enterococci_cfu_100ml</td>
+<td style="text-align: left;">integer</td>
+<td style="text-align: left;">Enterococci bacteria levels in colony forming units (CFU) per 100 millilitres of water</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">water_temperature_c</td>
+<td style="text-align: left;">integer</td>
+<td style="text-align: left;">Water temperature in degrees Celsius</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">conductivity_ms_cm</td>
+<td style="text-align: left;">integer</td>
+<td style="text-align: left;">Conductivity in microsiemens per centimetre</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">latitude</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">Latitude</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">longitude</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">Longitude</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="weather.csv" class="level3">
+<h3 class="anchored" data-anchor-id="weather.csv"><code>weather.csv</code></h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">variable</th>
+<th style="text-align: left;">class</th>
+<th style="text-align: left;">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">date</td>
+<td style="text-align: left;">date</td>
+<td style="text-align: left;">Date</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">max_temp_C</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">Maximum temperature in degrees Celsius</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">min_temp_C</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">Minimum temperature in degrees Celsius</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">precipitation_mm</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">Rainfall in millimetres</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">latitude</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">Latitude</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">longitude</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">Longitude</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="your-task" class="level2">
+<h2 class="anchored" data-anchor-id="your-task">Your task</h2>
+<p>Describe how you will use the available data to answer the research question. Your answer must include:</p>
+<ul>
+<li>A description of any data wrangling steps you will perform. For example, if you plan to create any new columns or compute summary statistics, describe how these new variables/statistics will be calculated. If you plan to combine data from multiple tables, on which variable(s) will you join?</li>
+<li>An description of what the data will look like once you are done with any data wrangling (describe the rows and columns in your dataset).</li>
+<li>A description of at least one plot you will make – sketch an example of what that plot could look like, with clear labels on the axes</li>
+<li>A description of at least one summary statistic or statistical model you will fit</li>
+<li>You do <strong>not</strong> need to write any code (although you may if you wish), but your answer should be sufficiently detailed that I could turn it into code</li>
+</ul>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
