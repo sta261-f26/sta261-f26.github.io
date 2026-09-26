@@ -15,7 +15,7 @@ September 23
 
 September 25
 : Data wrangling in Python
-  : [Class Activity](https://sta261-f26.github.io/class_activities/ca_13.html)
+  : [Class Activity](https://sta261-f26.github.io/class_activities/ca_13.html), [Class Activity solutions](https://sta261-f26.github.io/class_activities/ca_13_solutions.html)
   
 : Exam 1 review
   : [review questions](https://sta261-f26.github.io/class_activities/exam_1_review.html)
