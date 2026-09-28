@@ -17,7 +17,7 @@ The following code imports a dataset with 30 different headlines from different 
 ```{r, message=F, warning=F}
 library(tidyverse)
 
-headlines <- read_csv("https://sta279-f25.github.io/data/clickbait_headlines_small.csv")
+headlines <- read_csv("https://sta261-f26.github.io/data/clickbait_headlines_small.csv")
 ```
 
 1. The code below creates a new variable called `clickbait_guess`, in which we try to identify clickbait headlines using regular expressions. It then compares the clickbait predictions to the truth. Fill in the regular expression to predict that articles are clickbait if: *there is a number at the beginning of the headline*. How well does this work?
