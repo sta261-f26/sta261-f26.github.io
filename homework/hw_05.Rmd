@@ -7,62 +7,89 @@ output:
 link-citations: yes
 ---
 
-**Due:** Friday, October 3, 11:59pm on Canvas
+**Due:** Friday, October 9, 11:59pm on Canvas
 
 **Instructions:** 
 
 1. Go to Canvas -> Assignments -> HW 5. Open the GitHub Classroom assignment link
-2. Follow the [instructions](https://sta279-f25.github.io/resources/github_instructions/) to accept the assignment and clone the repository to your local computer
+2. Follow the [instructions](https://sta261-f26.github.io/resources/github_instructions/) to accept the assignment and clone the repository to your local computer
 3. The repository contains the file `hw_05.qmd`. Write your code and answers to the questions in the Quarto document. Commit and push to GitHub regularly.
 4. When you are finished, make sure to Render your Quarto document; this will produce a `hw_05.md` file which is easy to view on GitHub. Commit and push both the `hw_05.qmd` and `hw_05.md` files to GitHub
-5. Finally, [request feedback](https://sta279-f25.github.io/resources/github_instructions/#step-10-request-feedback) on your assignment on the "Feedback" pull request on your HW 5 repository
+5. Finally, [request feedback](https://sta261-f26.github.io/resources/github_instructions/#step-10-request-feedback) on your assignment on the "Feedback" pull request on your HW 5 repository
 
-**Important:** Make sure to include both the `.qmd` and `.md` files when you submit to receive full credit
+**Important:** Make sure to include the `.qmd` and `.md` files, and any images, when you submit!
+
+**Collaborators and AI statement:** At the top of your assignment, list any collaborators (Dr. Evans does not count -- he is a resource, not a collaborator), and provide an AI statement describing your use of AI to complete the questions. If you did not use AI in any way, let me know that too. If you did use AI, provide: the model used, the HW questions on which you used AI, and a summary of the ways in which AI provided assistance. As described in the syllabus, AI use is permitted on homework assignments, but submissions without a complete AI statement may not receive full credit.
 
 **Code guidelines:**
 
 * If a question requires code, and code is not provided, you will not receive full credit
 * You will be graded on the quality of your code. In addition to being correct, your code should also be easy to read
+* Some questions require both code and discussion of the results. If you are missing a discussion of the results, you will not receive full credit
 
 
-## Probability simulations
+# The Great British Bake Off
 
-### Robot tug-of-war
+The Great British Bake Off (called the Great British Baking Show in the US because of trademark issues with Pillsbury -- yes, really) is a British competition baking show. Each episode involves three challenges: a signature bake, a technical challenge, and a showstopper, all centered around a theme (bread week, cake week, pastry week, etc.). The participant who performs worst is eliminated (with a couple rare exceptions), and the participant who performs best is awarded "star baker" for the week. 
 
-Consider a tug-of-war competition for robots. In each match up, two robots take turns tugging the rope until the marker indicates that one of the robots won. The match starts with the marker at 0.
+The goal of this assignment is to use web scraping and data wrangling (including working with strings) to collect and analyze data about the show. We will scrape the data from Wikipedia articles about the show.
 
-* Robot A pulls the rope – use `runif(n=1,min=0,max=0.50)` to simulate the magnitude of the pull. Adding the simulated value to the marker position gives the new position of the marker.
-* Robot B pulls the rope in the opposite direction – use `runif(n=1,min=0,max=0.50)` to simulate the magnitude of the pull. Adding the simulated value to the marker position gives the new position of the marker.
-* The two robots continue taking turns until the marker moves past -0.50 or 0.50. The marker is check after *each* robot takes their turn -- the robots alternate, they do not pull simultaneously! It is therefore possible that the winning robot got more turns than the losing robot. 
+## Getting the episode names and information
+
+We will begin with series 2 as an example. The Wikipedia article on series 2 can be found at:
+
+[https://en.wikipedia.org/wiki/The_Great_British_Bake_Off_series_2](https://en.wikipedia.org/wiki/The_Great_British_Bake_Off_series_2)
+
+If you scroll down, you will notice that there is an "Episodes" section, which contains the headings "Episode 1: Cakes", "Episode 2: Tarts", etc. 
+
+Here is code with which to get the episode titles into R:
+
+```{r, message=F, warning=F}
+library(tidyverse)
+library(rvest)
+
+url <- "https://en.wikipedia.org/wiki/The_Great_British_Bake_Off_series_2"
+
+episodes <- read_html(url) |>
+  html_elements(".mw-heading > [id^='Episode_']") |>
+  html_text2() 
+```
 
 :::{.question}
 #### Question 1
 
-Write code that simulates 1000 robot tug of war battles.
+Using string and regular expression tools, use the `episodes` vector provided by the code above to create a data frame which contains the episode information in the following format:
+
+```{r, echo=F, message=F, warning=F}
+data.frame(episode = as.numeric(str_extract(episodes, "\\d+")),
+             name = str_extract(episodes, 
+                                        "(?<=: )[^\\(\\)]+(?=( \\(|$))"))
+```
+
 :::
 
 :::{.question}
 #### Question 2
 
-Report the results of 1000 simulated robot tug of war battles. Is the game fair? If not, what adjustments can be made to make it more fair?
+Re-run the web scraping code, and your code from question 1, for Series 4 instead of Series 2. You should get some unexpected results; explain what goes wrong, and *why* you get those results (look at the Wikipedia page!).
+
+(If, for whatever reason, you did not produce any unexpected results for Series 4, still look at the Wikipedia page, and describe what is different for the episode list of Series 4 vs. Series 2).
 :::
 
-### Labeled boxes
-
-Consider the following $(a + 1)$ player game (Gal and Miltersen, 2007). There are $a$ boxes with labels $1, ..., a$ and slips of paper labeled $1, 2, ..., a$ The lead player colors each slip of paper either red or blue and puts each slip of paper in a box so there is one and only one slip of paper per box, without the other $a$ players observing.
-
-Now, each player $i ∈ {1, 2, ..., a}$ can look in at most $a/2$ boxes and based on this make a guess about the color of the slip $i$. This done by each player in isolation. The $a$ players win if *every* player correctly announces the color of "their" slip.
 
 :::{.question}
 #### Question 3
 
-Conduct a simulation where the lead player colors the slips and adds them to the boxes at random. The other players randomly choose which boxes to open. What proportion of the time do all of the players see their own slip, guaranteeing they win? Does the proportion depend on $a$?
+To fix the issue from question 2, we will get rid of the "Episodes" from the masterclass. This can be done with a little help from the `str_subset` function.
 
-*Tip:* To efficiently check whether a vector contains a specific value, you can use `%in%`. For example,
+Fill in the modified web scraping code below, with an appropriate regular expression, so that the masterclass episodes are *not* included for Series 4:
 
-```{r}
-3 %in% c(1, 2, 3)
-4 %in% c(1, 2, 3)
+```{r, eval=F}
+url <- "https://en.wikipedia.org/wiki/The_Great_British_Bake_Off_series_4"
+read_html() |>
+  html_elements(".mw-heading > [id^='Episode_']") |>
+  html_text2() |>
+  str_subset(...) # fill this in!
 ```
 
 :::
@@ -70,61 +97,303 @@ Conduct a simulation where the lead player colors the slips and adds them to the
 :::{.question}
 #### Question 4
 
-Conduct a simulation where the lead player colors the slips and adds them to the boxes at random. The other players randomly choose which boxes to open. Suppose a player that doesn’t see their own slip randomly guesses either red or blue. What proportion of the time do the $a$ players win?
+Use an appropriate regular expression to extract the series number of the Wikipedia URL (which is stored as a string in R). 
+
+For example:
+
+```{r, eval=F}
+url <- "https://en.wikipedia.org/wiki/The_Great_British_Bake_Off_series_4"
+str_extract(url,  ... ) # fill this in!
+```
+
+Desired output:
+
+```{r, echo=F}
+str_extract("https://en.wikipedia.org/wiki/The_Great_British_Bake_Off_series_4", "\\d+") # fill this in!
+```
+
 :::
 
+## Writing a function
 
-## More practice with functions
+The next thing we want to do is extract the same information for *each* Bake Off series. However, if we have to copy and paste the same code many different times, our code will be messy, hard to read, prone to errors, and hard to debug.
 
-Neural networks are a way to learn complex prediction models. Fundamentally, a neural network works by passing input data through a series of nodes; the output of one layer of nodes is the input for the next layer. Each time the data goes through a node, an *activation function* is applied to transform the output (this allows the network to model nonlinear relationships).
+Instead, we want to write a **function**. Like functions in math, a function in R takes one or more inputs, does some operations, and produces an output.
 
-Common activation functions include the ReLU (rectified linear unit):
-
-$$f(x) = \begin{cases} x & x > 0 \\ 0 & x \leq 0 \end{cases}$$
-and the *leaky* ReLU, with parameter $a$:
-
-$$f_a(x) = \begin{cases} x & x > 0 \\ a \cdot x & x \leq 0 \end{cases}$$
-Indeed, the ReLU could be considered a special case of the leaky ReLU with $a = 0$. 
-
-Here is an implementation of the ReLU function in R:
+For example, suppose we want to write a function that extracts numbers from a string (this is such a simple task that we don't need to write a separate function, but we'll use this as a simple example of what a function could look like). Let's call this function `number_extractor`:
 
 ```{r}
-relu <- function(x){
-  if(x > 0){
-    return(x)
-  } else {
-    return(0)
-  }
+number_extractor <- function(string){
+  numbers <- str_extract_all(string, "\\d+") |>
+    unlist()
+  paste0("The numbers in this string are: ", 
+         paste0(numbers, collapse = " and "))
 }
 ```
 
-This `relu` function works for single inputs:
+Here is an example of `number_extractor` in action:
 
 ```{r}
-relu(1)
-relu(-1)
+number_extractor("When I was 15, I liked to skateboard. Now that I am 80, I prefer skiing.")
 ```
 
-However, it does not work for vectors of length greater than 1:
+The **input** to `number_extractor` is a string. Notice that in the definition of the function, we have not specified *what* the string is -- we have just left a placeholder called `string` which we refer to inside the function! This way, I can call the function on `any` string.
 
-```{r, error=T}
-relu(c(1, -1))
+
+### A function to extract Bake Off information
+
+We will write a function (let's call it `clean_gbbo`) which satisfies the following requirements:
+
+* Input: `url`, a string containing the URL for one of the GBBO seasons
+* Output: a data frame with columns for the episode number, episode title, and season number
+
+Here is starter code for that function:
+
+```{r, eval=F}
+clean_gbbo <- function(url){
+  # fill in the inside of the function 
+}
 ```
 
-The issue here is that `if(x > 0)` in the `if...else...` statement is not vectorized. That is, R is expecting a single true or false, not a vector. To vectorize this function we can use the `ifelse` function (which IS vectorized).
 
 :::{.question}
 #### Question 5
 
-Re-write the `relu` function above, using the `ifelse` function, so that `relu` can be applied to vectors.
+Using your answers to the previous questions, complete the `clean_ggbo` function.
+
+Here are some examples of this function in action:
+
+```{r, include=F}
+clean_gbbo <- function(url){
+  season_num <- str_extract(url, "(?<=series_)\\d+")
+  episodes <- read_html(url) |>
+    html_elements(".mw-heading > [id^='Episode_']") |>
+    html_text2() |>
+    str_subset(":")
+  data.frame(episode = as.numeric(str_extract(episodes, "\\d+")),
+             name = str_extract(episodes, 
+                                        "(?<=: )[^\\(\\)]+(?=( \\(|$))"),
+             season = as.numeric(season_num))
+}
+```
+
+```{r}
+clean_gbbo("https://en.wikipedia.org/wiki/The_Great_British_Bake_Off_series_2")
+
+clean_gbbo("https://en.wikipedia.org/wiki/The_Great_British_Bake_Off_series_4")
+```
+
 :::
+
+
+## Iterating over series
+
+So far, we have only worked with one series at a time. We will next want to think about iterating over multiple series. As a first step, it will help to create a vector of URLs, for each of the Bake Off series.
+
+The `str_glue` function will help here. Here is an example of the `str_glue` function in action:
+
+```{r}
+str_glue("class_activities/ca_{class_num}.html", 
+         class_num = 1:5)
+```
+
+
+```{r, include=F}
+season_urls <- str_glue("https://en.wikipedia.org/wiki/The_Great_British_Bake_Off_series_{series}", series=1:16)
+```
 
 :::{.question}
 #### Question 6
 
-Adapt your `relu` function from Question 4 to create a new function, `leaky_relu`, which takes TWO inputs, $x$ and $a$, and returns $f_a(x)$ as defined above. Make $a = 0$ the default value.
+Use the `str_glue` function to create a vector called `season_urls` which contains the URLs of the Wikipedia pages for seasons 1 - 16 of the Great British Bake Off.
+
+:::
+
+Now let's iterate over the `season_urls` vector!
+
+### Iterating
+
+We want to apply the same function to each entry in an object. A nice way to do this is with the `map` function from the `purrr` package. The `map` function takes two main arguments: the first is the object over which to iterate, and the second is the function to apply. 
+
+In our case, our code to create a combined dataset would look like:
+
+```{r}
+combined_data <- map(season_urls, clean_gbbo) |>
+  list_rbind()
+```
+
+Here `map` is doing the iteration, and `list_rbind` is collecting the results into a single dataframe.
+
+
+:::{.question}
+#### Question 7
+
+Run the code to produce the combined data.
+
 :::
 
 
+## Exploring the data
 
+Now let's explore the episode information! **For each of the following questions, you must write code to produce the answer. You may not answer just by looking through the combined data manually.**
+
+:::{.question}
+#### Question 8
+
+Which seasons have fewer than 10 episodes?
+
+:::
+
+Now let's look at the episode titles, which describe the "theme" of each week. Some of these themes appear multiple times, others appear only once. 
+
+**Note:** looking at the episode information, you will see that "Cakes" appears 8 times, and "Cake" appears 7 times. So, "Cake week" actually happens every series! The issue here is that "Cake" vs. "Cakes" looks different, but they are really the same theme (just singular vs. plural).
+
+There are some other issues: should we count "Biscuits" the same as "Biscuits and Traybakes"? Are "Pies" the same as "Pies and Tarts"? And depending on how you wrote the regular expressions, some of the names might have trailing white space.
+
+Handling the extra white space is straightforward: the `trimws` function in base R will do that for us, or we can modify our regular expressions. The other issues are more complicated.
+
+:::{.question}
+#### Question 9
+
+Which themes have appeared in every series? 
+
+In answering this question, you should modify the dataframe so that an episode name of "Cake" or "Cakes" is treated the same.
+
+:::
+
+:::{.question}
+#### Question 10
+
+How many episode themes have appeared only once? 
+
+:::
+
+:::{.question}
+#### Question 11
+
+How often are the first three weeks Biscuits, Bread, and Cakes (in any order)?
+
+:::
+
+
+```{r, eval=F, include=F}
+combined_seasons <- map(season_urls, clean_gbbo) |> 
+  list_rbind()
+combined_seasons |>
+  count(season)
+```
+
+# Converting LaTeX to Markdown
+
+(The following section is unrelated to the Bake Off section from above).
+
+For another class, I wrote a homework assignment in LaTeX, which contained variable descriptions for a dataset on Titanic passengers. Here is what the original LaTeX looked like:
+
+```
+The data include the following variables:
+
+\begin{itemize}
+\item \verb;Passenger;: A unique ID number for each passenger.
+\item \verb;Survived;: An indicator for whether the passenger survived (1) or perished (0) during the disaster.
+\item \verb;Pclass;: Indicator for the class of the ticket held by this passengers. 1 = 1st class, 2 = 2nd class, 3 = 3rd class.
+\item \verb;Name;: The name of the passenger.
+\item \verb;Sex;: Binary indicator for the sex of the passenger.
+\item \verb;Age;: Age of the passenger in years. Age is fractional if the passenger was less than 1 year old.
+\item \verb;SibSp;: number of siblings/spouses the passenger had aboard the Titanic. Here, siblings are defined as brother, sister, stepbrother, and stepsister. Spouses are defined as husband and wife.
+\item \verb;Parch;: number of parents/children the passenger had aboard the Titanic. Here, parent is defined as mother/father and child is defined as daughter,son, stepdaughter or stepson. NOTE: Some children traveled only with a nanny, therefore parch=0 for them. There were no parents aboard for these children.
+\item \verb;Ticket;: The unique ticket number for each passenger.
+\item \verb;Fare;: How much the ticket cost in US dollars.
+\item \verb;Cabin;: The cabin number assigned to each passenger. Some cabins hold more than one passenger.
+\item \verb;Embarked;: Port where the passenger boarded the ship, C = Cherbourg, Q = Queenstown, S = Southampton
+\end{itemize}
+```
+
+In a LaTeX document, this would then render to look like the following:
+
+:::{.question}
+The data include the following variables:
+
+* `Passenger`: A unique ID number for each passenger.
+* `Survived`: An indicator for whether the passenger survived (1) or perished (0) during the disaster.
+* `Pclass`: Indicator for the class of the ticket held by this passengers. 1 = 1st class, 2 = 2nd class, 3 = 3rd class.
+* `Name`: The name of the passenger.
+* `Sex`: Binary indicator for the sex of the passenger.
+* `Age`: Age of the passenger in years. Age is fractional if the passenger was less than 1 year old.
+* `SibSp`: number of siblings/spouses the passenger had aboard the Titanic. Here, siblings are defined as brother, sister, stepbrother, and stepsister. Spouses are defined as husband and wife.
+* `Parch`: number of parents/children the passenger had aboard the Titanic. Here, parent is defined as mother/father and child is defined as daughter,son, stepdaughter or stepson. NOTE: Some children traveled only with a nanny, therefore parch=0 for them. There were no parents aboard for these children.
+* `Ticket`: The unique ticket number for each passenger.
+* `Fare`: How much the ticket cost in US dollars.
+* `Cabin`: The cabin number assigned to each passenger. Some cabins hold more than one passenger.
+* `Embarked`: Port where the passenger boarded the ship, C = Cherbourg, Q = Queenstown, S = Southampton
+:::
+
+Unfortunately, I later wanted to copy these variable descriptions into a **Quarto** document. Quarto will render some LaTeX equations, but not the formatting shown above. Instead, to write these descriptions in a Quarto document, it would look like
+
+
+```
+The data include the following variables:
+
+* `Passenger`: A unique ID number for each passenger.
+* `Survived`: An indicator for whether the passenger survived (1) or perished (0) during the disaster.
+* `Pclass`: Indicator for the class of the ticket held by this passengers. 1 = 1st class, 2 = 2nd class, 3 = 3rd class.
+* `Name`: The name of the passenger.
+* `Sex`: Binary indicator for the sex of the passenger.
+* `Age`: Age of the passenger in years. Age is fractional if the passenger was less than 1 year old.
+* `SibSp`: number of siblings/spouses the passenger had aboard the Titanic. Here, siblings are defined as brother, sister, stepbrother, and stepsister. Spouses are defined as husband and wife.
+* `Parch`: number of parents/children the passenger had aboard the Titanic. Here, parent is defined as mother/father and child is defined as daughter,son, stepdaughter or stepson. NOTE: Some children traveled only with a nanny, therefore parch=0 for them. There were no parents aboard for these children.
+* `Ticket`: The unique ticket number for each passenger.
+* `Fare`: How much the ticket cost in US dollars.
+* `Cabin`: The cabin number assigned to each passenger. Some cabins hold more than one passenger.
+* `Embarked`: Port where the passenger boarded the ship, C = Cherbourg, Q = Queenstown, S = Southampton
+```
+
+Making all these changes by hand is tedious! Instead, let's do it with some string and regular expression tools.
+
+Here is a string that you can copy into R, which contains the original LaTeX text:
+
+```{r}
+original_str <- "The data include the following variables:
+
+\\begin{itemize}
+\\item \\verb;Passenger;: A unique ID number for each passenger.
+\\item \\verb;Survived;: An indicator for whether the passenger survived (1) or perished (0) during the disaster.
+\\item \\verb;Pclass;: Indicator for the class of the ticket held by this passengers. 1 = 1st class, 2 = 2nd class, 3 = 3rd class.
+\\item \\verb;Name;: The name of the passenger.
+\\item \\verb;Sex;: Binary indicator for the sex of the passenger.
+\\item \\verb;Age;: Age of the passenger in years. Age is fractional if the passenger was less than 1 year old.
+\\item \\verb;SibSp;: number of siblings/spouses the passenger had aboard the Titanic. Here, siblings are defined as brother, sister, stepbrother, and stepsister. Spouses are defined as husband and wife.
+\\item \\verb;Parch;: number of parents/children the passenger had aboard the Titanic. Here, parent is defined as mother/father and child is defined as daughter,son, stepdaughter or stepson. NOTE: Some children traveled only with a nanny, therefore parch=0 for them. There were no parents aboard for these children.
+\\item \\verb;Ticket;: The unique ticket number for each passenger.
+\\item \\verb;Fare;: How much the ticket cost in US dollars.
+\\item \\verb;Cabin;: The cabin number assigned to each passenger. Some cabins hold more than one passenger.
+\\item \\verb;Embarked;: Port where the passenger boarded the ship, C = Cherbourg, Q = Queenstown, S = Southampton
+\\end{itemize}
+"
+```
+
+You can check how R would print this string with `cat`:
+
+```{r}
+cat(original_str)
+```
+
+
+:::{.question}
+#### Question 12
+
+Using string functions and regular expressions, convert the LaTeX text into the desired Quarto text.
+
+Hint:
+
+* Look at `str_remove_all` and `str_replace_all`
+:::
+
+
+```{r, include=F, eval=F}
+original_str |>
+  str_remove_all("\\\\.+\\}\n") |>
+  str_replace_all("\\\\item", "*") |>
+  str_replace_all("\\\\verb;(.+);", "`\\1`") |>
+  cat()
+```
 
