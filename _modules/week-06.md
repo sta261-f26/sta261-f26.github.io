@@ -18,5 +18,8 @@ September 30
 
 October 2
 : **Exam 1**{: .label .label-green }
+
+: **Homework 5 released**{: .label .label-yellow }
+  : [HW 5](https://sta261-f26.github.io/homework/hw_05.html)
   
   
