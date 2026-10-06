@@ -1,0 +1,78 @@
+---
+title: "Activity: Functions"
+format: html
+editor: source
+---
+
+**Instructions:** 
+
+* Work with a neighbor to answer the following questions 
+* To get started, download the [class activity template](https://sta261-f26.github.io/class_activities/ca_17_template.qmd) file
+* When you are finished, render the file as an HTML and submit the HTML to Canvas (let me know if you encounter any problems)
+
+## Computing sample variance
+
+In statistics, we often summarize the variability or spread of a numeric variable by calculating the *sample variance*. Given $n$ observations $x_1,...,x_n$, the sample variance $s^2$ is defined by
+
+$$s^2 = \frac{1}{n-1} \sum \limits_{i=1}^n (x_i - \overline{x})^2$$
+
+In R, this can be done with the `var` function. For example:
+
+```{r}
+var(1:10)
+```
+
+1. **Question:** Here is an example vector:
+```{r}
+y <- c(1, 4, 8, 9, 21)
+```
+Using the definition above, compute the variance of the entries in `y`. Do not use the `var` function; rather, implement the mathematical definition I have provided. You may use other functions in R such as `sum` and `length`.
+
+
+2. **Question:** Now write your own function to compute the sample variance, called `my_var`. You may use standard arithmetic operations in R, but do not use any existing implementations of the sample variance or standard deviation (e.g., don't use `var` or `sd` when writing your function).
+
+```{r eval=F}
+my_var <- function(x){
+  # fill this in!
+}
+```
+
+
+3. **Question:** Using your `my_var` function, and the `across` function, compute the variance for the all the numeric columns in the `diamonds` data.
+
+## Trimmed means
+
+One of the key lessons you learn in intro stats is that the mean is not a robust measure of center -- it is very susceptible to outliers! 
+The median is one alternative that is more robust than the mean. Another alternative is a **trimmed mean**, in which we discard a proportion of data in either tail before averaging.
+
+Suppose we have the following numbers (ordered from smallest to largest):
+
+```
+1  2  3  5  7  9 13 17 18 50
+```
+
+To compute the 10% trimmed mean, remove 10% of the observations in each tail (in this case, 1 observation from each tail), leaving us with:
+
+```
+2  3  5  7  9 13 17 18
+```
+
+The 10% trimmed mean is the mean of the remaining observations (in this case, the 10% trimmed mean is 8).
+
+The 20% trimmed mean would remove 20% of the observations in each tail, etc. In general, the $p\cdot 100\%$ trimmed mean removes $p \cdot 100\%$ of the observations in each tail and then computes the mean of the remaining observations.
+
+4. **Question:** Write a function called `trimmed_mean`, which takes two arguments: an input vector `x`, and a proportion `p`. The output of the function should be the $p \cdot 100\%$ trimmed mean of the entries in `x`.
+
+```{r eval=F}
+trimmed_mean <- function(x, p){
+  # fill this in!
+}
+```
+
+*Hints:* The `mean` and `quantile` functions may be helpful here!
+
+5. **Question:** Compute the mean, median, and trimmed mean of the `carat` column in the diamonds data. How does the trimmed mean compare to the other two measures of center as you change $p$?
+
+
+
+
