@@ -188,6 +188,26 @@ window.Quarto = {
 <li><strong>Question:</strong> Compute the mean, median, and trimmed mean of the <code>carat</code> column in the diamonds data. How does the trimmed mean compare to the other two measures of center as you change <span class="math inline">\(p\)</span>?</li>
 </ol>
 </section>
+<section id="normalization" class="level2">
+<h2 class="anchored" data-anchor-id="normalization">0-1 normalization</h2>
+<p>In class, we wrote a function called <code>z_score</code> to compute the z-score for each entry in a vector, by subtracting the mean of that vector and dividing by the standard deviation.</p>
+<p>This is one example of <em>normalization</em>. Another type of normalization is 0-1 normalization. Given values <span class="math inline">\(x_1,...,x_n\)</span>, the 0-1 normalized values are defined as</p>
+<p><span class="math display">\[x_i^* = \frac{x_i - \min\{x_1,...,x_n\}}{\max\{x_1,...,x_n\} - \min\{x_1,...,x_n\}}\]</span></p>
+<ol start="6" type="1">
+<li><strong>Question:</strong> Write a function called <code>zero_one_norm</code> to compute the 0-1 normalized value for each entry in a vector. Requirements:
+<ul>
+<li>Input: a numeric vector <code>x</code></li>
+<li>Output: a vector of the same length as <code>x</code>, containing the 0-1 normalized values</li>
+</ul></li>
+<li><strong>Question:</strong> Use your function to normalize each of the numeric columns in the <code>diamonds</code> data.</li>
+</ol>
+</section>
+<section id="reflecting" class="level2">
+<h2 class="anchored" data-anchor-id="reflecting">Reflecting</h2>
+<ol start="8" type="1">
+<li>Look back at each of the functions you have written. What assumptions are you making about the inputs to those functions? What would happen if the assumptions are not satisfied?</li>
+</ol>
+</section>
 
 </main>
 <!-- /main column -->

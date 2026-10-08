@@ -73,6 +73,24 @@ trimmed_mean <- function(x, p){
 
 5. **Question:** Compute the mean, median, and trimmed mean of the `carat` column in the diamonds data. How does the trimmed mean compare to the other two measures of center as you change $p$?
 
+## 0-1 normalization
+
+In class, we wrote a function called `z_score` to compute the z-score for each entry in a vector, by subtracting the mean of that vector and dividing by the standard deviation.
+
+This is one example of *normalization*. Another type of normalization is 0-1 normalization. Given values $x_1,...,x_n$, the 0-1 normalized values are defined as
+
+$$x_i^* = \frac{x_i - \min\{x_1,...,x_n\}}{\max\{x_1,...,x_n\} - \min\{x_1,...,x_n\}}$$
+
+6. **Question:** Write a function called `zero_one_norm` to compute the 0-1 normalized value for each entry in a vector. Requirements:
+    * Input: a numeric vector `x`
+    * Output: a vector of the same length as `x`, containing the 0-1 normalized values
+    
+7. **Question:** Use your function to normalize each of the numeric columns in the `diamonds` data.
+
+
+## Reflecting
+
+8. Look back at each of the functions you have written. What assumptions are you making about the inputs to those functions? What would happen if the assumptions are not satisfied?
 
 
 
