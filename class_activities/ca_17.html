@@ -173,7 +173,7 @@ window.Quarto = {
 <pre><code>1  2  3  5  7  9 13 17 18 50</code></pre>
 <p>To compute the 10% trimmed mean, remove 10% of the observations in each tail (in this case, 1 observation from each tail), leaving us with:</p>
 <pre><code>2  3  5  7  9 13 17 18</code></pre>
-<p>The 10% trimmed mean is the mean of the remaining observations (in this case, the 10% trimmed mean is 8).</p>
+<p>The 10% trimmed mean is the mean of the remaining observations (in this case, the 10% trimmed mean is 9.25).</p>
 <p>The 20% trimmed mean would remove 20% of the observations in each tail, etc. In general, the <span class="math inline">\(p\cdot 100\%\)</span> trimmed mean removes <span class="math inline">\(p \cdot 100\%\)</span> of the observations in each tail and then computes the mean of the remaining observations.</p>
 <ol start="4" type="1">
 <li><strong>Question:</strong> Write a function called <code>trimmed_mean</code>, which takes two arguments: an input vector <code>x</code>, and a proportion <code>p</code>. The output of the function should be the <span class="math inline">\(p \cdot 100\%\)</span> trimmed mean of the entries in <code>x</code>.</li>

@@ -57,7 +57,7 @@ To compute the 10% trimmed mean, remove 10% of the observations in each tail (in
 2  3  5  7  9 13 17 18
 ```
 
-The 10% trimmed mean is the mean of the remaining observations (in this case, the 10% trimmed mean is 8).
+The 10% trimmed mean is the mean of the remaining observations (in this case, the 10% trimmed mean is 9.25).
 
 The 20% trimmed mean would remove 20% of the observations in each tail, etc. In general, the $p\cdot 100\%$ trimmed mean removes $p \cdot 100\%$ of the observations in each tail and then computes the mean of the remaining observations.
 
