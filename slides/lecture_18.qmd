@@ -1,0 +1,409 @@
+---
+title: "Functions, errors, and tests"
+format: 
+  revealjs:
+    theme: theme.scss
+editor: source
+execute: 
+  echo: true
+editor_options: 
+  chunk_output_type: console
+---
+
+## Previously
+
+We wrote a function to compute the sample variance:
+
+```{r}
+my_var <- function(x){
+  sum((x - mean(x))^2)/(length(x) - 1)
+}
+```
+
+What assumptions is this function making?
+
+## Potential sources of problems
+
+```{r, error = T}
+my_var <- function(x){
+  sum((x - mean(x))^2)/(length(x) - 1)
+}
+
+my_var(2)
+
+my_var(c('a', 'b'))
+
+my_var(c(1, 2, NA, 3))
+```
+
+## Modifying our function
+
+If our function cannot run (e.g., if there is an issue with the provided input), then our function should throw an **error**.
+
+```{r, error = T}
+my_var <- function(x){
+  if(length(x) < 2){
+    stop("Input must have at least two values.")
+  }
+  
+  sum((x - mean(x))^2)/(length(x) - 1)
+}
+
+my_var(2)
+my_var(c(1, 2))
+```
+
+## Choices
+
+What will the following code return?
+
+```{r, eval=F}
+y <- 4
+
+if(y < 5){
+  y <- y + 2
+}
+
+y
+```
+
+## Choices
+
+What will the following code return?
+
+```{r}
+y <- 4
+
+if(y < 5){
+  y <- y + 2
+}
+
+y
+```
+
+## Choices
+
+What will the following code return?
+
+```{r, eval=F}
+y <- 7
+
+if(y < 5){
+  y <- y + 2
+}
+
+y
+```
+
+## Choices
+
+What will the following code return?
+
+```{r}
+y <- 7
+
+if(y < 5){
+  y <- y + 2
+}
+
+y
+```
+
+The code within an **if** statement is run *only* if the specified condition is `TRUE`
+
+## Choices
+
+What will the following code return?
+
+```{r, eval = F}
+y <- 7
+
+if(y < 5){
+  y <- y + 2
+} else {
+  y <- y - 3
+}
+
+y
+```
+
+## Choices
+
+What will the following code return?
+
+```{r}
+y <- 7
+
+if(y < 5){
+  y <- y + 2
+} else {
+  y <- y - 3
+}
+
+y
+```
+
+If the condition for an `if` statement is `FALSE`, then the code inside the (optional) `else` statement will run.
+
+## Choices
+
+We can use `else if` to combine multiple `if`/`else` blocks:
+
+```{r}
+y <- 7
+
+if(y < 5){
+  y <- y + 2
+} else if(y > 5){
+  y <- y - 3
+} else {
+  print("y is 5!")
+}
+
+y
+```
+
+## Choices
+
+We can use `else if` to combine multiple `if`/`else` blocks:
+
+```{r}
+y <- 5
+
+if(y < 5){
+  y <- y + 2
+} else if(y > 5){
+  y <- y - 3
+} else {
+  print("y is 5!")
+}
+
+y
+```
+
+## Choices
+
+What will the following code produce?
+
+```{r, eval = F}
+y <- 4
+
+if(y < 5){
+  y <- y + 2
+}
+
+if(y > 5){
+  y <- y - 3
+}
+
+y
+```
+
+## Choices
+
+What will the following code produce?
+
+```{r}
+y <- 4
+
+if(y < 5){
+  y <- y + 2
+}
+
+if(y > 5){
+  y <- y - 3
+}
+
+y
+```
+
+## Choices
+
+What will the following code produce?
+
+```{r, eval = F}
+y <- 4
+
+if(y < 5){
+  y <- y + 2
+} else if(y > 5){
+  y <- y - 3
+}
+
+y
+```
+
+## Choices
+
+What will the following code produce?
+
+```{r}
+y <- 4
+
+if(y < 5){
+  y <- y + 2
+} else if(y > 5){
+  y <- y - 3
+}
+
+y
+```
+
+## Summary so far
+
+```{r, error = T}
+my_var <- function(x){
+  if(length(x) < 2){
+    stop("Input must have at least two values.")
+  }
+  
+  sum((x - mean(x))^2)/(length(x) - 1)
+}
+
+my_var(2)
+my_var(c(1, 2))
+```
+
+* Use an `if` statement to check if the provided input does not match our expectations
+* Use `stop` to throw an error (with a helpful message) and exit the function
+
+## Exiting a function
+
+R supports **implicit** returns:
+
+```{r, error = T}
+my_var <- function(x){
+  if(length(x) < 2){
+    stop("Input must have at least two values.")
+  }
+  
+  sum((x - mean(x))^2)/(length(x) - 1)
+}
+
+my_var(c(1, 2))
+```
+
+## Exiting a function
+
+These can also be made **explicit**:
+
+```{r, error = T}
+my_var <- function(x){
+  if(length(x) < 2){
+    stop("Input must have at least two values.")
+  }
+  
+  return(sum((x - mean(x))^2)/(length(x) - 1))
+}
+
+my_var(c(1, 2))
+```
+
+## Exiting a function
+
+What do you think the following code will return?
+
+```{r, eval = F}
+g <- function(x){
+  x + 1
+  return(x)
+}
+
+g(5)
+```
+
+## Exiting a function
+
+What do you think the following code will return?
+
+```{r}
+g <- function(x){
+  x + 1
+  return(x)
+}
+
+g(5)
+```
+
+## Exiting a function
+
+What do you think the following code will return?
+
+```{r, eval = F}
+g <- function(x){
+  return(x + 1)
+  x <- x + 2
+  x
+}
+
+g(5)
+```
+
+## Exiting a function
+
+What do you think the following code will return?
+
+```{r}
+g <- function(x){
+  return(x + 1)
+  x <- x + 2
+  x
+}
+
+g(5)
+```
+
+## Exiting a function
+
+What do you think the following code will return?
+
+```{r, eval = F}
+g <- function(x){
+  stop("Error!")
+  return(x + 1)
+}
+
+g(5)
+```
+
+## Exiting a function
+
+What do you think the following code will return?
+
+```{r}
+g <- function(x){
+  stop("Error!")
+  return(x + 1)
+}
+
+g(5)
+```
+
+## Exiting a function
+
+What do you think the following code will return?
+
+```{r, eval = F}
+g <- function(x){
+  return(x + 1)
+  stop("Error!")
+}
+
+g(5)
+```
+
+## Exiting a function
+
+What do you think the following code will return?
+
+```{r}
+g <- function(x){
+  return(x + 1)
+  stop("Error!")
+}
+
+g(5)
+```
+
+
+
