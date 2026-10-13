@@ -259,9 +259,6 @@ my_var <- function(x){
   
   sum((x - mean(x))^2)/(length(x) - 1)
 }
-
-my_var(2)
-my_var(c(1, 2))
 ```
 
 * Use an `if` statement to check if the provided input does not match our expectations
@@ -370,7 +367,7 @@ g(5)
 
 What do you think the following code will return?
 
-```{r}
+```{r, error=T}
 g <- function(x){
   stop("Error!")
   return(x + 1)

@@ -468,16 +468,7 @@
 <span id="cb33-4"><a href=""></a>  }</span>
 <span id="cb33-5"><a href=""></a>  </span>
 <span id="cb33-6"><a href=""></a>  <span class="fu">sum</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(<span class="fu">length</span>(x) <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb33-7"><a href=""></a>}</span>
-<span id="cb33-8"><a href=""></a></span>
-<span id="cb33-9"><a href=""></a><span class="fu">my_var</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in my_var(2): Input must have at least two values.</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a><span class="fu">my_var</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.5</code></pre>
-</div>
+<span id="cb33-7"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li>Use an <code>if</code> statement to check if the provided input does not match our expectations</li>
@@ -488,15 +479,15 @@
 <h2>Exiting a function</h2>
 <p>R supports <strong>implicit</strong> returns:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a>my_var <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb37-2"><a href=""></a>  <span class="cf">if</span>(<span class="fu">length</span>(x) <span class="sc">&lt;</span> <span class="dv">2</span>){</span>
-<span id="cb37-3"><a href=""></a>    <span class="fu">stop</span>(<span class="st">"Input must have at least two values."</span>)</span>
-<span id="cb37-4"><a href=""></a>  }</span>
-<span id="cb37-5"><a href=""></a>  </span>
-<span id="cb37-6"><a href=""></a>  <span class="fu">sum</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(<span class="fu">length</span>(x) <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb37-7"><a href=""></a>}</span>
-<span id="cb37-8"><a href=""></a></span>
-<span id="cb37-9"><a href=""></a><span class="fu">my_var</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a>my_var <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb34-2"><a href=""></a>  <span class="cf">if</span>(<span class="fu">length</span>(x) <span class="sc">&lt;</span> <span class="dv">2</span>){</span>
+<span id="cb34-3"><a href=""></a>    <span class="fu">stop</span>(<span class="st">"Input must have at least two values."</span>)</span>
+<span id="cb34-4"><a href=""></a>  }</span>
+<span id="cb34-5"><a href=""></a>  </span>
+<span id="cb34-6"><a href=""></a>  <span class="fu">sum</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(<span class="fu">length</span>(x) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb34-7"><a href=""></a>}</span>
+<span id="cb34-8"><a href=""></a></span>
+<span id="cb34-9"><a href=""></a><span class="fu">my_var</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.5</code></pre>
 </div>
@@ -506,15 +497,15 @@
 <h2>Exiting a function</h2>
 <p>These can also be made <strong>explicit</strong>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a>my_var <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb39-2"><a href=""></a>  <span class="cf">if</span>(<span class="fu">length</span>(x) <span class="sc">&lt;</span> <span class="dv">2</span>){</span>
-<span id="cb39-3"><a href=""></a>    <span class="fu">stop</span>(<span class="st">"Input must have at least two values."</span>)</span>
-<span id="cb39-4"><a href=""></a>  }</span>
-<span id="cb39-5"><a href=""></a>  </span>
-<span id="cb39-6"><a href=""></a>  <span class="fu">return</span>(<span class="fu">sum</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(<span class="fu">length</span>(x) <span class="sc">-</span> <span class="dv">1</span>))</span>
-<span id="cb39-7"><a href=""></a>}</span>
-<span id="cb39-8"><a href=""></a></span>
-<span id="cb39-9"><a href=""></a><span class="fu">my_var</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a>my_var <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb36-2"><a href=""></a>  <span class="cf">if</span>(<span class="fu">length</span>(x) <span class="sc">&lt;</span> <span class="dv">2</span>){</span>
+<span id="cb36-3"><a href=""></a>    <span class="fu">stop</span>(<span class="st">"Input must have at least two values."</span>)</span>
+<span id="cb36-4"><a href=""></a>  }</span>
+<span id="cb36-5"><a href=""></a>  </span>
+<span id="cb36-6"><a href=""></a>  <span class="fu">return</span>(<span class="fu">sum</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(<span class="fu">length</span>(x) <span class="sc">-</span> <span class="dv">1</span>))</span>
+<span id="cb36-7"><a href=""></a>}</span>
+<span id="cb36-8"><a href=""></a></span>
+<span id="cb36-9"><a href=""></a><span class="fu">my_var</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.5</code></pre>
 </div>
@@ -524,24 +515,24 @@
 <h2>Exiting a function</h2>
 <p>What do you think the following code will return?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb41-2"><a href=""></a>  x <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb41-3"><a href=""></a>  <span class="fu">return</span>(x)</span>
-<span id="cb41-4"><a href=""></a>}</span>
-<span id="cb41-5"><a href=""></a></span>
-<span id="cb41-6"><a href=""></a><span class="fu">g</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb38-2"><a href=""></a>  x <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb38-3"><a href=""></a>  <span class="fu">return</span>(x)</span>
+<span id="cb38-4"><a href=""></a>}</span>
+<span id="cb38-5"><a href=""></a></span>
+<span id="cb38-6"><a href=""></a><span class="fu">g</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="exiting-a-function-3" class="slide level2">
 <h2>Exiting a function</h2>
 <p>What do you think the following code will return?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb42-2"><a href=""></a>  x <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb42-3"><a href=""></a>  <span class="fu">return</span>(x)</span>
-<span id="cb42-4"><a href=""></a>}</span>
-<span id="cb42-5"><a href=""></a></span>
-<span id="cb42-6"><a href=""></a><span class="fu">g</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb39-2"><a href=""></a>  x <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb39-3"><a href=""></a>  <span class="fu">return</span>(x)</span>
+<span id="cb39-4"><a href=""></a>}</span>
+<span id="cb39-5"><a href=""></a></span>
+<span id="cb39-6"><a href=""></a><span class="fu">g</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5</code></pre>
 </div>
@@ -551,26 +542,80 @@
 <h2>Exiting a function</h2>
 <p>What do you think the following code will return?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb44-2"><a href=""></a>  <span class="fu">return</span>(x <span class="sc">+</span> <span class="dv">1</span>)</span>
-<span id="cb44-3"><a href=""></a>  x <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="dv">2</span></span>
-<span id="cb44-4"><a href=""></a>  x</span>
-<span id="cb44-5"><a href=""></a>}</span>
-<span id="cb44-6"><a href=""></a></span>
-<span id="cb44-7"><a href=""></a><span class="fu">g</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb41-2"><a href=""></a>  <span class="fu">return</span>(x <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb41-3"><a href=""></a>  x <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="dv">2</span></span>
+<span id="cb41-4"><a href=""></a>  x</span>
+<span id="cb41-5"><a href=""></a>}</span>
+<span id="cb41-6"><a href=""></a></span>
+<span id="cb41-7"><a href=""></a><span class="fu">g</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="exiting-a-function-5" class="slide level2">
 <h2>Exiting a function</h2>
 <p>What do you think the following code will return?</p>
 <div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb42-2"><a href=""></a>  <span class="fu">return</span>(x <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb42-3"><a href=""></a>  x <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="dv">2</span></span>
+<span id="cb42-4"><a href=""></a>  x</span>
+<span id="cb42-5"><a href=""></a>}</span>
+<span id="cb42-6"><a href=""></a></span>
+<span id="cb42-7"><a href=""></a><span class="fu">g</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6</code></pre>
+</div>
+</div>
+</section>
+<section id="exiting-a-function-6" class="slide level2">
+<h2>Exiting a function</h2>
+<p>What do you think the following code will return?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb44-2"><a href=""></a>  <span class="fu">stop</span>(<span class="st">"Error!"</span>)</span>
+<span id="cb44-3"><a href=""></a>  <span class="fu">return</span>(x <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb44-4"><a href=""></a>}</span>
+<span id="cb44-5"><a href=""></a></span>
+<span id="cb44-6"><a href=""></a><span class="fu">g</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="exiting-a-function-7" class="slide level2">
+<h2>Exiting a function</h2>
+<p>What do you think the following code will return?</p>
+<div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb45-2"><a href=""></a>  <span class="fu">return</span>(x <span class="sc">+</span> <span class="dv">1</span>)</span>
-<span id="cb45-3"><a href=""></a>  x <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="dv">2</span></span>
-<span id="cb45-4"><a href=""></a>  x</span>
-<span id="cb45-5"><a href=""></a>}</span>
-<span id="cb45-6"><a href=""></a></span>
-<span id="cb45-7"><a href=""></a><span class="fu">g</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb45-2"><a href=""></a>  <span class="fu">stop</span>(<span class="st">"Error!"</span>)</span>
+<span id="cb45-3"><a href=""></a>  <span class="fu">return</span>(x <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb45-4"><a href=""></a>}</span>
+<span id="cb45-5"><a href=""></a></span>
+<span id="cb45-6"><a href=""></a><span class="fu">g</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in g(5): Error!</code></pre>
+</div>
+</div>
+</section>
+<section id="exiting-a-function-8" class="slide level2">
+<h2>Exiting a function</h2>
+<p>What do you think the following code will return?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb47-2"><a href=""></a>  <span class="fu">return</span>(x <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb47-3"><a href=""></a>  <span class="fu">stop</span>(<span class="st">"Error!"</span>)</span>
+<span id="cb47-4"><a href=""></a>}</span>
+<span id="cb47-5"><a href=""></a></span>
+<span id="cb47-6"><a href=""></a><span class="fu">g</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="exiting-a-function-9" class="slide level2">
+<h2>Exiting a function</h2>
+<p>What do you think the following code will return?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb48-2"><a href=""></a>  <span class="fu">return</span>(x <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb48-3"><a href=""></a>  <span class="fu">stop</span>(<span class="st">"Error!"</span>)</span>
+<span id="cb48-4"><a href=""></a>}</span>
+<span id="cb48-5"><a href=""></a></span>
+<span id="cb48-6"><a href=""></a><span class="fu">g</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6</code></pre>
 </div>
