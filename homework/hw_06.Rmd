@@ -7,7 +7,7 @@ output:
 link-citations: yes
 ---
 
-**Due:** Friday, October 23, 11:59pm on Canvas
+**Due:** Friday, October 23, 11:59pm
 
 **Instructions:** 
 
