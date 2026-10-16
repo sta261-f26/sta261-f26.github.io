@@ -14,5 +14,11 @@ October 14
 
 October 16
 : Functions
+  : [slides (html)](https://sta261-f26.github.io/slides/lecture_19.html), [slides (pdf)](https://sta261-f26.github.io/slides/lecture_19.pdf), [warmup](https://sta261-f26.github.io/class_activities/ca_19_handout.pdf), [Class Activity](https://sta261-f26.github.io/class_activities/ca_19.html)
+  
+: Reading for next class
+  : [Sections 6.4 in Advanced R](https://adv-r.hadley.nz/functions.html#lexical-scoping)
+  
+: **Homework 6 released**{: .label .label-yellow }
   
   
