@@ -1,0 +1,333 @@
+---
+title: "Homework 6"
+output: 
+  rmdformats::robobook:
+    css: "homework.css"
+    highlight: pygments
+link-citations: yes
+---
+
+**Due:** Friday, October 23, 11:59pm on Canvas
+
+**Instructions:** 
+
+1. Go to Canvas -> Assignments -> HW 6. Open the GitHub Classroom assignment link
+2. Follow the [instructions](https://sta261-f26.github.io/resources/github_instructions/) to accept the assignment and clone the repository to your local computer
+3. The repository contains the file `hw_06.qmd`. Write your code and answers to the questions in the Quarto document. Commit and push to GitHub regularly.
+4. When you are finished, make sure to Render your Quarto document; this will produce a `hw_06.md` file which is easy to view on GitHub. Commit and push both the `hw_06.qmd` and `hw_06.md` files to GitHub
+5. Finally, [request feedback](https://sta261-f26.github.io/resources/github_instructions/#step-10-request-feedback) on your assignment on the "Feedback" pull request on your HW 6 repository
+
+**Important:** Make sure to include the `.qmd` and `.md` files when you submit!
+
+**Collaborators and AI statement:** At the top of your assignment, list any collaborators (Dr. Evans does not count -- he is a resource, not a collaborator), and provide an AI statement describing your use of AI to complete the questions. If you did not use AI in any way, let me know that too. If you did use AI, provide: the model used, the HW questions on which you used AI, and a summary of the ways in which AI provided assistance. As described in the syllabus, AI use is permitted on homework assignments, but submissions without a complete AI statement may not receive full credit.
+
+**Code guidelines:**
+
+* If a question requires code, and code is not provided, you will not receive full credit
+* You will be graded on the quality of your code. In addition to being correct, your code should also be easy to read
+* Some questions require both code and discussion of the results. If you are missing a discussion of the results, you will not receive full credit
+
+# Evaluating model performance
+
+In statistics, we often wish to assess the performance of a prediction model. When we fit a model (for example, a linear or logistic regression model), we are trying to describe the relation between the explanatory variable(s) and the response variable. The goal is that our model predictions should be "close" to the true, observed values of the response variable.
+
+Formally, suppose that you have data with $n$ observations. Let $y_1,...,y_n$ denote the observed values of the response variable for these $n$ observations, and let $\widehat{y}_1,...,\widehat{y}_n$ denote the *predicted* values from some model. We want the $\widehat{y}$ values to be "close" to the true $y$ values.
+
+How do we formalize this idea of "close"?
+
+## Mean squared error (MSE)
+
+If the response $y$ is a continuous variable, it is most common to use the *mean squared error* (MSE), which measures the average squared distance between the predictions and the true response:
+
+$$MSE = \frac{1}{n} \sum \limits_{i=1}^n (y_i - \widehat{y}_i)^2$$
+
+For the first question, you will write a function to compute the MSE. 
+
+:::{.question}
+#### Question 1
+
+Write a function called `my_mse` to compute the MSE, which satisfies the following requirements:
+
+Inputs:
+
+* `y`: vector of true responses
+* `yhat`: vector of predictions
+    
+
+Output: the MSE, as described in the formula above
+
+
+Other requirements:
+
+* Your function should leverage R's vectorized operations
+* Do not use any existing MSE implementations
+
+Examples:
+
+```{r, include=F}
+my_mse <- function(yhat, y) {
+  mean((yhat - y)^2)
+}
+```
+
+```{r}
+my_mse(c(1, 2, 3), c(1, 2, 3))
+my_mse(c(1, 2, 2), c(1, 2, 3))
+my_mse(c(0, 1, 2), c(1, 2, 3))
+```
+
+
+:::
+
+## `across` and anonymous functions
+
+One advantage of writing our own functions is that we can use them within other data wrangling functions like `across`. 
+
+Here is an example of `across` using R's built-in `mean` function:
+
+```{r message=F, warning=F}
+library(tidyverse)
+
+diamonds |>
+  summarize(across(where(is.numeric), mean))
+```
+
+However, if we use the same kind of code for the `starwars` data, we get `NA`:
+
+```{r}
+starwars |>
+  summarize(across(where(is.numeric), mean))
+```
+
+This is because there are `NA` entries in each of the numeric columns of the `starwars` data, so the mean is also NA. We usually handle missing values using `na.rm = TRUE` in the `mean` function. But the following code produces an error:
+
+```{r, error = TRUE}
+starwars |>
+  summarize(across(where(is.numeric), mean(na.rm=TRUE)))
+```
+
+This is because `mean` is a function, but `mean(na.rm=TRUE)` is an **evaluation** of a function (the result of *calling* the `mean` function). For `across` to work, we need to give it a function object.
+
+Here is one solution:
+
+```{r}
+starwars |>
+  summarize(across(where(is.numeric), 
+                   function(x) mean(x, na.rm=T)))
+```
+
+The code `function(x) mean(x, na.rm=T)` defines a function, which is passed as an argument to `across`. Because we never gave this function a name (it doesn't exist in the global environment, only within our `across` call), it is referred to as an **anonymous function**. 
+
+## Comparing model performance
+
+Model performance metrics such as MSE can be used to compare different models. The repository for this assignment contains a CSV file, `pred_data.csv`, with the following columns:
+
+* `truth`: the true response values $y$ for 200 observations
+* `pred_knn`: the predictions for a k-nearest neighbors (kNN) model
+* `pred_random_forest`: the predictions for a random forest model
+* `pred_lasso`: the predictions for a lasso model 
+* `pred_linear`: the predictions for a linear regression model (no penalty term)
+
+:::{.question}
+#### Question 2
+
+Using your MSE function from question 1, and the `across` function from `dplyr`, calculate the MSE for each model (kNN, random forest, lasso, linear regression). You may find an anonymous function helpful!
+
+Which model has the lowest MSE?
+:::
+
+# Logistic regression
+
+As you learned in STA 112, *linear* regression is used with quantitative responses, whereas *logistic* regression is used for binary responses ($Y_i = 0$ or $1$). In particular, if $\pi_i = P(Y_i = 1)$, then a simple logistic regression model (with explanatory variable $X_i$) is
+$$\log \left( \frac{\pi_i}{1 - \pi_i} \right) = \beta_0 + \beta_1 X_i$$
+
+As an example, consider a dataset on 400 different applicants to graduate programs. We will focus on two specific variables for each applicant:
+
+* `admit`: whether the applicant was admitted to graduate school (0 = no, 1 = yes)
+* `gpa`: the applicant's undergraduate GPA (on a 4-point scale)
+
+
+Our goal is to investigate the relationship between GPA and grad school acceptance. We can fit a logistic regression model:
+
+```{r}
+grad_app <- read.csv("https://stats.idre.ucla.edu/stat/data/binary.csv")
+
+log_reg <- glm(admit ~ gpa, family = binomial, data = grad_app)
+summary(log_reg)
+```
+
+## Fitting logistic regression: quantity to optimize
+
+To estimate coefficients in a linear regression model, we typically minimize the residual sum of squares. In a logistic regression model, however, raw residuals $Y_i - \widehat{\pi}_i$ do not have the same meaning.
+
+Instead, logistic regression models are fit by minimizing a different quantity. The most common choice is the following, and is sometimes called the **binary cross-entropy**:
+
+$$BCE = -\frac{1}{n} \sum \limits_{i=1}^n [y_i \log(\widehat{\pi}_i) + (1 - y_i) \log(1 - \widehat{\pi}_i) ]$$
+
+(Here log is the natural log).
+
+:::{.question}
+#### Question 3
+
+Write a function called `my_bce` to compute the BCE, which satisfies the following requirements:
+
+Inputs:
+
+* `y`: vector of true responses $y_i$
+* `p_hat`: vector of predictions $\widehat{\pi}_i$
+
+
+Output: the BCE, as described in the formula above
+
+Error handling:
+
+* throw an error (with a helpful message) if any of the entries of `y` are not 0 or 1
+* throw an error (with a helpful message) if any of the entries of `p_hat` are $<= 0$ or $>= 1$
+
+Other requirements:
+
+* Your function should leverage R's vectorized operations
+* Do not use any existing BCE implementations, or existing implementations of similar functions
+
+Examples:
+
+```{r, include=F}
+my_bce <- function(y, yhat) {
+  -mean(y*log(yhat) + (1 - y)*log(1 - yhat))
+}
+```
+
+```{r}
+my_bce(c(1, 0, 0), c(0.5, 0.5, 0.5))
+my_bce(c(1, 0, 0), c(0.99, 0.01, 0.02))
+```
+
+:::
+
+## Fitting logistic regression: estimating coefficients
+
+The BCE is the quantity we optimize when estimating coefficients in a logistic regression model. In particular, for the simple logistic regression model 
+
+$$\log \left( \frac{\pi_i}{1 - \pi_i} \right) = \beta_0 + \beta_1 X_i$$
+
+then
+
+$$BCE(\beta_0, \beta_1) = -\frac{1}{n} \sum \limits_{i=1}^n \left[y_i \log\left(\frac{e^{\beta_0 + \beta_1 X_i}}{1 + e^{\beta_0 + \beta_1 X_i}}\right) + (1 - y_i) \log\left(1 - \frac{e^{\beta_0 + \beta_1 X_i}}{1 + e^{\beta_0 + \beta_1 X_i}}\right) \right]$$
+
+:::{.question}
+#### Question 4
+
+Write a function called `bce_logistic` which computes the BCE for a simple logistic regression model, given the observed responses, the explanatory variable, and values for $\beta_0$ and $\beta_1$. 
+
+Your function should satisfy the following requirements:
+
+Inputs:
+
+* `y`: a vector of observed responses $Y_i$
+* `x`: a vector of the observed explanatory variable $X_i$
+* `beta`: a vector of length 2, containing values for $\beta_0$ and $\beta_1$
+
+Output: $BCE(\beta_0, \beta_1)$ as described in the formula above
+
+Error handling:
+
+* throw an error (with a helpful message) if any of the entries of `y` are not 0 or 1
+* throw an error (with a helpful message) if the length of `x` is different from the length of `y`
+
+Other requirements:
+
+* Your function should leverage R's vectorized operations
+* You may use your function from question 3, but you may not use any other implementations of BCE or related functions
+
+Examples:
+
+```{r, include=F}
+bce_logistic <- function(y, x, beta){
+  phat <- exp(beta[1] + beta[2]*x)/(
+    1 + exp(beta[1] + beta[2]*x)
+  )
+  my_bce(y, phat)
+}
+```
+
+```{r}
+# on the grad_app data
+bce_logistic(grad_app$admit,
+             grad_app$gpa,
+             coef(log_reg))
+```
+
+```{r}
+# on simulated data
+set.seed(261)
+x1 <- rnorm(100)
+y1 <- rbinom(100, 1, exp(x1)/(1 + exp(x1)))
+bce_logistic(y = y1, x = x1, beta = c(0, 0))
+
+bce_logistic(y = y1, x = x1, beta = c(0, 1))
+```
+
+:::
+
+:::{.question}
+#### Question 5
+
+Write a function called `log_regress` which fits a simple logistic regression model on provided data. Your function should satisfy the following requirements:
+
+Inputs:
+
+* `y`: a vector of observed responses $Y_i$
+* `x`: a vector of the observed explanatory variable $X_i$
+
+Output: 
+
+* a list, containing the following named entries:
+    * `coefficients`: the estimated coefficients for the model ($\widehat{\beta}_0$ and $\widehat{\beta}_1$)
+    * `fitted_values`: the estimated probabilities $\widehat{\pi}_i$ from the fitted model
+    
+
+Error handling:
+
+* throw an error (with a helpful message) if any of the entries of `y` are not 0 or 1
+* throw an error (with a helpful message) if the length of `x` is different from the length of `y`
+
+Other requirements:
+
+* Your function should leverage R's vectorized operations
+* You should use `optim` to find values of $\beta$ that minimize BCE
+* `optim` requires an initial guess for ($\beta_0$, $\beta_1$). Use $\left( \log\left(\dfrac{\overline{Y}}{1 - \overline{Y}}\right), 0 \right)$
+* You may use your functions from questions 3 and 4, but you may not use any other implementations of logistic regression or related functions
+
+Examples:
+
+```{r, include=F}
+log_regress <- function(y, x){
+  beta <- c(log(mean(y)/(1 - mean(y))), 0)
+  beta <- optim(beta, function(b) bce_logistic(y, x, b))$par
+  phat <- exp(beta[1] + beta[2]*x)/(
+    1 + exp(beta[1] + beta[2]*x)
+  )
+  list("coefficients" = beta,
+       "fitted_values" = phat)
+}
+```
+
+```{r}
+m1 <- log_regress(grad_app$admit, grad_app$gpa)
+m1$coefficients
+head(m1$fitted_values)
+```
+
+```{r}
+m2 <- log_regress(y1, x1)
+m2$coefficients
+head(m2$fitted_values)
+```
+
+:::
+
+
+
+
+
+

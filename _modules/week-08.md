@@ -20,5 +20,6 @@ October 16
   : [Sections 6.4 in Advanced R](https://adv-r.hadley.nz/functions.html#lexical-scoping)
   
 : **Homework 6 released**{: .label .label-yellow }
+  : [HW 6](https://sta261-f26.github.io/homework/hw_06.html)
   
   
