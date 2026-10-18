@@ -1,0 +1,184 @@
+---
+title: "Vectors, functions, and unit tests"
+execute:
+  echo: true
+format: 
+  revealjs:
+    theme: theme.scss
+editor: source
+editor_options: 
+  chunk_output_type: console
+---
+
+## Motivating example
+
+What do you think will be the output of this code?
+
+```{r, eval=F, echo=T}
+x <- c(1, 2, 3, 4)
+y <- c(0, 1)
+
+x + y
+```
+
+## Motivating example
+
+```{r}
+x <- c(1, 2, 3, 4)
+y <- c(0, 1)
+
+x + y
+```
+
+What has happened here?
+
+## Vector recycling
+
+**Vector recycling:** Repeating elements of the shorter vector to match the length of the longer vector
+
+```{r}
+x <- c(1, 2, 3, 4)
+y <- c(0, 1)
+
+x + y
+```
+
+## Vector recycling
+
+```{r, warning=T}
+x <- c(1, 2, 3)
+y <- c(0, 1)
+
+x + y
+```
+
+If the length of the longer vector is not a multiple of the length of the shorter vector, R will give a warning -- but will still produce output!
+
+## Huber loss
+
+```{r}
+huber_loss <- function(y, y_hat, gamma){
+  res <- y - y_hat
+  ifelse(abs(res) < gamma, 
+         0.5*res^2, 
+         gamma*abs(res) - 0.5*gamma^2)
+}
+
+huber_loss(y = c(2, 2, 3, 4), y_hat = c(1.5, 2.5), gamma = 1)
+```
+
+* How would I modify my function to ensure `y` and `y_hat` have the same length?
+* The current code runs fine, even if the output is not what we want. How would I catch this bug in my code?
+
+## Error handling
+
+```{r, error = T}
+huber_loss <- function(y, y_hat, gamma){
+  if(length(y) != length(y_hat)){
+    stop("y and y_hat must have the same length")
+  }
+  
+  res <- y - y_hat
+  ifelse(abs(res) < gamma, 
+         0.5*res^2, 
+         gamma*abs(res) - 0.5*gamma^2)
+}
+
+huber_loss(y = c(2, 2, 3, 4), y_hat = c(1.5, 2.5), gamma = 1)
+```
+
+## Finding bugs: unit testing!
+
+```{r, warning=F, message=F}
+library(testthat)
+```
+
+```{r}
+test_that("Huber loss length error", {
+  expect_error(huber_loss(y = c(2, 2, 3, 4), 
+                          y_hat = c(1.5, 2.5), gamma = 1))
+})
+```
+
+## Finding bugs: unit testing!
+
+Let's also check that we get an error when `y` is the shorter vector:
+
+```{r, warning=F, message=F}
+library(testthat)
+```
+
+```{r}
+test_that("Huber loss length error", {
+  expect_error(huber_loss(y = c(2, 2, 3, 4), 
+                          y_hat = c(1.5, 2.5), gamma = 1))
+  expect_error(huber_loss(y = c(1, 2),
+                          y_hat = c(1, 2, 3), gamma = 1))
+})
+```
+
+## Finding bugs: unit testing!
+
+We can also test that our function produces the desired values:
+
+$$\rho_\gamma(Y_i, \widehat{Y}_i) = \begin{cases} \frac{1}{2}(Y_i - \widehat{Y}_i)^2 & |Y_i - \widehat{Y}_i| < \gamma \\ \gamma|Y_i - \widehat{Y}_i| - \frac{1}{2}\gamma^2 & |Y_i - \widehat{Y}_i| \geq \gamma \end{cases}$$
+
+```{r}
+test_that("Huber loss value test 1", {
+  expect_equal(huber_loss(y = 1, y_hat = 0.5, gamma = 1),
+               0.125)
+})
+```
+
+## Finding bugs: unit testing!
+
+This implementation has a bug, but our test passes:
+
+```{r}
+huber_loss <- function(y, y_hat, gamma){
+  if(length(y) != length(y_hat)){
+    stop("y and y_hat must have the same length")
+  }
+  
+  res <- y - y_hat
+  ifelse(res < gamma, 
+         0.5*res^2, 
+         gamma*abs(res) - 0.5*gamma^2)
+}
+```
+
+```{r}
+test_that("Huber loss value test 1", {
+  expect_equal(huber_loss(y = 1, y_hat = 0.5, gamma = 1),
+               0.125)
+})
+```
+
+## Finding bugs: unit testing!
+
+```{r}
+huber_loss <- function(y, y_hat, gamma){
+  if(length(y) != length(y_hat)){
+    stop("y and y_hat must have the same length")
+  }
+  
+  res <- y - y_hat
+  ifelse(res < gamma,  0.5*res^2, gamma*abs(res) - 0.5*gamma^2)
+}
+```
+
+```{r, error = T}
+test_that("Huber loss value test 1", {
+  expect_equal(huber_loss(y = 1, y_hat = 0.5, gamma = 1),
+               0.125)
+  expect_equal(huber_loss(y = 1, y_hat = 3, gamma = 1),
+               1.5)
+})
+```
+
+
+## Class activity
+
+Work on the class activity (course website).
+
+
