@@ -11,7 +11,7 @@ September 28
 
 September 30
 : Regular expressions
-  : [slides (html)](https://sta261-f26.github.io/slides/lecture_15.html), [slides (pdf)](https://sta261-f26.github.io/slides/lecture_15.pdf), [Class Activity](https://sta261-f26.github.io/class_activities/ca_15.html)
+  : [slides (html)](https://sta261-f26.github.io/slides/lecture_15.html), [slides (pdf)](https://sta261-f26.github.io/slides/lecture_15.pdf), [Class Activity](https://sta261-f26.github.io/class_activities/ca_15.html), [Class Activity solutions](https://sta261-f26.github.io/class_activities/ca_15_solutions.html)
 
 : Reading for next class
   : [Sections 15.4 -- 15.7, R for Data Science (2e)](https://r4ds.hadley.nz/regexps.html)

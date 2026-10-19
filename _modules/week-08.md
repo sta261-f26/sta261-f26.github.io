@@ -14,7 +14,7 @@ October 14
 
 October 16
 : Functions
-  : [slides (html)](https://sta261-f26.github.io/slides/lecture_19.html), [slides (pdf)](https://sta261-f26.github.io/slides/lecture_19.pdf), [warmup](https://sta261-f26.github.io/class_activities/ca_19_handout.pdf), [Class Activity](https://sta261-f26.github.io/class_activities/ca_19.html)
+  : [slides (html)](https://sta261-f26.github.io/slides/lecture_19.html), [slides (pdf)](https://sta261-f26.github.io/slides/lecture_19.pdf), [warmup](https://sta261-f26.github.io/class_activities/ca_19_handout.pdf), [Class Activity](https://sta261-f26.github.io/class_activities/ca_19.html), [Class Activity solutions](https://sta261-f26.github.io/class_activities/ca_19_solutions.html)
   
 : Reading for next class
   : [Sections 6.4 in Advanced R](https://adv-r.hadley.nz/functions.html#lexical-scoping)
