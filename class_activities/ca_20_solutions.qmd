@@ -1,0 +1,279 @@
+---
+title: "Activity: functions and unit testing"
+format: html
+editor: source
+callout-icon: false
+---
+
+# Fitting linear regression models
+
+The following code generates data $X_i \sim N(0, 1)$, $\varepsilon_i \sim N(0, 1)$, and 
+
+$$Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i$$
+
+with $\beta_0 = \beta_1 = 1$.
+
+```{r}
+n <- 100
+x <- rnorm(n)
+noise <- rnorm(n)
+y <- 1 + x + noise
+```
+
+To estimate $\beta_0$ and $\beta_1$, we can use the `lm` function:
+
+```{r}
+lm(y ~ x)
+```
+
+How are these estimated coefficients calculated? Mathematically, the vector of estimated coefficients $\widehat{\boldsymbol{\beta}}$ is given by
+
+$$\widehat{\boldsymbol{\beta}} = (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{X}^T \mathbf{y}$$
+where $\mathbf{X}$ is the *design matrix* and $\mathbf{y}$ is the vector of observed responses. For the model above,
+
+$$\widehat{\boldsymbol{\beta}} = \begin{bmatrix}
+\widehat{\beta}_0 \\
+\widehat{\beta}_1
+\end{bmatrix} \hspace{0.5cm} \mathbf{X} = \begin{bmatrix}
+1 & x_1 \\
+1 & x_2 \\
+1 & x_3 \\
+\vdots & \vdots \\
+1 & x_n
+\end{bmatrix} \hspace{0.5cm} \mathbf{y} = \begin{bmatrix}
+y_1 \\
+y_2 \\
+y_3 \\
+\vdots \\
+y_n
+\end{bmatrix}$$
+
+How would we do this math in R? Since $\mathbf{X}$ is a matrix, and $\widehat{\boldsymbol{\beta}}$ and $\mathbf{y}$ are both vectors, we want to work with *matrices* and *vectors* in R!
+
+* The vector `y` generated above already represents $\mathbf{y}$ (by default, vectors in R are column vectors)
+* We need to create the design matrix $\mathbf{X}$, by adding a column of 1s to the `x` simulated above. The following code creates $\mathbf{X}$:
+
+```{r, eval=F}
+X_mat <- cbind(1, x)
+```
+
+* Matrix multiplication in R is done with `%*%`. For example, if `A` and `B` are conformal matrices/vectors, then $AB$ would be calculated with `A %*% B`
+* Transposes are calculated with `t()`. E.g., $A^T$ is given by `t(A)`
+* Matrix inverses are calculated with `solve()`. E.g., $A^{-1}$ is given by `solve(A)`
+
+::: {.callout-tip}
+## Question 1
+
+Using this information, write a function called `my_lm` which fits a simple linear regression model to provided data. Your function should satisfy the following requirements:
+
+Inputs:
+
+* `y`: a vector of observed responses
+* `x`: a vector for the observed explanatory variable (numeric)
+
+Output: a vector containing the estimated coefficients $\widehat{\boldsymbol{\beta}}$
+
+Error handling: Brainstorm at least two different ways the function could fail if provided with the wrong input. Your function should throw an error (with a helpful message) if those situations occur.
+:::
+
+**Solution:** Here is one possible implementation
+
+```{r}
+my_lm <- function(y, x){
+  if(length(y) != length(x)){
+    stop("Length of y must match length of x")
+  }
+  
+  # note: linear regression in general allows for categorical 
+  # explanatory variables. But THIS implementation does not --
+  # we would have to modify our code to add indicators to the
+  # design matrix for a categorical variable
+  if(!is.numeric(y) | !is.numeric(x)){
+    stop("x and y must both be numeric vectors")
+  }
+  
+  X <- cbind(1, x)
+  beta <- solve(t(X) %*% X) %*% t(X) %*% y
+  as.numeric(beta)
+}
+```
+
+
+Here is an example of the function in action:
+
+
+
+```{r}
+my_lm(y, x)
+```
+
+
+## Unit testing
+
+To test that our function behaves as expected, we can create unit tests with the `testthat` package in R. For example, to test that we get an error if `x` and `y` do not have the same lengths:
+
+```{r}
+library(testthat)
+
+test_that("my_lm equal lengths", {
+  expect_error(my_lm(y = c(1, 2, 3), x = c(2, 3)))
+})
+```
+
+The `testthat` package contains many useful `expect_` functions. Here are a few examples:
+
+* `expect_error`: Do you expect an error?
+* `expect_equal`: Do you expect a particular value?
+* `expect_length`: Do you expect an object with this length or shape?
+* `expect_lte`, `expect_gte`: Do you expect a value bigger or smaller than this?
+
+Write and run the unit tests described below. If your `my_lm` function does not pass the tests, correct your implementation.
+
+::: {.callout-tip}
+## Question 2
+
+Write a unit test to verify that your `my_lm` function throws an error when the wrong inputs are provided. 
+
+:::
+
+**Solution:**
+
+```{r}
+test_that("my_lm checking errors", {
+  expect_error(my_lm(y = c(1, 2, 3), x = c(2, 3)))
+  expect_error(my_lm(as.character(y), x))
+})
+```
+
+
+::: {.callout-tip}
+## Question 3
+
+Write a unit test to verify that your `my_lm` function returns a vector of length 2 (since we are fitting simple linear regression).
+:::
+
+**Solution:**
+
+```{r}
+test_that("my_lm output length", {
+  expect_length(my_lm(y, x), 2)
+})
+```
+
+
+Now let's verify that the function produces reasonable output. We can compare with the output from the `lm` function. So, we might try the following test:
+
+```{r, error = T}
+test_that("my_lm value check", {
+  expect_equal(my_lm(y, x), lm(y ~ x)$coef)
+})
+```
+
+However, we get an error! This is because `expect_equal` is checking whether two objects are the same, and `lm(y ~ x)$coef` has names (`(Intercept)` and `x`), whereas our function does not name the output.
+
+To check whether the values are the same, ignoring attributes like names, we can instead use `expect_equivalent`:
+
+```{r, error = T}
+test_that("my_lm value check", {
+  expect_equivalent(my_lm(y, x), lm(y ~ x)$coef)
+})
+```
+
+
+::: {.callout-tip}
+## Question 4
+
+Run the test and verify that your function passes.
+:::
+
+**Solution:**
+
+```{r, error = T}
+test_that("my_lm value check", {
+  expect_equivalent(my_lm(y, x), lm(y ~ x)$coef)
+})
+```
+
+# Pearson's chi-squared test
+
+Suppose that we have a categorical variable, which has $k$ different levels (e.g., $1,...,k$). We are interested in testing whether this variable comes from some hypothesized distribution. The distribution of a categorical variable is defined by the probability for each category, so our hypothesized distribution is specified in terms of $k$ different probability values, $p_1,...,p_k$, such that $\sum \limits_{i=1}^{k} p_i = 1$. 
+
+Let $O_i$ be the observed count in each category, and $n = \sum_i O_i$ be the total count across all categories. Given these $n$ observations, if our hypothesized distribution were true, we would *expect* to see $n p_i$ observations in category $i$. Let $E_i = n p_i$ denote these expected counts.
+
+The idea of the chi-squared test is then to compare the observed counts with these expected counts; if they are very different, we have evidence against the null hypothesis that the distribution follows the specified probabilities. 
+
+In particular, the test statistic for the chi-squared test is:
+
+$$X^2 = \sum \limits_{i=1}^k \frac{(O_i - E_i)^2}{E_i}$$
+
+::: {.callout-tip}
+## Question 5
+
+Write a function called `chisq_test` which satisfies the following requirements:
+
+Inputs:
+
+* `x`: a vector which contains the observed counts for the categorical variable
+* `p`: a vector of the same length as `x`, which contains the hypothesized probabilities for each category
+
+Output: the chi-squared test statistic defined above.
+
+Error handling: Brainstorm at least three different ways the function could fail if provided with the wrong input. Your function should throw an error (with a helpful message) if those situations occur.
+
+Additional requirements:
+
+* You may not use any existing chi-squared test implementations to write your function
+* Use vectorized operations in R
+
+:::
+
+**Solution:** Here is one possible implementation.
+
+
+```{r}
+chisq_test <- function(x, p){
+  if(length(x) != length(p)){
+    stop("x and p must have the same length")
+  }
+  
+  if(!is.numeric(x) | !is.numeric(p)){
+    stop("x and p must both be numeric")
+  }
+  
+  if(any(p < 0 | p > 1)){
+    stop("all values of p must be between 0 and 1")
+  }
+  
+  stopifnot("probabilities must sum to 1" = all.equal(sum(p), 1))
+  
+  n <- sum(x)
+  ex <- n * p
+  sum((x - ex)^2/ex)
+}
+```
+
+Here is an example:
+
+```{r}
+chisq_test(x = c(10, 35, 15), p = c(0.2, 0.4, 0.4))
+```
+
+We can compare with the `chisq.test` function in R to check our output:
+
+```{r}
+chisq.test(x = c(10, 35, 15), p = c(0.2, 0.4, 0.4))$statistic
+```
+
+
+::: {.callout-tip}
+## Question 6
+
+Write a set of unit tests for your function.
+
+:::
+
+
+
+
+
+

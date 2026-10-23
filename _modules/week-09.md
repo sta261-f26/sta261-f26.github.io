@@ -15,6 +15,10 @@ October 21
 
 October 23
 : Iteration
+  : [slides (html)](https://sta261-f26.github.io/slides/lecture_22.html), [slides (pdf)](https://sta261-f26.github.io/slides/lecture_22.pdf), [Class Activity](https://sta261-f26.github.io/class_activities/ca_22.html)
+  
+: Reading for next class
+  : [Chapter 26 in R for Data Science](https://r4ds.hadley.nz/iteration.html)
   
 : **Homework 7 released**{: .label .label-yellow }
   
