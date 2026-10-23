@@ -135,7 +135,8 @@ df_chisq <- function(df, x, y){
     mutate(y_prop = sum(n)) |>
     ungroup() |>
     mutate(exp = x_prop*y_prop/sum(n)) |>
-    summarize(chisq = sum((n - exp)^2/exp))
+    summarize(chisq = sum((n - exp)^2/exp)) |>
+    pull(chisq)
 }
 ```
 

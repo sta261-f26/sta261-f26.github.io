@@ -21,5 +21,6 @@ October 23
   : [Chapter 26 in R for Data Science](https://r4ds.hadley.nz/iteration.html)
   
 : **Homework 7 released**{: .label .label-yellow }
+  : [HW 7](https://sta261-f26.github.io/homework/hw_07.html)
   
   
