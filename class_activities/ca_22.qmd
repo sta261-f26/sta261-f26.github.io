@@ -16,7 +16,7 @@ This class activity requires access to several CSV files. Rather than have you d
 
 **You do not need to submit the activity on GitHub classroom, only the HTML file on Canvas. The GitHub Classroom setup is just to make it easy for you to get a repository with the data files in the right place.**
 
-1. Go to Canvas -> Assignments -> Class Activity 11. Open the GitHub Classroom assignment link
+1. Go to the class activity for today on Canvas. Open the GitHub Classroom assignment link
 2. Follow the [instructions](https://sta261-f26.github.io/resources/github_instructions/) to accept the assignment and clone the repository to your local computer
 3. The repository contains the file `ca_22_template.qmd`, and a folder of CSV files called `intro_stats_grades`. Write your code and answers to the questions in the Quarto document.
 4. When you are finished, make sure to Render your Quarto document to HTML, then submit the HTML to Canvas
