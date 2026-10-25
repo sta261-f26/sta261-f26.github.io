@@ -1,0 +1,126 @@
+---
+title: "Activity: simulation"
+format: html
+editor: source
+callout-icon: false
+---
+
+**Instructions:** 
+
+* Work with a neighbor to answer the following questions 
+* To get started, download the [class activity template](https://sta261-f26.github.io/class_activities/ca_23_template.qmd) file
+* When you are finished, render the file as an HTML and submit the HTML to Canvas (let me know if you encounter any problems)
+
+## Probability simulation: the birthday problem
+
+Suppose we have a class of 30 students. What is the probability that there is at least one shared birthday?
+
+* Assume there are 365 days in a year
+* Assume that each day is equally likely as a birthday
+* Assume there are no multiple-birth siblings (e.g. twins, triplets, etc.) in the class
+
+::: {.callout-tip}
+## Question 1
+Create a vector to store the days of the year (numbered 1 to 365)
+:::
+
+::: {.callout-tip}
+## Question 2
+Use the `sample` function to randomly choose birthdays for the class (think about whether we want to sample with or without replacement here...)
+:::
+
+::: {.callout-tip}
+## Question 3
+Check the number of distinct birthdays (hints: `unique` returns the unique elements of a vector; `length` returns the length of a vector). Are there 30 distinct birthdays?
+:::
+
+::: {.callout-tip}
+## Question 4
+Use a for loop to repeat the experiment `nsim=10000` times, making sure to store the results. What is the probability of at least one shared birthday?
+:::
+
+::: {.callout-tip}
+## Question 5
+How many students do we need for the probability to be approximately 50%?
+:::
+
+## Using `map` instead of a loop
+
+Rather than use a loop, the other way we could consider iterating is with `map`. 
+
+::: {.callout-tip}
+## Question 6
+
+Write a function called `birthday_match` which randomly generates a set of birthdays and checks whether there are any shared birthdays. 
+
+Input:
+
+* `n`: the number of students in the class
+
+Output: a boolean -- whether there were any shared birthdays in a randomly generated class of `n` students
+:::
+
+We can then use `map` to repeat `birthday_match` many times:
+
+```{r, include=F}
+library(purrr)
+birthday_match <- function(n){
+  days <- 1:365
+  birthdays <- sample(days, n, replace=T)
+  length(unique(birthdays)) < n
+}
+```
+
+```{r}
+set.seed(213)
+
+nsim <- 10000
+n_students <- 30
+
+map_lgl(1:nsim, function(i) birthday_match(n_students)) |>
+  mean()
+```
+
+::: {.callout-tip}
+## Question 7
+
+Using the code from question 6 and the example code with `map_lgl`, write a function called `est_match_probability` which estimates the match probability for a class with `n_students`, using `nsim` repetitions.
+
+Inputs:
+
+* `n_students`: the number of students in a class
+* `nsim`: the number of simulations used to estimate the probability
+
+Output: the estimated probability of a birthday match in a class of size `n_students`
+
+
+Here is an example:
+
+```{r, include=F}
+est_match_probability <- function(n_students, nsim){
+  map_lgl(1:nsim, function(i) birthday_match(n_students)) |>
+    mean()
+}
+```
+
+```{r}
+set.seed(213)
+
+est_match_probability(n_students = 30, nsim = 10000)
+```
+
+We can then `map` this function over different numbers of students!
+
+```{r}
+class_sizes <- 15:35
+nsim <- 10000
+probs <- map_dbl(class_sizes, 
+                 function(n) est_match_probability(n, nsim))
+probs
+```
+
+
+:::
+
+
+

@@ -1,0 +1,148 @@
+---
+title: "Activity: Functions and data frames"
+format: html
+editor: source
+callout-icon: false
+---
+
+## Creating a plot
+
+The code below creates side-by-side boxplots to show the distribution of carat for each different cut in the `diamonds` data:
+
+```{r, message=F, warning=F}
+library(tidyverse)
+
+diamonds |>
+  ggplot(aes(x = cut, y = carat)) +
+  geom_boxplot() +
+  theme_bw() +
+  labs(title = "Distribution of carat by cut in the diamonds data")
+```
+
+::: {.callout-tip}
+## Question 1
+
+Adapting this code, write a function called `group_boxplot` which allows you to make side-by-side boxplots, given a data frame and the two variables to plot. Here are some examples of the function in action:
+
+:::
+
+**Solution:**
+
+```{r}
+group_boxplot <- function(df, x, y) {
+  label <- rlang::englue("Distribution of {{y}} by {{x}} in the {{df}} data")
+  
+  df |>
+    ggplot(aes(x = {{ x }}, y = {{ y }})) +
+    geom_boxplot() + 
+    theme_bw() +
+    labs(title = label)
+}
+```
+
+```{r, message=F, warning=F}
+library(palmerpenguins)
+
+group_boxplot(diamonds, cut, carat)
+group_boxplot(diamonds, carat, cut)
+group_boxplot(penguins, species, bill_depth_mm)
+```
+
+
+## Two-way tables
+
+Suppose we want to look at the relationship between two categorical variables. One way to examine their relationship is with a **two-way table**, which displays the number of observations for each combination of the values. 
+
+For example, to examine the relationship between `species` and `island` in the `penguins` data:
+
+```{r}
+table("island" = penguins$island, "species" = penguins$species)
+```
+
+We can see that there are 44 Adelie penguins on Biscoe island, 0 chinstrap penguins on Biscoe island, 124 Gentoos on Biscoe island, etc.
+
+The same information is given by the `count` function in `dplyr`, but in a different form. For example:
+
+```{r}
+penguins |>
+  count(island, species, .drop = FALSE)
+```
+
+::: {.callout-tip}
+## Question 2
+
+Pivot the output of this code to create a two-way table that looks something like this:
+
+```{r echo=F, message=F}
+penguins |> 
+  count(species, island, .drop = F) |>
+  pivot_wider(names_from = island, 
+              values_from = n)
+```
+
+
+Your output should look similar to the output of the `table` function, but you may not use the `table` function.
+:::
+
+**Solution:**
+
+```{r message=F}
+penguins |> 
+  count(species, island, .drop = F) |>
+  pivot_wider(names_from = island, 
+              values_from = n)
+```
+
+::: {.callout-tip}
+## Question 3
+
+Now write a function called `twoway_table` which creates a two-way table for an arbitrary dataset and variables. Your function should satisfy the following requirements:
+
+Input:
+
+* `df`: the data frame
+* `x`: the first categorical variable (a column in `df`)
+* `y`: the second categorical variable (a column in `df`)
+
+Output: a two-way table displaying the counts for each combination of `x` and `y`
+:::
+
+**Solution:**
+
+```{r}
+twoway_table <- function(df, x, y){
+  df |>
+    count({{x}}, {{y}}, .drop=F) |>
+    drop_na() |>
+    pivot_wider(names_from = {{y}},
+                values_from = n)
+}
+```
+
+```{r}
+twoway_table(penguins, island, species)
+twoway_table(penguins, island, sex)
+twoway_table(diamonds, cut, color)
+```
+
+
+```{r, include=F}
+df_chisq <- function(df, x, y){
+  df |>
+    count({{x}}, {{y}}, .drop=F) |>
+    drop_na() |>
+    group_by({{x}}) |>
+    mutate(x_prop = sum(n)) |>
+    group_by({{y}}) |>
+    mutate(y_prop = sum(n)) |>
+    ungroup() |>
+    mutate(exp = x_prop*y_prop/sum(n)) |>
+    summarize(chisq = sum((n - exp)^2/exp)) |>
+    pull(chisq)
+}
+```
+
+
+
+
+

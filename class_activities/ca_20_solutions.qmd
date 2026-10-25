@@ -101,8 +101,6 @@ my_lm <- function(y, x){
 
 Here is an example of the function in action:
 
-
-
 ```{r}
 my_lm(y, x)
 ```
@@ -272,6 +270,36 @@ Write a set of unit tests for your function.
 
 :::
 
+**Solution:** Here are some possible tests:
+
+```{r}
+test_that("chisq_test errors", {
+  expect_error(x = c(10, 35, 15), p = c(0.2, 0.8))
+  expect_error(x = c(10, 35), p = c(0.2, 0.4, 0.4))
+  expect_error(x = c(10, 35, 15), p = c(0.2, 0.4, 0.5))
+  expect_error(x = c(10, 35, 15), p = c(0.2, 0.4, 0.3))
+  expect_error(x = c('a', 'b', 'c'), p = c(0.2, 0.4, 0.4))
+  expect_error(x = c(10, 35, 15), p = c('a', 'b', 'c'))
+  expect_error(x = c(10, 35, 15), p = c(-0.2, 0.4, 0.8))
+})
+
+test_that("chisq_test values 1", {
+  expect_equivalent(chisq_test(x = c(10, 35, 15), 
+                               p = c(0.2, 0.4, 0.4)),
+                    chisq.test(x = c(10, 35, 15), 
+                               p = c(0.2, 0.4, 0.4))$statistic)
+})
+
+test_that("chisq_test values 2", {
+  set.seed(261)
+  n <- sample(2:10, 1)
+  x <- sample(20:100, n, replace=T)
+  p <- runif(n)
+  p <- p/sum(p)
+  expect_equivalent(chisq_test(x = x, p = p),
+                    chisq.test(x = x, p = p)$statistic)
+})
+```
 
 
 
