@@ -3,7 +3,7 @@ title: Iteration and simulation
 ---
 
 October 26
-: Functions and unit tests
+: Iteration and simulation
   : [slides (html)](https://sta261-f26.github.io/slides/lecture_23.html), [slides (pdf)](https://sta261-f26.github.io/slides/lecture_23.pdf), [Class Activity](https://sta261-f26.github.io/class_activities/ca_23.html)
 
 October 28
