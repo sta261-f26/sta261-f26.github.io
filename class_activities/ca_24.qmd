@@ -1,0 +1,53 @@
+---
+title: "Activity: simulation"
+format: html
+editor: source
+callout-icon: false
+---
+
+**Instructions:** 
+
+* Work with a neighbor to answer the following questions 
+* To get started, download the [class activity template](https://sta261-f26.github.io/class_activities/ca_24_template.qmd) file
+* When you are finished, render the file as an HTML and submit the HTML to Canvas (let me know if you encounter any problems)
+
+## Robot tug-of-war
+
+Consider a tug-of-war competition for robots. In each match up, two robots take turns tugging the rope until the marker indicates that one of the robots won. The match starts with the marker at 0.
+
+* Robot A pulls the rope – use `runif(n=1,min=0,max=0.50)` to simulate the magnitude of the pull. Adding the simulated value to the marker position gives the new position of the marker.
+* Robot B pulls the rope in the opposite direction – use `runif(n=1,min=0,max=0.50)` to simulate the magnitude of the pull. Adding the simulated value to the marker position gives the new position of the marker.
+* The two robots continue taking turns until the marker moves past -0.50 or 0.50. The marker is check after *each* robot takes their turn -- the robots alternate, they do not pull simultaneously! It is therefore possible that the winning robot got more turns than the losing robot. 
+
+::: {.callout-tip}
+## Question 1
+
+Write code that simulates 1000 robot tug of war battles.
+:::
+
+::: {.callout-tip}
+## Question 2
+
+Report the results of 1000 simulated robot tug of war battles. Is the game fair? If not, what adjustments can be made to make it more fair?
+:::
+
+## Labeled boxes
+
+Consider the following $(a + 1)$ player game (Gal and Miltersen, 2007). There are $a$ boxes with labels $1, ..., a$ and slips of paper labeled $1, 2, ..., a$ The lead player colors each slip of paper either red or blue and puts each slip of paper in a box so there is one and only one slip of paper per box, without the other $a$ players observing.
+
+Now, each player $i ∈ {1, 2, ..., a}$ can look in at most $a/2$ boxes and based on this make a guess about the color of the slip $i$. This done by each player in isolation. The $a$ players win if *every* player correctly announces the color of "their" slip.
+
+::: {.callout-tip}
+## Question 3
+
+Conduct a simulation where the lead player colors the slips and adds them to the boxes at random. The other players randomly choose which boxes to open. What proportion of the time do all of the players see their own slip, guaranteeing they win? Does the proportion depend on $a$?
+
+*Tip:* To efficiently check whether a vector contains a specific value, you can use `%in%`. For example,
+
+```{r}
+3 %in% c(1, 2, 3)
+4 %in% c(1, 2, 3)
+```
+
+:::
+
