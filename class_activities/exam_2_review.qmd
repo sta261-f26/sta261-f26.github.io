@@ -1,0 +1,684 @@
+---
+title: "Exam 2 review"
+format: html
+editor: source
+callout-icon: false
+---
+
+Below are questions to help you study for Exam 2. These are some examples of the kinds of questions I might ask.
+
+* This is not a practice exam. There will be fewer questions on the actual exam.
+* The questions cover most, but not all, possible material for the exam.
+* The distribution of questions here is not necessarily reflective of the distribution of questions on the actual exam.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE)
+```
+
+# What you should know
+
+## Material from the first exam
+
+I will not test you extensively on material from the first exam, but since much of the computing material builds on earlier topics, you should be familiar with some of the key concepts in R (I will *not* test you on any Python for Exam 2).
+
+In particular, you should be familiar with:
+
+* Basics of lists and vectors (`length`, indexing, etc.)
+* Fundamental data wrangling functions (e.g., `group_by`, `summarize`, `mutate`, `select`, `filter`, `count`)
+
+## Strings functions
+
+You should be familiar with the following string functions in R:
+
+* `str_extract` and `str_extract_all`
+* `str_replace` and `str_replace_all`
+* `str_subset`
+* `str_detect`
+
+## Regular expressions
+
+You should be familiar with the following regular expression components:
+
+* `\\d` and `\\s`
+* `\\b` is a word boundary
+* `+`
+* `.`
+* alternation with `|`
+* string anchors `^` and `$`
+* `^` as negation inside a character class `[ ]`
+* Using `\\` for literals vs. special characters. For example:
+    * `\\d` matches any digit, whereas `d` matches the letter "d"
+    * `$` matches the end of the string, whereas `\\$` matches a literal dollar sign
+* positive look-aheads and look-behinds
+* back-references `\\1`
+
+## Function writing
+
+* You should be able to write functions of multiple arguments that return objects such as numeric values, vectors, and data frames
+* You should know how to include default arguments in your functions
+* You should be able to write functions that accept a data frame as an argument, and then perform operations on that data frame
+* You should be able to write functions which throw an error (with a helpful message) if certain conditions are not met
+* You should know what sorts of inputs would make your function fail
+* You should have ideas for how you would test your functions to ensure they work as expected (you will *not* have to write the full code for a unit test, but you may need to describe what you would assess)
+
+## Iteration
+
+You should be able to:
+
+* Use a `for` loop to repeat a process a specified number of times
+* Use a `while` loop to repeat a process while a condition is true
+* Update a vector or a counter within a loop to track the output of each iteration
+* Use `map` (or variants such as `map_dbl` and `map_lgl`) to apply a function to each entry of a vector or list
+* Use `across` to apply a function across the columns of a dataframe
+
+## Probability simulations
+
+You should be able to write a simulation that estimates the probability of some event, given a particular scenario. The output of your code should be an estimate of that probability, using many repetitions (like the examples in class).
+
+**Note:** For the exam, I am more interested in the logic of how you approach the simulation, than in your code syntax being perfect. Your code should be mostly correct, but a few minor errors isn't an issue.
+
+# Practice with loops in R
+
+::: {.callout-tip}
+## Question 1
+What will the following code return when you run it in R?
+
+```{r, eval=F}
+output <- rep(NA, 10)
+for(i in 1:5){
+  output[i] <- i
+}
+
+output[6]
+```
+:::
+
+
+::: {.callout-tip}
+## Question 2
+
+What will the following code return when you run it in R?
+
+```{r, eval=F}
+output <- rep(0, 10)
+for(i in 1:10){
+  output[i] <- i
+}
+
+output[6]
+```
+:::
+
+::: {.callout-tip}
+## Question 3
+
+What will the following code return when you run it in R?
+
+```{r, eval=F}
+output <- rep(0, 10)
+for(i in 1:10){
+  output[i] <- i
+}
+
+output[11]
+```
+:::
+
+
+::: {.callout-tip}
+## Question 4
+
+What will the following code return when you run it in R?
+
+```{r, eval=F}
+output <- rep(1, 10)
+for(i in 2:10){
+  output[i] <- i + output[i-1]
+}
+
+output[5]
+```
+:::
+
+
+::: {.callout-tip}
+## Question 5
+
+What will the following code return when you run it in R?
+
+```{r, eval=F}
+output <- rep(1, 10)
+for(i in 2:10){
+  output[i] <- i + output[i+1]
+}
+
+output[5]
+```
+:::
+
+
+# Practice with functions
+
+## Standard deviation
+
+The *sample standard deviation* of numbers $x_1,...,x_n$ is given by 
+
+$$\widehat{\sigma} = \sqrt{\frac{1}{n-1}\sum \limits_{i=1}^n (x_i - \bar{x})^2},$$
+
+where $\bar{x} = \frac{1}{n} \sum \limits_{i=1}^n x_i$.
+
+::: {.callout-tip}
+## Question 6
+
+Write a function called `my_sd` which calculates the standard deviation of a vector in R. Your function should satisfy the following requirements:
+
+Input:
+
+* `x`: a vector of the observations $x_1,...,x_n$
+
+Output: the estimated standard deviation $\widehat{\sigma}$
+
+Error handling: Brainstorm at least two different ways the function could fail if provided with the wrong input. Your function should throw an error (with a helpful message) if those situations occur.
+
+Other requirements: you make not use any existing standard deviation functions (e.g. `sd`)
+:::
+
+## $\ell_p$ norm
+
+The $\ell_p$ norm of a vector $x = (x_1,...,x_k)$ is given by
+
+$$||x||_p = \left( \sum \limits_{i=1}^k |x_i|^p \right)^{1/p}$$
+
+where $p > 0$.
+
+::: {.callout-tip}
+## Question 7
+
+Write a function called `p_norm` in R, which satisfies the following requirements.
+
+Input:
+
+* `x`: a vector containing $x_1,...,x_k$
+* `p`: the value of $p$ to use when computing the norm. Make `p = 2` the default value (this corresponds to the usual Euclidean norm).
+
+Output: the $\ell_p$ norm of `x`
+
+Error handling: Brainstorm at least two different ways the function could fail if provided with the wrong input. Your function should throw an error (with a helpful message) if those situations occur.
+:::
+
+## Kurtosis
+
+Suppose we have a sample $X_1,...,X_n$ from some population distribution. We know that the mean describes the "center" of the distribution, the standard deviation is a measure of variability, and skewness describes the shape of the distribution. 
+
+Another quantity we can calculate to describe a distribution is *kurtosis*, which describes how heavy the tails of the distribution are. The *sample kurtosis* is calculated by:
+
+$$\dfrac{\frac{1}{n} \sum \limits_{i=1}^n (X_i - \bar{X})^4}{\left( \frac{1}{n} \sum \limits_{i=1}^n (X_i - \bar{X})^2 \right)^2} \ \ - \ \ 3$$
+
+where $\bar{X}$ is the sample mean.
+
+::: {.callout-tip}
+## Question 8
+
+Write a function in R to calculate the sample kurtosis. 
+
+Input:
+
+* `x`: a vector containing $X_1,...,X_n$
+
+Output: the sample kurtosis for `x`
+
+Error handling: Brainstorm at least two different ways the function could fail if provided with the wrong input. Your function should throw an error (with a helpful message) if those situations occur.
+:::
+
+
+# Accuracy
+
+Let $Y_1,...,Y_n \in \{0, 1\}$ be observations from a binary variable that we are interested in predicting, and let $\widehat{p}_i = \widehat{P}(Y_i = 1)$ be the estimated probability that $Y_i = 1$. For example, we may get these estimated probabilities from a logistic regression model.
+
+Since $\widehat{p}_1,...,\widehat{p}_n \in [0, 1]$, we can convert our predicted probabilities into *binary* predictions by thresholding:
+
+$\widehat{Y}_i = \begin{cases} 1 & \widehat{p}_i > h \\ 0 & \widehat{p}_i \leq h \end{cases}$
+
+where $h$ is a user-specified threshold. Then, the **accuracy** of our binary predictions is defined as:
+
+$$\text{Accuracy} = \frac{\#\{\widehat{Y}_i = Y_i\}}{n}$$
+
+where the numerator denotes the number of predictions $\widehat{Y}_i$ which agree with the true observed response $Y_i$.
+
+::: {.callout-tip}
+## Question 9
+
+Write a function called `calc_accuracy` which satisfies the following requirements:
+
+Input:
+
+* `y`: the vector of observed responses $Y_1,...,Y_n$
+* `p`: the vector of estimated probabilities $\widehat{p}_1,...,\widehat{p}_n$
+* `h`: the thresholding to use when converting $\widehat{p}_1,...,\widehat{p}_n$ into binary predictions
+
+Output: the accuracy
+
+Other requirements:
+
+* Your function should leverage R's vectorized operations. No loops!
+:::
+
+Now suppose that we have a data frame in R called `pred_data`. Here are the first few rows of `pred_data`:
+
+```{r, include = F}
+pred_data <- data.frame(truth = c(0, 0, 1, 0, 1, 1),
+                        pred_knn = c(0.4, 0.6, 0.9, 0.1, 0.2, 0.9),
+                        pred_lasso = c(0.1, 0.2, 0.8, 0.2, 0.7, 0.6),
+                        pred_logistic = c(0.15, 0.3, 0.6, 0.2, 0.9, 0.2))
+```
+
+```{r}
+pred_data
+```
+
+The columns are:
+
+* `truth`: the true responses $Y$ (0 or 1)
+* `pred_knn`: predicted probabilities from kNN
+* `pred_lasso`: predicted probabilities from a lasso model
+* `pred_logistic`: predicted probabilities from a logistic regression
+
+::: {.callout-tip}
+## Question 10
+
+Using your `calc_accuracy` function from the previous question, and the `across` function from `dplyr`, write code to calculate the accuracy for each model.
+
+:::
+
+
+# Iteration and function writing
+
+Your friend is the head TA for intro statistics at a large university. They have a GitHub repository, which contains a folder (`intro_stats_grades`) containing the final grades in each section of intro statistics at the university.  There are 20 sections in total. Here is an example of the first few file names, using `list.files` to get the names in R:
+
+Code:
+
+```
+grade_files <- list.files("intro_stats_grades/")
+head(grade_files, n=3)
+```
+
+Output:
+
+```
+'intro_stats_grades/section_01.csv'  
+'intro_stats_grades/section_02.csv'  
+'intro_stats_grades/section_03.csv'
+```
+
+Here is an example of what the first few rows from one of these files looks like:
+
+```
+  name_first     name_last final_percent
+       Lacey     Challoner            87
+      Haajid         Chung            94
+      Bryson      Jacobson            86
+       Jason       Saravia            79
+     Elliott        Strait            83
+```
+
+
+::: {.callout-tip}
+## Question 11
+
+A student will receive an "A" in the course if their overall score (`final_percent`) is at least 90. Write a function in R called `frac_a` to calculate the fraction of students in a class who received an "A", satisfying the following requirements:
+
+Input: 
+
+* `df` a data frame, containing grades for one of the course sections. You may assume that all of the grades for the 20 sections are stored like the example above.
+
+Output: the fraction of students receiving an A.
+
+:::
+
+::: {.callout-tip}
+## Question 12
+
+Using the `frac_a` function from the previous question, write code to compute the fraction of "A" grades in *each* section of introductory statistics. Your code should return either a vector or a list of length 20, with an entry for each section.
+
+* You may either `map` or use a loop, whichever you prefer
+* The `read_csv` function will read in data from a CSV file into R
+* You may use the `grade_files` vector, defined above, as a starting place.
+* If you did not complete the previous question, that is ok -- you may assume that the function `frac_a` has been correctly implemented when answering this question.
+:::
+
+
+# Practice with probability simulations
+
+Three players enter a room and a red or blue hat is placed on each person’s head.
+The color of each hat is determined by [an independent] coin toss (so, any combination of red and blue hats is possible). No communication of any sort is allowed, except for an initial strategy session before the game begins. Once they have had a chance to look at the other hats [but not their own], the players must *simultaneously* guess the color of their own hats or pass. The players win the game if at least one person guesses correctly, and no one guesses incorrectly.
+
+::: {.callout-tip}
+## Question 13
+
+Here is one strategy: one player randomly guesses the color of their hat, while the other two players pass. Write a simulation to estimate the probability the players win the game (the true probability is 1/2).
+
+:::
+
+::: {.callout-tip}
+## Question 14
+
+Here is another strategy: if a player sees the same color on the other two hats, they guess the color they do not see. If a player sees different colors on the other two hats, they pass. For example: If players A, B, and C have hats red, blue, and blue respectively, then player A would guess red, player B would pass, and player C would pass. Write a simulation to estimate the probability the players win the game with this new strategy (the true probability is 3/4).
+:::
+
+
+# Function scoping
+
+::: {.callout-tip}
+## Question 15
+
+What will be the output of the following code?
+
+```{r eval=F}
+x <- 10
+test_fun <- function(x = 11){
+  return(x)
+}
+test_fun()
+x
+```
+
+:::
+
+::: {.callout-tip}
+## Question 16
+
+What will be the output of the following code?
+
+```{r eval=F}
+x <- 10
+test_fun <- function(y = 11){
+  return(x + 1)
+}
+test_fun()
+x
+```
+
+:::
+
+::: {.callout-tip}
+## Question 17
+
+What will be the output of the following code?
+
+```{r eval=F}
+x <- 10
+test_fun <- function(y = 11){
+  x <- x + 1
+  return(x + 1)
+}
+test_fun()
+x
+```
+
+:::
+
+::: {.callout-tip}
+## Question 18
+
+What will be the output of the following code?
+
+```{r eval=F}
+x <- 10
+test_fun <- function(x = 11){
+  x <- x + 1
+  return(x + 1)
+}
+test_fun()
+x
+```
+:::
+
+::: {.callout-tip}
+## Question 19
+
+What will be the output of the following code?
+
+```{r eval=F}
+x <- 10
+test_fun <- function(x = 11){
+  x <- x + 1
+  return(x + 1)
+}
+x <- test_fun(x)
+x
+```
+:::
+
+
+# Strings and regular expressions
+
+## Example 1
+
+```{r include=F}
+library(tidyverse)
+```
+
+
+Consider the following strings:
+
+```{r, echo=F}
+strings <- c(
+  "George Washington: February 22, 1732",
+  "Thomas Jefferson: April 13, 1743",
+  "Abraham Lincoln: February 12, 1809",
+  "Theodore Roosevelt: October 27, 1858"
+)
+
+strings
+```
+
+For each question below, fill in the R code to produce the desired output.
+
+1.
+
+```{r, eval=F}
+str_extract(strings, ...)
+```
+
+```{r, echo=F}
+str_extract(strings, ".+(?=:)")
+```
+
+2.
+
+
+```{r, eval=F}
+str_extract(strings, ...)
+```
+
+```{r, echo=F}
+str_extract(strings, "(?<=: ).+")
+```
+
+3.
+
+```{r, eval=F}
+str_extract(strings, ...)
+```
+
+```{r, echo=F}
+str_extract(strings, "(?<=\\s).+(?=:)")
+```
+
+4.
+
+```{r, eval=F}
+str_extract(strings, ...)
+```
+
+```{r, echo=F}
+str_extract(strings, "(?<=, ).+")
+```
+
+## Example 2
+
+Consider the following strings:
+
+```{r, echo=F}
+strings <- c("apple", "banana", "canteloupe", "durian",
+             "eggplant", "french fries", "goat cheese",
+             "pizza", "99 red balloons", "101 dalmatians",
+             "route 66")
+```
+
+```{r}
+strings
+```
+
+
+For each question below, fill in the R code to produce the desired output.
+
+5.
+
+```{r, eval=F}
+str_subset(strings, ...)
+```
+
+```{r, echo=F}
+str_subset(strings, "\\d+")
+```
+
+6.
+
+```{r, eval=F}
+str_subset(strings, ...)
+```
+
+```{r, echo=F}
+str_subset(strings, "^\\d+")
+```
+
+7.
+
+```{r, eval=F}
+str_subset(strings, ...)
+```
+
+```{r, echo=F}
+str_subset(strings, "a")
+```
+
+8.
+
+```{r, eval=F}
+str_subset(strings, ...)
+```
+
+```{r, echo=F}
+str_subset(strings, "\\s")
+```
+
+9.
+
+```{r, eval=F}
+str_subset(strings, ...)
+```
+
+```{r, echo=F}
+str_subset(strings, "(.)\\1")
+```
+
+## Example 3
+
+Suppose you receive a vector containing the following email addresses:
+
+```{r}
+emails <- c("evansc@wfu.edu",
+            "dalzelnm@wfu.edu",
+            "heplersa@wfu.edu")
+```
+
+10. Fill in the following code to produce the desired output:
+
+```{r, eval=F}
+str_extract(emails, ...)
+```
+
+```{r, echo=F}
+str_extract(emails, "^.+(?=@)")
+```
+
+## Example 4
+
+You have a folder with the following filenames:
+
+```{r}
+filenames <- c(".bash_profile",
+               "workspace.doc",
+               "img0912.jpg",
+               "updated_img0912.png",
+               "documentation.html",
+               "favicon.gif",
+               "access.lock")
+```
+
+
+11. Fill in the following code to produce the desired output:
+
+```{r, eval=F}
+str_subset(filenames, ...)
+```
+
+```{r, echo=F}
+str_subset(filenames, "(gif|png|jpg)")
+```
+
+## Example 5
+
+Consider the following string:
+
+```{r}
+ex_str <- "The kurtosis is defined by the equation $\\mu_4/\\sigma^4$, 
+where $\\mu_4$ is the fourth central moment 
+and $\\sigma$ is the standard deviation."
+```
+
+12. Fill in the following code to produce the desired output:
+
+```{r, eval=F}
+str_extract_all(ex_str, ...)
+```
+
+```{r, echo=F}
+str_extract_all(ex_str, "\\$[^\\$]+\\$")
+```
+
+## Example 6
+
+Here is another small dataset, `ex_df`, which has a single column (`faculty`):
+
+```{r, include=F}
+ex_df <- data.frame(faculty = c("Rob Erhardt, Professor: MAN 343",
+                "Daniel Beavers, Associate Professor: MAN 337",
+                "Kenneth Berenhaut, Professor: MAN 379",
+                "Leonardo Cella, Assistant Professor: MAN 344",
+                "Lucy D'Agostino McGowan, Assistant Professor: MAN 342",
+                "Nicole Dalzell, Associate Teaching Professor: MAN 338"))
+```
+
+```{r}
+ex_df
+```
+
+13. Write code to produce the following output using `ex_df`:
+
+```{r, echo=F}
+ex_df |>
+  separate_wider_regex(faculty,
+                       patterns = c(
+                         name = ".+",
+                         ", ",
+                         position = ".+",
+                         ": ",
+                         office = ".+"
+                       ))
+```
+
+
+
+
