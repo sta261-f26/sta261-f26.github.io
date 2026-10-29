@@ -1,0 +1,129 @@
+---
+title: "Activity: simulation"
+format: html
+editor: source
+callout-icon: false
+---
+
+## Robot tug-of-war
+
+Consider a tug-of-war competition for robots. In each match up, two robots take turns tugging the rope until the marker indicates that one of the robots won. The match starts with the marker at 0.
+
+* Robot A pulls the rope – use `runif(n=1,min=0,max=0.50)` to simulate the magnitude of the pull. Adding the simulated value to the marker position gives the new position of the marker.
+* Robot B pulls the rope in the opposite direction – use `runif(n=1,min=0,max=0.50)` to simulate the magnitude of the pull. Adding the simulated value to the marker position gives the new position of the marker.
+* The two robots continue taking turns until the marker moves past -0.50 or 0.50. The marker is check after *each* robot takes their turn -- the robots alternate, they do not pull simultaneously! It is therefore possible that the winning robot got more turns than the losing robot. 
+
+::: {.callout-tip}
+## Question 1
+
+Write code that simulates 1000 robot tug of war battles.
+:::
+
+**Solution:** Here is one possible implementation:
+
+```{r}
+# set a seed for reproducibility
+set.seed(321)
+
+nsim <- 1000 # number of games
+results <- rep(NA, nsim)
+
+for(i in 1:nsim){
+  # each game starts with the marker in the middle
+  marker <- 0
+  
+  # first robot to pull is robot A
+  current_robot <- "A"
+  
+  # play until the marker crosses 0.5 or -0.5
+  while(abs(marker) < 0.5){
+    pull <- runif(1, 0, 0.5)
+    
+    # movement depends on whether current robot is A or B
+    marker <- ifelse(current_robot == "A", marker + pull, marker - pull)
+    
+    # switch robot for the next pull
+    current_robot <- ifelse(current_robot == "A", "B", "A")
+  }
+  results[i] <- marker >= 0.5
+}
+```
+
+
+::: {.callout-tip}
+## Question 2
+
+Report the results of 1000 simulated robot tug of war battles. Is the game fair? If not, what adjustments can be made to make it more fair?
+:::
+
+**Solution:**
+
+```{r}
+# fraction of the time that robot A wins
+mean(results)
+```
+
+The game is decidedly unfair, but could be made more fair by adjusting the starting position of the marker, or the strength with which robot B pulls.
+
+## Labeled boxes
+
+Consider the following $(a + 1)$ player game (Gal and Miltersen, 2007). There are $a$ boxes with labels $1, ..., a$ and slips of paper labeled $1, 2, ..., a$ The lead player colors each slip of paper either red or blue and puts each slip of paper in a box so there is one and only one slip of paper per box, without the other $a$ players observing.
+
+Now, each player $i ∈ {1, 2, ..., a}$ can look in at most $a/2$ boxes and based on this make a guess about the color of the slip $i$. This done by each player in isolation. The $a$ players win if *every* player correctly announces the color of "their" slip.
+
+::: {.callout-tip}
+## Question 3
+
+Conduct a simulation where the lead player colors the slips and adds them to the boxes at random. The other players randomly choose which boxes to open. What proportion of the time do all of the players see their own slip, guaranteeing they win? Does the proportion depend on $a$?
+
+*Tip:* To efficiently check whether a vector contains a specific value, you can use `%in%`. For example,
+
+```{r}
+3 %in% c(1, 2, 3)
+4 %in% c(1, 2, 3)
+```
+
+:::
+
+**Solution:** 
+
+```{r}
+# helper function so we can play the game for different values of a
+# input: the number of players who will be looking for slips
+# output: whether they all found their slips (TRUE) or not (FALSE)
+play_game <- function(a){
+  
+  # randomly assign slips to boxes
+  slips <- 1:a
+  boxes <- sample(slips, a, replace=F)
+  
+  # store whether each player saw their slip
+  # (could also use a counter here)
+  player_results <- rep(NA, a)
+  
+  for(player in 1:a){
+    # randomly choose a/2 boxes to open
+    opened_boxes <- sample(1:a, a/2, replace = F)
+    player_results[player] <- player %in% boxes[opened_boxes]
+  }
+  return(sum(player_results) == a)
+}
+
+a_values <- 2:20 # values of a to consider
+a_probs <- rep(NA, length(a_values)) # results for each a
+ngames <- 1000
+
+for(i in 1:length(a_values)){
+  game_results <- rep(NA, ngames)
+  
+  for(j in 1:ngames){
+    game_results[j] <- play_game(a_values[i])
+  }
+  a_probs[i] <- mean(game_results)
+}
+
+plot(a_values, a_probs)
+```
+
+
+
