@@ -1,0 +1,133 @@
+---
+title: "Back to Python"
+format: 
+  revealjs:
+    theme: theme.scss
+editor: source
+editor_options: 
+  chunk_output_type: console
+---
+
+
+## Iteration and simulation in Python
+
+Recall our first simulation example:
+
+```{r, echo=T}
+M <- 10 # number of people at the party
+hats <- 1:M # numbered hats
+nsim <- 10000 # number of simulations
+results <- rep(0, nsim) # vector to store the results
+
+for(i in 1:nsim){
+  randomized_hats <- sample(hats, M, replace = FALSE)
+  results[i] <- sum(randomized_hats == hats) > 0
+}
+
+mean(results)
+```
+
+## Iteration and simulation in Python
+
+Here is the same code, written in Python
+
+```{python, echo=T}
+import numpy as np
+
+M = 10 # number of people at the party
+hats = np.arange(M) # numbered hats
+nsim = 10000 # number of simulations
+results = np.zeros(nsim) # to store the results
+
+for i in range(nsim):
+    randomized_hats = np.random.choice(hats, M, replace = False)
+    results[i] = np.sum(randomized_hats == hats) > 0
+
+np.mean(results)
+```
+
+What similarities and differences do you notice?
+
+## Step 1: representing the hats
+
+```{python, echo = T}
+import numpy as np
+
+M = 10 # number of people at the party
+hats = np.arange(M) # numbered hats
+
+hats
+hats[0]
+hats[1]
+```
+
+* `hats` is a 1-dimensional array (similar to a vector in R)
+* Python is *0-indexed*: the first entry is `hats[0]`
+
+## Step 2: everyone draws a random hat
+
+```{python, echo=T}
+import numpy as np
+
+M = 10 # number of people at the party
+hats = np.arange(M) # numbered hats
+
+randomized_hats = np.random.choice(hats, M, replace = False)
+
+randomized_hats
+```
+
+* `np.random.choice` works like R's `sample` function
+* Booleans in Python are `True` and `False` (as opposed to `TRUE` and `FALSE`, or `T` and `F`)
+
+## Step 3: check who got their original hat
+
+```{python, echo=T}
+import numpy as np
+
+M = 10 # number of people at the party
+hats = np.arange(M) # numbered hats
+
+randomized_hats = np.random.choice(hats, M, replace = False)
+randomized_hats
+
+randomized_hats == hats
+
+np.sum(randomized_hats == hats)
+```
+
+* NumPy arrays allow for "vectorized" operations, like in R
+
+## Step 4: iteration
+
+```{python, echo=T}
+import numpy as np
+
+M = 10 # number of people at the party
+hats = np.arange(M) # numbered hats
+nsim = 10000 # number of simulations
+results = np.zeros(nsim) # to store the results
+
+for i in range(nsim):
+    randomized_hats = np.random.choice(hats, M, replace = False)
+    results[i] = np.sum(randomized_hats == hats) > 0
+
+np.mean(results)
+```
+
+* `range(nsim)` is similar to `1:nsim` in R 
+* We don't use the curly braces `{ }`. Instead we use whitespace (four spaces is standard, you just have to be consistent)
+
+
+## Class activity
+
+Work on the class activity (course website).
+
+
+
+
+
+
+
+
+

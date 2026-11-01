@@ -1,0 +1,108 @@
+---
+title: "Activity: simulation"
+format: html
+editor: source
+ipynb-shell-interactivity: all
+---
+
+**Instructions:** 
+
+* Work with a neighbor to answer the following questions 
+* You do **not** need to submit anything for this activity
+
+**Working in Python:** To work in Python, we will use [Google Colab](https://colab.research.google.com/):
+
+* Click on the link to go to Colab
+* Log in with your WFU google account
+* Click "New Notebook"
+
+**Turning off AI assistance:** Google Colab is annoying and will give you a ton of AI assistance by default. Here is how to turn that off:
+
+* In your notebook, go to Tools -> Settings
+* From the Settings menu, choose "AI Assistance"
+* **Uncheck** the boxes "Show AI-powered inline completions" and "Consented to use generative AI features"
+* **Check** the boxe "Hide generative AI features"
+
+## The birthday problem
+
+Suppose we have a class of 30 students. What is the probability that there is at least one shared birthday?
+
+* Assume there are 365 days in a year
+* Assume that each day is equally likely as a birthday
+* Assume there are no multiple-birth siblings (e.g. twins, triplets, etc.) in the class
+
+1. Use the `np.arange` function to create a 1-dimensional array, `days`, to store the days of the year (numbered 0 to 364)
+
+2. Use the `np.random.choice` function to randomly choose birthdays for the class (shared birthdays are possible, so use `replace=True` in the function!)
+
+3. Check the number of distinct birthdays (hints: the `np.unique` and `len` functions may be helpful!). Are there 30 distinct birthdays?
+
+4. Use a `for` loop to repeat the experiment `nsim = 10000` times, making sure to store the results. What is the probability of at least one shared birthday?
+
+## Probability simulation: theater seating
+
+Suppose there are exactly 100 seats in a movie theater. Further, suppose the movie theater has imposed a new ticketing system where each person’s ticket has an assigned seat number. Consider the case where the movie is sold-out (all 100 seats will be taken) and the first person in the theater lost their ticket and takes a random seat. Each subsequent person attempts to go to their seat. If their seat is open, they take it. Otherwise, to avoid confrontation, they choose a random seat. 
+
+5. Conduct a simulation to assess the probability that the last person into the theater will get their assigned seat.
+
+
+## Probability simulation: pairing socks
+
+You own 10 pairs of socks (for a total of 20 socks). The socks range in color from 1 (white) to 10 (black). (That is, you have two socks of color 1 (white), two socks of color 2 (very light gray), two socks of color 3 (light gray), etc.).
+
+Without looking, you take all 20 socks from the drawer, and pair them at random. What is the probability that they are paired so that the colors of all pairs differ by at most 3?
+
+6. Write a simulation in Python that would allow you to estimate this probability.
+
+Here is some additional information that might help:
+
+* `np.concat` combines two arrays. E.g.:
+
+```{python}
+import numpy as np
+
+np.concat(([1, 2], [4, 5]))
+np.concat((np.arange(3), np.arange(3)))
+```
+
+* `numpy` arrays can be indexed by Python lists or other `numpy` arrays. E.g.:
+
+```{python}
+x = np.array([1, 17, 19])
+x
+x[[0, 2]]
+x[np.array([0, 2])]
+```
+
+* `np.arange` permits you to specify the start, end, and increment. Note that the end is not included. For example:
+
+```{python}
+np.arange(3)
+np.arange(0, 3)
+np.arange(1, 3)
+np.arange(1, 4)
+np.arange(1, 4, 2)
+```
+
+
+
+
+```{python}
+#| include: false
+
+import numpy as np
+
+socks = np.concat((np.arange(1, 11), np.arange(1, 11)))
+nsim = 10000
+res = np.zeros(nsim)
+
+for i in range(nsim):
+  shuffled_socks = np.random.choice(socks, 20, replace=False)
+  left_socks = shuffled_socks[np.arange(1, 21, 2)]
+  right_socks = shuffled_socks[np.arange(0, 20, 2)]
+  res[i] = max(abs(left_socks - right_socks))
+  
+np.mean(res <= 3)
+```
+
+
