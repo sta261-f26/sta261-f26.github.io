@@ -56,7 +56,7 @@ mean(results)
 
 Map approach: One run of the simulation is actually easier to do with the for loop, because the first person is treated differently than the others, and we need to update the `taken` vector. However, we can write a function to do one run of the simulation, then iterate it with `map`.
 
-```{r, message=F}
+```{r, message=F, warning=F}
 library(tidyverse)
 set.seed(771)
 
