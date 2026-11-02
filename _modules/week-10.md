@@ -15,6 +15,6 @@ October 28
 
 October 30
 : Iteration and simulation
-  : [Class Activity](https://sta261-f26.github.io/class_activities/ca_25.html)
+  : [Class Activity](https://sta261-f26.github.io/class_activities/ca_25.html), [Class Activity solutions](https://sta261-f26.github.io/class_activities/ca_25_solutions.html)
   
   
