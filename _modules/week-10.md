@@ -11,7 +11,7 @@ October 28
   : [slides (html)](https://sta261-f26.github.io/slides/lecture_24.html), [slides (pdf)](https://sta261-f26.github.io/slides/lecture_24.pdf), [Class Activity](https://sta261-f26.github.io/class_activities/ca_24.html), [Class Activity solutions](https://sta261-f26.github.io/class_activities/ca_24_solutions.html)
   
 : Exam 2 review
-  : [review questions](https://sta261-f26.github.io/class_activities/exam_2_review.html)
+  : [review questions](https://sta261-f26.github.io/class_activities/exam_2_review.html), [review solutions](https://sta261-f26.github.io/class_activities/exam_2_review_solutions.html)
 
 October 30
 : Iteration and simulation
