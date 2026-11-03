@@ -1,0 +1,68 @@
+---
+title: "Activity: simulation"
+format: html
+editor: source
+ipynb-shell-interactivity: all
+---
+
+## The birthday problem
+
+Suppose we have a class of 30 students. What is the probability that there is at least one shared birthday?
+
+* Assume there are 365 days in a year
+* Assume that each day is equally likely as a birthday
+* Assume there are no multiple-birth siblings (e.g. twins, triplets, etc.) in the class
+
+**Solution:**
+
+```{python}
+import numpy as np
+
+# set a seed for reproducibility
+np.random.seed(33)
+
+days = np.arange(364) # days of the year
+n_students = 30
+nsim = 10000
+results = np.zeros(nsim)
+
+for i in range(nsim):
+    birthdays = np.random.choice(days, n_students, replace=True)
+    results[i] = len(np.unique(birthdays)) < n_students
+
+np.mean(results)
+```
+
+
+## Probability simulation: theater seating
+
+Suppose there are exactly 100 seats in a movie theater. Further, suppose the movie theater has imposed a new ticketing system where each person’s ticket has an assigned seat number. Consider the case where the movie is sold-out (all 100 seats will be taken) and the first person in the theater lost their ticket and takes a random seat. Each subsequent person attempts to go to their seat. If their seat is open, they take it. Otherwise, to avoid confrontation, they choose a random seat. 
+
+**Solution:**
+
+```{python}
+np.random.seed(111)
+
+n_people = 100 # number of people in the theater
+nsim = 1000 # number of simulations to estimate probability
+results = np.zeros(nsim)
+seats = np.arange(n_people)
+
+for i in range(nsim):
+  taken = np.zeros(n_people)
+  
+  choice = np.random.choice(seats)
+  taken[choice] = 1
+  
+  for j in range(1, n_people - 1):
+    if taken[j] == 0:
+      taken[j] = 1
+    else:
+      choice = np.random.choice(seats[taken == 0])
+      taken[choice] = 1
+  
+  results[i] = taken[n_people-1] == 0
+
+np.mean(results)
+```
+

@@ -1,0 +1,162 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Activity: simulation\"\n",
+        "format: html\n",
+        "editor: source\n",
+        "ipynb-shell-interactivity: all\n",
+        "---\n",
+        "\n",
+        "**Instructions:** \n",
+        "\n",
+        "* Work with a neighbor to answer the following questions \n",
+        "* You do **not** need to submit anything for this activity\n",
+        "\n",
+        "**Working in Python:** To work in Python, we will use [Google Colab](https://colab.research.google.com/):\n",
+        "\n",
+        "* Click on the link to go to Colab\n",
+        "* Log in with your WFU google account\n",
+        "* Click \"New Notebook\"\n",
+        "\n",
+        "**Turning off AI assistance:** Google Colab is annoying and will give you a ton of AI assistance by default. Here is how to turn that off:\n",
+        "\n",
+        "* In your notebook, go to Tools -> Settings\n",
+        "* From the Settings menu, choose \"AI Assistance\"\n",
+        "* **Uncheck** the boxes \"Show AI-powered inline completions\" and \"Consented to use generative AI features\"\n",
+        "* **Check** the boxe \"Hide generative AI features\"\n",
+        "\n",
+        "\n",
+        "## Probability simulation: pairing socks\n",
+        "\n",
+        "You own 10 pairs of socks (for a total of 20 socks). The socks range in color from 1 (white) to 10 (black). (That is, you have two socks of color 1 (white), two socks of color 2 (very light gray), two socks of color 3 (light gray), etc.).\n",
+        "\n",
+        "Without looking, you take all 20 socks from the drawer, and pair them at random. What is the probability that they are paired so that the colors of all pairs differ by at most 3?\n",
+        "\n",
+        "1. Write a simulation in Python to estimate this probability.\n",
+        "\n",
+        "Here is some additional information that might help:\n",
+        "\n",
+        "* `np.concat` combines two arrays. E.g.:"
+      ],
+      "id": "9e9b2bb5"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import numpy as np\n",
+        "\n",
+        "np.concat(([1, 2], [4, 5]))\n",
+        "np.concat((np.arange(3), np.arange(3)))"
+      ],
+      "id": "f64230d1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "* `numpy` arrays can be indexed by Python lists or other `numpy` arrays. E.g.:"
+      ],
+      "id": "80c60881"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "x = np.array([1, 17, 19])\n",
+        "x\n",
+        "x[[0, 2]]\n",
+        "x[np.array([0, 2])]"
+      ],
+      "id": "54b4adfd",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "* `np.arange` permits you to specify the start, end, and increment. Note that the end is not included. For example:"
+      ],
+      "id": "a58b5afc"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "np.arange(3)\n",
+        "np.arange(0, 3)\n",
+        "np.arange(1, 3)\n",
+        "np.arange(1, 4)\n",
+        "np.arange(1, 4, 2)"
+      ],
+      "id": "375f7719",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| include: false\n",
+        "\n",
+        "import numpy as np\n",
+        "\n",
+        "socks = np.concat((np.arange(1, 11), np.arange(1, 11)))\n",
+        "nsim = 10000\n",
+        "res = np.zeros(nsim)\n",
+        "\n",
+        "for i in range(nsim):\n",
+        "  shuffled_socks = np.random.choice(socks, 20, replace=False)\n",
+        "  left_socks = shuffled_socks[np.arange(1, 21, 2)]\n",
+        "  right_socks = shuffled_socks[np.arange(0, 20, 2)]\n",
+        "  res[i] = max(abs(left_socks - right_socks))\n",
+        "  \n",
+        "np.mean(res <= 3)"
+      ],
+      "id": "656f9c14",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Roulette revisited\n",
+        "\n",
+        "Previously, we consider the following gambling scenario:\n",
+        "\n",
+        "-   A roulette wheel has 38 slots numbered 00, 0, and 1--36. Two are green, 18 are red, and 18 are black.\n",
+        "-   If a gambler bets based on color, the return on a \\$1 bet is \\$2\n",
+        "-   A gambler has \\$50, and will continuously bet \\$1 on red until they double their money (have \\$100) or lose the money they came with\n",
+        "-   What is the probability the gambler doubles their money?\n",
+        "\n",
+        "2. Write a simulation in Python to estimate this probability. In addition to the material we have covered so far, you will need to look up a couple new Python tools, such as `while` loops.\n",
+        "\n",
+        "## Monty Hall\n",
+        "\n",
+        "Suppose you are on a game show, with three closed doors. Behind two of the doors is a goat, and behind one of the doors is a car. You randomly select one of the three doors. The host then opens one of the remaining doors to reveal a goat, and gives you the option of sticking with your original choice, or switching to the other unopened door. For contestants who choose to switch doors, what is the probability of winning the car?\n",
+        "\n",
+        "\n",
+        "3. Write a simulation in Python to estimate this probability."
+      ],
+      "id": "4919fd55"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Users/ciaranevans/anaconda3/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

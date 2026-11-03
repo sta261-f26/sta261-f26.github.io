@@ -1,0 +1,103 @@
+---
+title: "Activity: simulation"
+format: html
+editor: source
+ipynb-shell-interactivity: all
+---
+
+**Instructions:** 
+
+* Work with a neighbor to answer the following questions 
+* You do **not** need to submit anything for this activity
+
+**Working in Python:** To work in Python, we will use [Google Colab](https://colab.research.google.com/):
+
+* Click on the link to go to Colab
+* Log in with your WFU google account
+* Click "New Notebook"
+
+**Turning off AI assistance:** Google Colab is annoying and will give you a ton of AI assistance by default. Here is how to turn that off:
+
+* In your notebook, go to Tools -> Settings
+* From the Settings menu, choose "AI Assistance"
+* **Uncheck** the boxes "Show AI-powered inline completions" and "Consented to use generative AI features"
+* **Check** the boxe "Hide generative AI features"
+
+
+## Probability simulation: pairing socks
+
+You own 10 pairs of socks (for a total of 20 socks). The socks range in color from 1 (white) to 10 (black). (That is, you have two socks of color 1 (white), two socks of color 2 (very light gray), two socks of color 3 (light gray), etc.).
+
+Without looking, you take all 20 socks from the drawer, and pair them at random. What is the probability that they are paired so that the colors of all pairs differ by at most 3?
+
+1. Write a simulation in Python to estimate this probability.
+
+Here is some additional information that might help:
+
+* `np.concat` combines two arrays. E.g.:
+
+```{python}
+import numpy as np
+
+np.concat(([1, 2], [4, 5]))
+np.concat((np.arange(3), np.arange(3)))
+```
+
+* `numpy` arrays can be indexed by Python lists or other `numpy` arrays. E.g.:
+
+```{python}
+x = np.array([1, 17, 19])
+x
+x[[0, 2]]
+x[np.array([0, 2])]
+```
+
+* `np.arange` permits you to specify the start, end, and increment. Note that the end is not included. For example:
+
+```{python}
+np.arange(3)
+np.arange(0, 3)
+np.arange(1, 3)
+np.arange(1, 4)
+np.arange(1, 4, 2)
+```
+
+
+
+
+```{python}
+#| include: false
+
+import numpy as np
+
+socks = np.concat((np.arange(1, 11), np.arange(1, 11)))
+nsim = 10000
+res = np.zeros(nsim)
+
+for i in range(nsim):
+  shuffled_socks = np.random.choice(socks, 20, replace=False)
+  left_socks = shuffled_socks[np.arange(1, 21, 2)]
+  right_socks = shuffled_socks[np.arange(0, 20, 2)]
+  res[i] = max(abs(left_socks - right_socks))
+  
+np.mean(res <= 3)
+```
+
+
+## Roulette revisited
+
+Previously, we consider the following gambling scenario:
+
+-   A roulette wheel has 38 slots numbered 00, 0, and 1--36. Two are green, 18 are red, and 18 are black.
+-   If a gambler bets based on color, the return on a \$1 bet is \$2
+-   A gambler has \$50, and will continuously bet \$1 on red until they double their money (have \$100) or lose the money they came with
+-   What is the probability the gambler doubles their money?
+
+2. Write a simulation in Python to estimate this probability. In addition to the material we have covered so far, you will need to look up a couple new Python tools, such as `while` loops.
+
+## Monty Hall
+
+Suppose you are on a game show, with three closed doors. Behind two of the doors is a goat, and behind one of the doors is a car. You randomly select one of the three doors. The host then opens one of the remaining doors to reveal a goat, and gives you the option of sticking with your original choice, or switching to the other unopened door. For contestants who choose to switch doors, what is the probability of winning the car?
+
+
+3. Write a simulation in Python to estimate this probability.
