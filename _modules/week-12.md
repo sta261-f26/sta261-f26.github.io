@@ -10,7 +10,7 @@ November 9
   : [Chapter 21, R4DS](https://r4ds.hadley.nz/databases.html), [Chapter 15, MDSR](https://mdsr-book.github.io/mdsr3e/15-sqlI.html)
 
 November 11
-: SQL murder mystery
+: SQL murder mystery 
 
 November 13
 : SQL and relational data
