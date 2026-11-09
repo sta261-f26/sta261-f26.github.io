@@ -7,7 +7,7 @@ output:
 link-citations: yes
 ---
 
-**Due:** Friday, November 13, 11:59pm 
+**Due:** Friday, November 20, 11:59pm 
 
 **Instructions:** 
 
