@@ -22,6 +22,8 @@ link-citations: yes
 
 **Important:** This assignment can be completed as a **group assignment**. That is, you may work individually or in groups of up to 3 students total. If you work in a group, all members must contribute, but only one student needs to submit the assignment on GitHub; list the names of all group members in the submission.
 
+**Important:** This assignment is **optional**. If you choose to complete the assignment, it can replace your lowest homework score. (That is, your homework grade will be based on the 7 highest scores).
+
 # SQL Murder Mystery
 
 In class, you worked on solving a [murder mystery](https://mystery.knightlab.com/) using SQL. In this homework assignment, you will create your *own* SQL murder mystery!

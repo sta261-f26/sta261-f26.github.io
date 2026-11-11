@@ -11,10 +11,15 @@ November 9
 
 November 11
 : SQL murder mystery 
+  : [Class Activity](https://sta261-f26.github.io/class_activities/ca_29.html)
+
+: **Project released**{: .label .label-green }
+  : [Project](https://sta261-f26.github.io/project/project.html)
 
 November 13
 : SQL and relational data
 
-: **Homework 8 released**{: .label .label-yellow }
+: **Homework 8 released (optional)**{: .label .label-yellow }
+  : [HW 8](https://sta261-f26.github.io/homework/hw_08.html)
   
   
