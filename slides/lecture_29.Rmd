@@ -1,0 +1,55 @@
+---
+title: "Course logistics"
+author: "Ciaran Evans"
+output: beamer_presentation
+---
+
+## Course logistics
+
+Completed so far:
+
+* 7 HW assignments
+* 2 midterm exams
+* numerous in-class activities
+
+What is left:
+
+* HW 8 (optional! I will take your 7 highest HW grades). Practice with SQL
+* Project (due December 4)
+* Final exam
+
+Class structure:
+
+* A few more days of SQL
+* Project work time
+
+## Project
+
+**Due:** December 4
+
+**Overview:** You will be helping organize an undergraduate student research competition. This involves:
+
+* Sending verification emails to faculty sponsors
+* Determining which projects are valid competition entries
+* Assigning judges to valid projects according to judging criteria
+* Determining winning projects based on judge scores
+
+**Note:** Most of these steps can be completed in parallel! If you are stuck on an "earlier" step, you can always work on a "later" step.
+
+**AI use:** AI can only be used for small questions. It cannot generate big ideas and it cannot write important or substantial pieces of code for you. We will have in-class time to work on the project too, so you have me as a resource if you get stuck!
+
+## Today
+
+* Activity: SQL murder mystery
+
+\bigskip
+
+* If done early:
+    * Could work on HW 8 (writing your own SQL murder mystery)
+    * Could start looking at project
+    * Could leave early
+    
+\bigskip
+
+* Office hours today: changed on 2 - 3:30pm
+

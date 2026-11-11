@@ -11,7 +11,7 @@ November 9
 
 November 11
 : SQL murder mystery 
-  : [Class Activity](https://sta261-f26.github.io/class_activities/ca_29.html)
+  : [slides (pdf)](https://sta261-f26.github.io/slides/lecture_29.pdf), [Class Activity](https://sta261-f26.github.io/class_activities/ca_29.html)
 
 : **Project released**{: .label .label-green }
   : [Project](https://sta261-f26.github.io/project/project.html)
