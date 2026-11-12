@@ -18,6 +18,7 @@ November 11
 
 November 13
 : SQL and relational data
+  : [slides (pdf)](https://sta261-f26.github.io/slides/lecture_29.pdf), [activity 1](https://sta261-f26.github.io/class_activities/ca_30_warmup.pdf), [activity 2](https://sta261-f26.github.io/class_activities/ca_30.html)
 
 : **Homework 8 released (optional)**{: .label .label-yellow }
   : [HW 8](https://sta261-f26.github.io/homework/hw_08.html)
