@@ -76,6 +76,18 @@ ALTER TABLE airports
 
 2. Now create primary keys for the `airports` and `planes` tables.
 
+```{sql connection=conn, echo=F, eval=F}
+ALTER TABLE airports 
+ ADD PRIMARY KEY (faa);
+ 
+ALTER TABLE planes 
+ ADD PRIMARY KEY (tailnum);
+```
+
+
+
+
+
 # Composite primary keys
 
 The three tables above had primary keys created from a single column. For the `weather` table, however, our primary key will be a combination of two columns: `origin` and `time_hour`. This is called a *composite* primary key. Here is the code:
@@ -100,6 +112,11 @@ ALTER TABLE flights
 
 5. Add a primary key to the `flights` table using the `carrier`, `flight`, and `time_hour` columns.
 
+```{sql connection=conn, eval=F, echo=F}
+ALTER TABLE flights 
+ ADD PRIMARY KEY (carrier, flight, time_hour);
+```
+
 # Adding a foreign key
 
 Now let's add a foreign key to the `weather` table, which specifies that the `origin` column references the `faa` column in the `airports` table. 
@@ -121,6 +138,7 @@ INSERT INTO weather_new
 SELECT origin, time_hour, temp, dewp, humid 
 FROM weather;
 ```
+
 
 The `DESCRIBE` command we used above to see the primary keys won't show us the foreign keys in a table. We can, however, look for all the primary and foreign keys across tables in the database:
 
@@ -191,11 +209,51 @@ where dest = 'SFO' AND origin='JFK'
 limit 5
 ```
 
+# Another query
+
+The `airports` table has one row for each different airport in the database. There are a total of 1458 rows and 8 columns in the `airports` table; here are a few random rows from the table, showing the relevant columns for this question:
+
+```{r, echo=F, message=F, warning=F}
+library(nycflights13)
+library(tidyverse)
+
+airports |>
+  select(faa, name) |>
+  slice_sample(n=5) |>
+  data.frame()
+```
+
+The `weather` table has one row for each date-time, for each of the three NY airports (EWR, JFK, LGA), and records a variety of weather variables at each time for each location. Here are a few random rows from the table, showing the relevant columns for this question:
+
+```{r, echo=F}
+weather |>
+  select(origin, month, temp, humid) |>
+  slice_sample(n=5) |>
+  data.frame()
+```
+
+The `weather` table uses a 3-character FAA code to identify each airport. It does *not* include the full name for the airports. 
+
+We would like to produce a table with the mean temperature, and humidity for each month, for each of the 3 NYC airports in the database. The output table should also include the full name of each airport. Here is what the output table looks like:
+
+```{r, echo=F, message=F, warning=F}
+weather |>
+  group_by(origin, month) |>
+  summarize(mean_temp = mean(temp, na.rm=T),
+            mean_humid = mean(humid, na.rm=T)) |>
+  inner_join(airports, join_by(origin == faa)) |>
+  select(origin, name, month, mean_temp, mean_humid) |>
+  data.frame()
+```
+
+10. Write a SQL query to produce the desired results.
+
+11. How would you modify your above query to keep only the rows in the results for which the mean temperature is at least 60?
 
 
 # Disconnecting
 
-Finall, when we are finished we should disconnect from the database. Run the following code in R to disconnect, and make sure it is included at the end of your .qmd file.
+Finally, when we are finished we should disconnect from the database. Run the following code in R to disconnect, and make sure it is included at the end of your .qmd file.
 
 ```{r}
 DBI::dbDisconnect(conn)

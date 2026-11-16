@@ -405,11 +405,83 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>How many flights were there from JFK to SFO? What fraction of those flights were cancelled?</li>
 </ol>
 </section>
+<section id="another-query" class="level1">
+<h1>Another query</h1>
+<p>The <code>airports</code> table has one row for each different airport in the database. There are a total of 1458 rows and 8 columns in the <code>airports</code> table; here are a few random rows from the table, showing the relevant columns for this question:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  faa                               name
+1 9A1        Covington Municipal Airport
+2 DDC        Dodge City Regional Airport
+3 GAD Northeast Alabama Regional Airport
+4 HYG             Hydaburg Seaplane Base
+5 LIT                          Adams Fld</code></pre>
+</div>
+</div>
+<p>The <code>weather</code> table has one row for each date-time, for each of the three NY airports (EWR, JFK, LGA), and records a variety of weather variables at each time for each location. Here are a few random rows from the table, showing the relevant columns for this question:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  origin month  temp humid
+1    EWR     6 77.00 78.96
+2    EWR     7 84.92 60.98
+3    LGA     3 39.02 52.26
+4    LGA    12 32.00 63.51
+5    LGA     7 84.02 65.74</code></pre>
+</div>
+</div>
+<p>The <code>weather</code> table uses a 3-character FAA code to identify each airport. It does <em>not</em> include the full name for the airports.</p>
+<p>We would like to produce a table with the mean temperature, and humidity for each month, for each of the 3 NYC airports in the database. The output table should also include the full name of each airport. Here is what the output table looks like:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   origin                name month mean_temp mean_humid
+1     EWR Newark Liberty Intl     1  35.56216   62.12451
+2     EWR Newark Liberty Intl     2  34.26332   63.33558
+3     EWR Newark Liberty Intl     3  40.11865   57.91382
+4     EWR Newark Liberty Intl     4  52.97750   54.23513
+5     EWR Newark Liberty Intl     5  63.32024   64.07371
+6     EWR Newark Liberty Intl     6  73.26725   67.00229
+7     EWR Newark Liberty Intl     7  80.70300   66.67641
+8     EWR Newark Liberty Intl     8  74.53748   65.75175
+9     EWR Newark Liberty Intl     9  67.30478   64.03556
+10    EWR Newark Liberty Intl    10  59.77821   65.31928
+11    EWR Newark Liberty Intl    11  44.57734   56.52011
+12    EWR Newark Liberty Intl    12  37.95008   69.72141
+13    JFK John F Kennedy Intl     1  35.38555   61.66162
+14    JFK John F Kennedy Intl     2  34.19246   62.55848
+15    JFK John F Kennedy Intl     3  39.54472   58.02222
+16    JFK John F Kennedy Intl     4  50.14270   60.05764
+17    JFK John F Kennedy Intl     5  59.31476   70.98926
+18    JFK John F Kennedy Intl     6  69.95825   73.76147
+19    JFK John F Kennedy Intl     7  78.73492   71.74469
+20    JFK John F Kennedy Intl     8  73.81878   67.84420
+21    JFK John F Kennedy Intl     9  66.89775   65.25182
+22    JFK John F Kennedy Intl    10  59.80195   65.06362
+23    JFK John F Kennedy Intl    11  45.13419   56.79961
+24    JFK John F Kennedy Intl    12  38.60487   68.31341
+25    LGA          La Guardia     1  35.95927   59.15609
+26    LGA          La Guardia     2  34.35612   60.68603
+27    LGA          La Guardia     3  39.97652   56.55947
+28    LGA          La Guardia     4  52.11450   53.15060
+29    LGA          La Guardia     5  62.75000   61.49618
+30    LGA          La Guardia     6  73.32650   61.22686
+31    LGA          La Guardia     7  80.76425   62.26404
+32    LGA          La Guardia     8  75.04825   60.34574
+33    LGA          La Guardia     9  67.91125   59.67743
+34    LGA          La Guardia    10  60.63244   60.13875
+35    LGA          La Guardia    11  45.26093   53.49296
+36    LGA          La Guardia    12  38.76976   63.62769</code></pre>
+</div>
+</div>
+<ol start="10" type="1">
+<li><p>Write a SQL query to produce the desired results.</p></li>
+<li><p>How would you modify your above query to keep only the rows in the results for which the mean temperature is at least 60?</p></li>
+</ol>
+</section>
 <section id="disconnecting" class="level1">
 <h1>Disconnecting</h1>
-<p>Finall, when we are finished we should disconnect from the database. Run the following code in R to disconnect, and make sure it is included at the end of your .qmd file.</p>
+<p>Finally, when we are finished we should disconnect from the database. Run the following code in R to disconnect, and make sure it is included at the end of your .qmd file.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>DBI<span class="sc">::</span><span class="fu">dbDisconnect</span>(conn)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>DBI<span class="sc">::</span><span class="fu">dbDisconnect</span>(conn)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 
