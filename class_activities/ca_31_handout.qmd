@@ -1,0 +1,69 @@
+---
+title: "Activity: Project planning"
+format: pdf
+editor: source
+---
+
+\vspace{-2.5cm}
+
+# Project background
+
+I am currently one of the organizers for the Undergraduate Statistics Project Competition ([USPROC](https://www.causeweb.org/usproc/)), a national statistics competition in which students submit research projects from classes and independent studies. This organization work involves managing data about student submissions, communicating with faculty mentors, and coordinating judging. I use many of the tools we have learned in STA 261 to do this work.
+
+In this project, you will play the role of a competition organizer from start to finish, from handling student submissions to assigning judges and finally determining a winner. I have modified the rules of the competition slightly for this project, but otherwise what you will be doing is very similar.
+
+## Submission rules
+
+* One student cannot submit multiple projects
+* The length of a project can be at most 5 pages
+* There can be at most 5 authors of the project (the student who submits the project, plus at most 4 coauthors)
+* Each project must be sponsored by a faculty member, who will attest that the student(s) did complete the project themselves and were undergraduates when they did the work
+* Each faculty member can sponsor at most 5 projects for the competition. If more than 5 projects are submitted for a faculty member, then they will be asked to choose their top 5 projects for judging
+
+## Judging rules
+
+* Judges must be university faculty, graduate students, or industry professionals
+* Each judge can score at most 6 projects
+* Every project must be scored by at least 5 judges
+
+
+# Part 2: Assign judges
+
+One of your tasks in this project is assigning judges to each of the valid project submissions. To determine judging assignments, you have access to the following files (see the provided files in the assignment GitHub repository):
+
+* `judge_info.csv`: the name, judge ID, and role (faculty, graduate student, etc.) of everyone who volunteered to judge this competition
+* `student_submissions.csv`: information about the different student submissions to the competition
+* `verification_responses.csv`: information provided by faculty sponsors when asked to verify their students' submissions
+
+Your judging assignments must satisfy the following requirements.
+
+**Requirements:**
+
+* Judging assignments should obey the judging and competition rules described above
+* You may not waste judges' time: do not send them inadmissible projects, and do not assign too many projects to any judge
+* Your `judging_assignments.csv` file should contain one row for each judge assigned to the projects, with the following columns:
+  * `judge_name`: the name of the judge
+  * `judge_id`: the judge's ID number, corresponding to the `judge_id` column in the `judge_info.csv` file
+  * A column for each project the judge is assigned, containing the project ID number. Reading across the row for each judge will tell me which projects were assigned to that judge
+  
+\newpage
+
+# Questions
+
+The purpose of this activity is to help you plan how you will complete this part of the project, before you actually start the coding.
+
+1. How will you determine which submitted projects are admissible (and so can be sent out for judging)? Which files will you use, and what information will you use from each file?
+
+
+\vspace{8cm}
+
+2. How will you determine which judges are allowed to judge projects? Which files will you use, and what information will you use from each file?
+
+\newpage
+
+3. Once you have the allowed projects and judges, how will you match them up to meet the judging requirements? Brainstorm what the specific steps would look like to create the assignments (you don't have to write the code, but try to give yourself enough detail that you can turn your plan into code later).
+
+
+
+
+
